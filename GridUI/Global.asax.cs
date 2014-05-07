@@ -6,7 +6,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using GridUI.Controllers;
-using GridUI.Infrastructure;
 
 namespace GridUI
 {
@@ -17,8 +16,8 @@ namespace GridUI
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas(); 
-            Bootstrapper.Start(); 
-            new DispatcherController(); // init routes
+             
+            
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
