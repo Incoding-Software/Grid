@@ -1,0 +1,42 @@
+﻿using Grid.Interfaces;
+using Grid.Paging;
+using GridUI.Persistance;
+using GridUI.Specifications;
+using Incoding.CQRS;
+using Incoding.Data;
+
+namespace GridUI.Queries
+{
+    #region << Using >>
+
+    
+
+    #endregion
+
+    public class GetProductsPagingQuery : QueryBase<IncPaginatedResult<Product>>, IRoutableQuery, ISortable<GetProductsPagingQuery.SortType>
+    {
+        public enum SortType
+        {
+            Name,
+            Price
+        }
+
+        protected override IncPaginatedResult<Product> ExecuteResult()
+        {
+           return this.Repository.Paginated(new PaginatedSpecification(this.Page, 10), orderSpecification: new ProductPagingOrderSpec(SortBy, Desc));
+        }
+
+        [HashUrl]
+        public int Page { get; set; }
+        public int PageSize { get { return 10; } private set { } }
+
+        public string BuildUrl(int page = 0)
+        {
+            this.Page = page;
+            return this.HashAction();
+        }
+
+        public SortType SortBy { get; set; }
+        public bool Desc { get; set; }
+    }
+}

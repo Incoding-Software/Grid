@@ -1,0 +1,792 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Bound</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>Template</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Template(@<text>
+                                            @(Html.When(JqueryBind.Click)
+                                                  .DoWithPreventDefault()
+                                                  .Direct()
+                                                  .OnSuccess(s => s.Utilities.Window.Alert(item.For(r => r.Date)))
+                                                  .AsHtmlAttributes()
+                                                  .ToLink(item.For(r => r.Date)))
+                                        </text>)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Template(<text>
+                                         Html.When(JqueryBind.Click)
+                                               .DoWithPreventDefault()
+                                               .Direct()
+                                               .OnSuccess(s => s.Utilities.Window.Alert(item.For(r => r.Date)))
+                                               .AsHtmlAttributes()
+                                               .ToLink(item.For(r => r.Date)))
+                                      </text>)
+                               .Title("Date of made")
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+            
+            <h1>AutoBind</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()                
+                      .GridClass(BootstrapTable.Hover)
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                     Html.Grid<ProductVm>()                
+                      .GridClass(BootstrapTable.Hover)
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                    
+                    
+                    
+        [AutoBind(Hide = true)]
+        public string Id { get; set; }
+        [AutoBind(Title = "Product Name from attr")]
+        public string Name { get; set; }
+        [AutoBind(Width = 100, SortBy = GetProductsQuery.SortType.Price, SortDefault = true)]
+        public string Price { get; set; }
+        [AutoBind(Title = "Date of made from attr", SortBy = GetProductsQuery.SortType.Date)]
+        public string Date { get; set; }
+        [AutoBind(Raw = true, WidthPct = 35)]
+        public string Comment { get; set; }
+                </pre>
+            </div>
+            
+
+            <h1>GridClass</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>HeadHtmlAttr</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .HeadHtmlAttr(BootstrapClass.Success) //.HeadHtmlAttr("success")
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>RowHtmlAttr</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .RowHtmlAttr(BootstrapClass.Warning))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          dsl.Bound(r => r.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .RowHtmlAttr(BootstrapClass.Warning)
+                </pre>
+            </div>
+
+
+            <h1>HeaderHtmlAttr</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(BootstrapClass.Danger);
+
+                          dsl.Bound(r => r.Price)
+                              .HeaderHtmlAttr(BootstrapClass.Success);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(BootstrapClass.Danger);
+
+                          dsl.Bound(r => r.Price)
+                              .HeaderHtmlAttr(BootstrapClass.Success);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>HtmlAttr</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(BootstrapClass.Danger)
+                              .HtmlAttr(BootstrapClass.Success);
+
+
+                          dsl.Bound(r => r.Price)
+                              .HeaderHtmlAttr(BootstrapClass.Success);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(BootstrapClass.Danger)
+                              .HtmlAttr(BootstrapClass.Success);
+                          
+
+                          dsl.Bound(r => r.Price)
+                              .HeaderHtmlAttr(BootstrapClass.Success);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>Width</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(100);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(500);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                    Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(100);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(500);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>WidthPct</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Price)
+                              .WidthPct(20);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Price)
+                              .WidthPct(20);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>Visible</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Price)
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Price)
+                              .WidthPct(20);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>Raw</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(500);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(500);
+
+                          dsl.Bound(r => r.Comment)
+                              .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Price)
+                              .WidthPct(50);
+
+                          dsl.Bound(r => r.Comment)
+                              .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>NoRecordsTemplate</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .NoRecordsTemplate("Нет записей!"))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .OnBind(dsl => {})
+                      .NoRecordsTemplate("Нет записей!")
+                </pre>
+            </div>
+
+
+            <h1>NextRow</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .NextRow(@<text>
+                                    <td style="width: 200px;"></td>
+                                    <td colspan="2">Notes: @item.ForRaw(r => r.Comment)</td>
+                                </text>))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .NextRow(<text>
+                        <td style="width: 200px;"></td>
+                        <td colspan="2">Notes: item.ForRaw(r => r.Comment)</td>
+                    </text>)
+                    
+                </pre>
+            </div>
+
+
+            <h1>Sortable</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+
+
+            <h1>Pageable</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable())
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable()
+                </pre>
+            </div>
+
+
+            <h1>Custom Pageable</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .OnBind(dsl => { })
+                      .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet()))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet())
+                </pre>
+            </div>
+
+
+            <h1>OnBind</h1>
+
+            <div class="bs-docs-example">
+                <div class="control-group">
+                    <label class="control-label">
+                        Console
+                    </label>
+                    <div class="controls">
+                        <div id="console"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .OnBind(dsl =>
+                      {
+                          dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(@<div>Bind Success</div>);
+                      })
+                      .Pageable())
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(dsl =>
+                      {
+                          dsl.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .Width(200);
+
+                          dsl.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          dsl.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .OnBind(dsl =>
+                      {
+                          dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(Bind Success);
+                      })
+                      .Pageable()
+               </pre>
+            </div>
+        </div>
+    </div>
+</div>

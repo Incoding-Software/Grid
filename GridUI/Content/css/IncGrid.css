@@ -1,0 +1,89 @@
+/**FOR GRID***/
+
+.inc-grid {
+    
+}
+
+.inc-grid-content {
+    /*height: 300px;
+    border: none;
+    overflow-x: auto;
+    overflow-y: scroll;
+    width: 100%;*/
+}
+
+
+.inc-grid .table { 
+    table-layout: fixed;
+    margin-bottom: 0;
+}
+
+.inc-grid .table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inc-grid .table > tbody + tbody {
+    border-top: 1px solid #DDDDDD;
+}
+
+table tr.history-strike-through textarea, table tr.history-strike-through td:not(.inc-grid-history) {
+    text-decoration: line-through;
+}
+
+.history-strike-through td { text-decoration: line-through !important }
+
+.inc-grid-history { 
+    width: 60px;
+    text-decoration: none !important;
+}
+
+table tr.history-strike-through td.inc-grid-history {
+    text-decoration: none !important;
+}
+
+.inc-icon {
+    background-image: url("../images/sprite.png");
+    display: inline-block;
+    font-size: 0;
+    height: 16px;
+    line-height: 0;
+    overflow: hidden;
+    text-align: center;
+    text-indent: -3333px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.inc-arrow-up {
+    background-position: -16px -160px;
+}
+
+.inc-arrow-down {
+    background-position: -16px -176px;
+}
+
+
+
+[class^="icon-"], [class*=" icon-"] {
+    background-image: url("../images/glyphicons/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    width: 14px;
+}
+[class^="icon-"]:last-child, [class*=" icon-"]:last-child {
+}
+
+.icon-arrow-up {
+    background-position: -289px -96px;
+}
+.icon-arrow-down {
+    background-position: -312px -96px;
+}
+
+
+/**END FOR GRID***/

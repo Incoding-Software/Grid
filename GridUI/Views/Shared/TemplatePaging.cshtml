@@ -1,0 +1,24 @@
+﻿@using Grid.Paging
+@using Incoding.MvcContrib
+
+
+@using (var template = Html.Incoding().Template<PagingModel>())
+{
+        <ul class="customPagination">
+            @using (var each = template.ForEach())
+            {
+                using (each.Is(r => r.Active))
+                {
+                    <li class="success">
+                        <a href="#!@each.ForRaw(r => r.Url)">@each.For(r => r.Text)</a>
+                    </li>
+                }
+                using (each.Not(r => r.Active))
+                {
+                    <li>
+                        <a href="#!@each.ForRaw(r => r.Url)">@each.For(r => r.Text)</a>
+                    </li>
+                }
+            }
+        </ul>
+}
