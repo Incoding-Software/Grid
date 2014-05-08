@@ -9,6 +9,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Grid";
 }
 
 
@@ -19,14 +20,14 @@
 
             <div class="example">
                 @(Html.Grid<ProductVm>()
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
@@ -34,14 +35,14 @@
             <div class="sourceCode">
                 <pre>
                       Html.Grid<ProductVm>()
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -53,14 +54,14 @@
 
             <div class="example">
                 @(Html.Grid<ProductVm>()
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Template(@<text>
+                          column.Template(@<text>
                                             @(Html.When(JqueryBind.Click)
                                                   .DoWithPreventDefault()
                                                   .Direct()
@@ -75,14 +76,14 @@
             <div class="sourceCode">
                 <pre>
                       Html.Grid<ProductVm>()
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Template(<text>
+                          column.Template(<text>
                                          Html.When(JqueryBind.Click)
                                                .DoWithPreventDefault()
                                                .Direct()
@@ -130,14 +131,14 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
@@ -146,14 +147,14 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -167,14 +168,14 @@
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
@@ -184,14 +185,14 @@
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success) //.HeadHtmlAttr("success")
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -205,14 +206,14 @@
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -223,14 +224,14 @@
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name");
 
-                          dsl.Bound(r => r.Price);
+                          column.Bound(r => r.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -244,16 +245,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .HeaderHtmlAttr(BootstrapClass.Danger);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .HeaderHtmlAttr(BootstrapClass.Success);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
@@ -263,16 +264,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .HeaderHtmlAttr(BootstrapClass.Danger);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .HeaderHtmlAttr(BootstrapClass.Success);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
@@ -286,18 +287,18 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .HeaderHtmlAttr(BootstrapClass.Danger)
                               .HtmlAttr(BootstrapClass.Success);
 
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .HeaderHtmlAttr(BootstrapClass.Success);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
@@ -307,18 +308,18 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .HeaderHtmlAttr(BootstrapClass.Danger)
                               .HtmlAttr(BootstrapClass.Success);
                           
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .HeaderHtmlAttr(BootstrapClass.Success);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
@@ -332,16 +333,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(100);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(500);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -351,16 +352,16 @@
                 <pre>
                     Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(100);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(500);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -374,16 +375,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .WidthPct(20);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
@@ -392,16 +393,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .WidthPct(20);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -414,16 +415,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Visible(false);
                       })
@@ -433,16 +434,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .WidthPct(20);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Visible(false);
                       })
@@ -456,16 +457,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(500);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(500);
 
-                          dsl.Bound(r => r.Comment)
+                          column.Bound(r => r.Comment)
                               .Raw();
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
@@ -474,16 +475,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .WidthPct(50);
 
-                          dsl.Bound(r => r.Comment)
+                          column.Bound(r => r.Comment)
                               .Raw();
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
@@ -496,16 +497,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -516,21 +517,20 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
-                      .OnBind(dsl => {})
                       .NoRecordsTemplate("Нет записей!")
                 </pre>
             </div>
@@ -541,16 +541,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -564,16 +564,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -592,18 +592,18 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Sortable(GetProductsQuery.SortType.Name, true)
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200)
                               .Sortable(GetProductsQuery.SortType.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -613,18 +613,18 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Sortable(GetProductsQuery.SortType.Name, true)
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200)
                               .Sortable(GetProductsQuery.SortType.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -638,16 +638,16 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -658,16 +658,16 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -682,37 +682,36 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
-                      .OnBind(dsl => { })
                       .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet()))
             </div>
             <div class="sourceCode">
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -739,18 +738,18 @@
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Sortable(GetProductsQuery.SortType.Name, true)
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200)
                               .Sortable(GetProductsQuery.SortType.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
@@ -765,25 +764,25 @@
                 <pre>
                       Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .Columns(dsl =>
+                      .Columns(column =>
                       {
-                          dsl.Bound(r => r.Name)
+                          column.Bound(r => r.Name)
                               .Title("Product Name")
                               .Sortable(GetProductsQuery.SortType.Name, true)
                               .Width(200);
 
-                          dsl.Bound(r => r.Price)
+                          column.Bound(r => r.Price)
                               .Width(200)
                               .Sortable(GetProductsQuery.SortType.Price);
 
-                          dsl.Bound(r => r.Date)
+                          column.Bound(r => r.Date)
                               .Title("Date of made")
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .OnBind(dsl =>
                       {
-                          dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(Bind Success);
+                                                             dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(Bind Success);
                       })
                       .Pageable()
                </pre>

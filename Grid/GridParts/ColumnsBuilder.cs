@@ -7,7 +7,7 @@ using Incoding.MvcContrib;
 
 namespace Grid.GridParts
 {
-    public class ColumnsBuilder<T> where T : class
+    public class ColumnsBuilder<T> : IColumnsBuilder<T> where T : class
     {
         #region Fields
 
@@ -28,7 +28,7 @@ namespace Grid.GridParts
 
         public IColumn<T> Bound(Expression<Func<T, object>> argExpression)
         {
-            string name = argExpression.GetMemberName();
+            var name = argExpression.GetMemberName();
             var column = new Column<T>(name) { Expression = name };
             this._gridBuilder.AddColumn(column);
             return column;
@@ -42,5 +42,6 @@ namespace Grid.GridParts
         }
 
         #endregion
+
     }
 }

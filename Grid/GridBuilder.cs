@@ -66,8 +66,6 @@ namespace Grid
 
         bool isPageable;
 
-        bool customColumns;
-
         IDictionary<string, object> RowAttributes;
 
         IDictionary<string, object> HeaderRowAttributes;
@@ -101,7 +99,6 @@ namespace Grid
 
         public IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction)
         {
-            customColumns = true;
             builderAction(new ColumnsBuilder<T>(this));
             return this;
         }
@@ -207,13 +204,8 @@ namespace Grid
 
         #endregion
         
-        #region PrivateMethods
 
-        string NoRecordsTemplateDefault()
-        {
-            NoRecordsTemplate(GridOptions.Default.NoRecordsText);
-            return this.noRecordsTemplate;
-        }
+        #region PrivateMethods
 
         MvcHtmlString Render()
         {
@@ -229,7 +221,7 @@ namespace Grid
             var thead = new TagBuilder("thead");
             var tr = new TagBuilder("tr");
 
-            if (!customColumns)
+            if (!_сolumnList.Any())
                 AutoBind();
 
             foreach (var column in this._сolumnList)
@@ -249,36 +241,6 @@ namespace Grid
             }
 
             return new MvcHtmlString(divMain.ToString());
-        }
-
-        private void AutoBind()
-        {
-            PropertyInfo[] properties = typeof(T).GetProperties();
-            foreach (PropertyInfo propInfo in properties)
-            {
-                var attrs = propInfo.FirstOrDefaultAttribute<AutoBindAttribute>();
-                AddColumn(new Column<T>(propInfo.Name)
-                {
-                    Expression = propInfo.Name,
-                    ColumnWidth = attrs != null ? 
-                                  attrs.Width == 0 ? String.Empty : attrs.Width.ToString() :
-                                  String.Empty,
-                   
-                    ColumnWidthPct = attrs != null ?
-                                     attrs.WidthPct == 0 ? String.Empty : attrs.WidthPct.ToString() :
-                                     String.Empty,
-
-                    IsRaw = attrs != null && attrs.Raw,
-                    IsVisible = attrs == null || !attrs.Hide,
-                    Name = attrs != null ? 
-                           attrs.Title ?? propInfo.Name :
-                           propInfo.Name,
-
-                    SortBy = attrs != null ? attrs.SortBy : null,
-                    SortDefault = attrs != null && attrs.SortDefault
-                });     
-            }
-                 
         }
 
         MvcHtmlString AddTh(Column<T> column)
@@ -320,68 +282,6 @@ namespace Grid
             return new MvcHtmlString(th.ToString());
         }
 
-        MvcHtmlString SortArrow(Action<SortArrowSetting> action)
-        {
-            var setting = new SortArrowSetting();
-            action(setting);
-
-            var link = this._htmlHelper.When(JqueryBind.Click)
-                    .DoWithPreventDefaultAndStopPropagation().Direct()
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.With(selector => selector.Name(this.sortBySelector)).Core().JQuery.Attributes.Val(setting.By);
-                        dsl.With(selector => selector.Name(this.descSelector)).Core().Trigger.Invoke(JqueryBind.Click);
-                        dsl.With(selector => selector.Class("sort-arrow")).Core().Trigger.Incoding();
-                        dsl.With(selector => selector.Id(setting.TargetId)).Core().Trigger.Incoding();
-                    })
-                    .AsHtmlAttributes()
-                    .ToLink(setting.Content);
-
-            var builder = new StringBuilder();
-            builder.Append(link);
-            builder.Append(RenderSortArrow(setting.By, true, setting.SortDefault));
-            builder.Append(RenderSortArrow(setting.By, false, setting.SortDefault));
-            return new MvcHtmlString(builder.ToString());
-        }
-
-
-        MvcHtmlString RenderSortArrow<TEnum>(TEnum sort, bool desc, bool sortDefault)
-        {
-            string arrowsDefault = "inc-icon " + (desc ? "inc-arrow-up" : "inc-arrow-down");
-
-            string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
-
-            return this._htmlHelper.When("initincoding resetgrid")
-                    .DoWithStopPropagation().Direct()
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().JQuery.Attributes.AddClass("hide");
-                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
-                                );
-
-                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == "")
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
-                                        .And
-                                        .Is(() => sortDefault == true));
-
-                        dsl.Self().Core().JQuery.Attributes.AddClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) != desc)
-                                );
-                    })
-                                .AsHtmlAttributes(new { @class = (GridOptions.Default.IsArrowsBootstrap() ? arrowsBootstrap : arrowsDefault) + " sort-arrow hide" })
-                                .ToTag(GridOptions.Default.IsArrowsBootstrap() ? HtmlTag.I : HtmlTag.Span);
-        }
-
         MvcHtmlString AddTemplate()
         {
             var divPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
@@ -402,7 +302,7 @@ namespace Grid
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                     .AsHtmlAttributes(new { id = this.templateDiv, @class = "inc-grid-content" })
                     .ToDiv();
-            
+
             var div = this._htmlHelper.When(JqueryBind.InitIncoding)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxGet(this.ajaxGetAction)
@@ -505,7 +405,7 @@ namespace Grid
                 {
                     if (customPagingTemplate == null)
                     {
-                     using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this.pagingTemplateId))
+                        using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this.pagingTemplateId))
                         {
                             sb.Append("<ul class=\"pagination\">");
                             using (var each = template.ForEach())
@@ -547,10 +447,109 @@ namespace Grid
                 divPagingContainer.AddCssClass("pagination");
                 divContent.InnerHtml += divPagingContainer.ToString();
             }
-                
+
 
             return new MvcHtmlString(divContent.ToString());
         }
+
+        string NoRecordsTemplateDefault()
+        {
+            NoRecordsTemplate(GridOptions.Default.NoRecordsText);
+            return this.noRecordsTemplate;
+        }
+
+        private void AutoBind()
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            foreach (PropertyInfo propInfo in properties)
+            {
+                var attrs = propInfo.FirstOrDefaultAttribute<AutoBindAttribute>();
+                AddColumn(new Column<T>(propInfo.Name)
+                {
+                    Expression = propInfo.Name,
+                    ColumnWidth = attrs != null ? 
+                                  attrs.Width == 0 ? String.Empty : attrs.Width.ToString() :
+                                  String.Empty,
+                   
+                    ColumnWidthPct = attrs != null ?
+                                     attrs.WidthPct == 0 ? String.Empty : attrs.WidthPct.ToString() :
+                                     String.Empty,
+
+                    IsRaw = attrs != null && attrs.Raw,
+                    IsVisible = attrs == null || !attrs.Hide,
+                    Name = attrs != null ? 
+                           attrs.Title ?? propInfo.Name :
+                           propInfo.Name,
+
+                    SortBy = attrs != null ? attrs.SortBy : null,
+                    SortDefault = attrs != null && attrs.SortDefault
+                });     
+            }
+                 
+        }
+
+        MvcHtmlString SortArrow(Action<SortArrowSetting> action)
+        {
+            var setting = new SortArrowSetting();
+            action(setting);
+
+            var link = this._htmlHelper.When(JqueryBind.Click)
+                    .DoWithPreventDefaultAndStopPropagation()
+                    .Direct()
+                    .OnSuccess(dsl =>
+                    {
+                        dsl.With(selector => selector.Name(this.sortBySelector)).Core().JQuery.Attributes.Val(setting.By);
+                        dsl.With(selector => selector.Name(this.descSelector)).Core().Trigger.Invoke(JqueryBind.Click);
+                        dsl.With(selector => selector.Class("sort-arrow")).Core().Trigger.Incoding();
+                        dsl.With(selector => selector.Id(setting.TargetId)).Core().Trigger.Incoding();
+                    })
+                    .AsHtmlAttributes()
+                    .ToLink(setting.Content);
+
+            var builder = new StringBuilder();
+            builder.Append(link);
+            builder.Append(RenderSortArrow(setting.By, true, setting.SortDefault));
+            builder.Append(RenderSortArrow(setting.By, false, setting.SortDefault));
+            return new MvcHtmlString(builder.ToString());
+        }
+
+        MvcHtmlString RenderSortArrow<TEnum>(TEnum sort, bool desc, bool sortDefault)
+        {
+            string arrowsDefault = "inc-icon " + (desc ? "inc-arrow-up" : "inc-arrow-down");
+
+            string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
+
+            return this._htmlHelper.When("initincoding resetgrid")
+                    .DoWithStopPropagation().Direct()
+                    .OnSuccess(dsl =>
+                    {
+                        dsl.Self().Core().JQuery.Attributes.AddClass("hide");
+                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
+                                .If(builder => builder
+                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
+                                        .And
+                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
+                                );
+
+                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
+                                .If(builder => builder
+                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == "")
+                                        .And
+                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
+                                        .And
+                                        .Is(() => sortDefault == true));
+
+                        dsl.Self().Core().JQuery.Attributes.AddClass("hide")
+                                .If(builder => builder
+                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
+                                        .And
+                                        .Is(() => Selector.Jquery.Name(this.descSelector) != desc)
+                                );
+                    })
+                                .AsHtmlAttributes(new { @class = (GridOptions.Default.IsArrowsBootstrap() ? arrowsBootstrap : arrowsDefault) + " sort-arrow hide" })
+                                .ToTag(GridOptions.Default.IsArrowsBootstrap() ? HtmlTag.I : HtmlTag.Span);
+        }
+
 
         #endregion
 

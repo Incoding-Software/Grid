@@ -1,10 +1,11 @@
 ﻿
 <!DOCTYPE html>
-<html >
+<html>
     <head>
-        <link href="~/Content/css/bootstrap3.css" rel="stylesheet" />    
-        <link href="~/Content/css/IncGrid.css" rel="stylesheet" />  
-        <link href="~/Content/codemirror.css" rel="stylesheet" />
+        <link href="~/Content/css/bootstrap3.css" rel="stylesheet" /> 
+        <link href="~/Content/css/grid.css" rel="stylesheet" />
+
+        <title>@ViewBag.Title</title>
         <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")"> </script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/underscore.min.js")"> </script>                
         <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.min.js")"> </script>
@@ -13,14 +14,13 @@
         <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"> </script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/handlebars-1.1.2.js")"> </script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/incoding.framework.min.js")"> </script>                 
-        <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap3.min.js")"> </script>                 
-        <script type="text/javascript" src="@Url.Content("~/Scripts/codemirror.js")"> </script> 
+       <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap3.min.js")"> </script>             
+
           
         <script>
             TemplateFactory.Version = '100';
         </script>
     </head>
- @*   @Html.Incoding().RenderDropDownTemplate() *@
     <body>        
         @RenderBody()
     </body>
