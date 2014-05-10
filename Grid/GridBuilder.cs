@@ -42,19 +42,19 @@ namespace Grid
 
         readonly HtmlHelper _htmlHelper;
 
-        string templateDiv = "templateDiv_" + Guid.NewGuid();
+        string contentTable = "contentTable_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string templateId = "templateId_" + Guid.NewGuid();
+        string templateId = "templateId_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string pagingTemplateId = "pagingTemplateId_" + Guid.NewGuid();
+        string pagingTemplateId = "pagingTemplateId_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string noRecords = "noRecords_" + Guid.NewGuid();
+        string noRecords = "noRecords_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string sortBySelector = "sortBySelector_" + Guid.NewGuid();
+        string sortBySelector = "sortBySelector_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string descSelector = "descSelector_" + Guid.NewGuid();
+        string descSelector = "descSelector_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string pagingContainer = "pagingContainer_" + Guid.NewGuid();
+        string pagingContainer = "pagingContainer_" + Guid.NewGuid().ToString().Substring(0, 5);
 
         string gridClass;
 
@@ -231,7 +231,11 @@ namespace Grid
             table.InnerHtml = thead.ToString();
             divMain.InnerHtml = table.ToString();
 
-            divMain.InnerHtml += AddTemplate();
+            if(isPageable)
+                divMain.InnerHtml += AddPageableTemplate();
+            else
+                divMain.InnerHtml += AddTemplate();
+
             divMain.InnerHtml += this.noRecordsTemplate ?? this.NoRecordsTemplateDefault();
 
             if (this._сolumnList.Any(r => r.SortBy != null))
@@ -255,7 +259,7 @@ namespace Grid
                 var link = SortArrow(setting =>
                 {
                     setting.Content = column.Name;
-                    setting.TargetId = this.templateDiv;
+                    setting.TargetId = this.contentTable;
                     setting.By = column.SortBy;
                     setting.SortDefault = column.SortDefault;
                 });
@@ -284,7 +288,29 @@ namespace Grid
 
         MvcHtmlString AddTemplate()
         {
-            var divPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
+            var table = this._htmlHelper.When(JqueryBind.InitIncoding)
+                    .DoWithPreventDefaultAndStopPropagation()
+                    .AjaxGet(this.ajaxGetAction)
+                    .OnSuccess(dsl =>
+                    {
+                        dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
+
+                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
+                                .If(r => r.Data<List<T>>(data => data.IsEmpty()));
+                    })
+                    .OnSuccess(onBindAction)
+                    .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
+                    .AsHtmlAttributes(new { id = this.contentTable, @class = "table " + gridClass })
+                    .ToTag(HtmlTag.Table);
+
+            return new MvcHtmlString(string.Format("{0}{1}", table.ToHtmlString(), CreateTemplate()));
+        }
+
+        
+
+        MvcHtmlString AddPageableTemplate()
+        {
+            var tableWithPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxHashGet(this.ajaxGetAction)
                     .OnSuccess(dsl =>
@@ -300,24 +326,19 @@ namespace Grid
                     })
                     .OnSuccess(onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this.templateDiv, @class = "inc-grid-content" })
-                    .ToDiv();
+                    .AsHtmlAttributes(new { id = this.contentTable, @class = "table " + gridClass })
+                    .ToTag(HtmlTag.Table);
 
-            var div = this._htmlHelper.When(JqueryBind.InitIncoding)
-                    .DoWithPreventDefaultAndStopPropagation()
-                    .AjaxGet(this.ajaxGetAction)
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
 
-                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
-                                .If(r => r.Data<List<T>>(data => data.IsEmpty()));
-                    })
-                    .OnSuccess(onBindAction)
-                    .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this.templateDiv, @class = "inc-grid-content" })
-                    .ToDiv();
+            var divPagingContainer = new TagBuilder("div");
+            divPagingContainer.GenerateId(pagingContainer);
+            divPagingContainer.AddCssClass("pagination");
 
+            return new MvcHtmlString(string.Format("{0}{1}{2}", tableWithPageable.ToHtmlString(), CreateTemplate(), divPagingContainer.ToString()));
+        }
+
+        private StringBuilder CreateTemplate()
+        {
             var sb = new StringBuilder();
             using (TextWriter writer = new StringWriter(sb))
             {
@@ -326,13 +347,9 @@ namespace Grid
                     Writer = new HtmlTextWriter(writer)
                 }, new ViewPage());
 
+                //create template
                 using (var template = writerHtmlHelper.Incoding().ScriptTemplate<T>(this.templateId))
                 {
-                    if (!string.IsNullOrWhiteSpace(this.gridClass))
-                        sb.Append("<table class=\"table " + this.gridClass + "\">");
-                    else
-                        sb.Append("<table class=\"table\">");
-
                     using (var each = template.ForEach())
                     {
                         var tbody = new TagBuilder("tbody");
@@ -395,61 +412,43 @@ namespace Grid
                                 tbody.InnerHtml += trNext.ToString();
                             }
                         }
-
                         sb.Append(tbody);
                     }
-                    sb.Append("</table>");
                 }
+                //end create template
 
-                if (isPageable)
+                if (isPageable && customPagingTemplate == null)
                 {
-                    if (customPagingTemplate == null)
+                    using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this.pagingTemplateId))
                     {
-                        using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this.pagingTemplateId))
+                        sb.Append("<ul class=\"pagination\">");
+                        using (var each = template.ForEach())
                         {
-                            sb.Append("<ul class=\"pagination\">");
-                            using (var each = template.ForEach())
+                            using (each.Is(r => r.Active))
                             {
-                                using (each.Is(r => r.Active))
-                                {
-                                    var li = new TagBuilder("li");
-                                    var link = new TagBuilder("a");
-                                    link.MergeAttribute("href", "#!" + each.For(r => r.Url));
-                                    link.InnerHtml = each.For(r => r.Text);
-                                    li.InnerHtml = link.ToString();
-                                    li.AddCssClass("active");
-                                    sb.Append(li);
-                                }
-                                using (each.Not(r => r.Active))
-                                {
-                                    var li = new TagBuilder("li");
-                                    var link = new TagBuilder("a");
-                                    link.MergeAttribute("href", "#!" + each.For(r => r.Url));
-                                    link.InnerHtml = each.For(r => r.Text);
-                                    li.InnerHtml = link.ToString();
-                                    sb.Append(li);
-                                }
-
+                                var li = new TagBuilder("li");
+                                var link = new TagBuilder("a");
+                                link.MergeAttribute("href", "#!" + each.For(r => r.Url));
+                                link.InnerHtml = each.For(r => r.Text);
+                                li.InnerHtml = link.ToString();
+                                li.AddCssClass("active");
+                                sb.Append(li);
+                            }
+                            using (each.Not(r => r.Active))
+                            {
+                                var li = new TagBuilder("li");
+                                var link = new TagBuilder("a");
+                                link.MergeAttribute("href", "#!" + each.For(r => r.Url));
+                                link.InnerHtml = each.For(r => r.Text);
+                                li.InnerHtml = link.ToString();
+                                sb.Append(li);
                             }
                         }
-                        sb.Append("</ul>");
                     }
+                    sb.Append("</ul>");
                 }
             }
-
-            var divContent = new TagBuilder("div");
-            divContent.InnerHtml = isPageable ? divPageable.ToHtmlString() : div.ToHtmlString();
-            divContent.InnerHtml += sb.ToString();
-            if (isPageable)
-            {
-                var divPagingContainer = new TagBuilder("div");
-                divPagingContainer.GenerateId(pagingContainer);
-                divPagingContainer.AddCssClass("pagination");
-                divContent.InnerHtml += divPagingContainer.ToString();
-            }
-
-
-            return new MvcHtmlString(divContent.ToString());
+            return sb;
         }
 
         string NoRecordsTemplateDefault()
