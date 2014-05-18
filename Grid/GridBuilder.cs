@@ -305,9 +305,7 @@ namespace Grid
 
             return new MvcHtmlString(string.Format("{0}{1}", table.ToHtmlString(), CreateTemplate()));
         }
-
-        
-
+    
         MvcHtmlString AddPageableTemplate()
         {
             var tableWithPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
@@ -514,11 +512,9 @@ namespace Grid
 
         MvcHtmlString RenderSortArrow<TEnum>(TEnum sort, bool desc, bool sortDefault)
         {
-            string arrowsDefault = "inc-icon " + (desc ? "inc-arrow-up" : "inc-arrow-down");
-
             string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
 
-            return this._htmlHelper.When("initincoding resetgrid")
+            return this._htmlHelper.When(JqueryBind.InitIncoding)
                     .DoWithStopPropagation().Direct()
                     .OnSuccess(dsl =>
                     {
@@ -545,8 +541,8 @@ namespace Grid
                                         .Is(() => Selector.Jquery.Name(this.descSelector) != desc)
                                 );
                     })
-                                .AsHtmlAttributes(new { @class = (GridOptions.Default.IsArrowsBootstrap() ? arrowsBootstrap : arrowsDefault) + " sort-arrow hide" })
-                                .ToTag(GridOptions.Default.IsArrowsBootstrap() ? HtmlTag.I : HtmlTag.Span);
+                                .AsHtmlAttributes(new { @class = arrowsBootstrap + " sort-arrow hide" })
+                                .ToTag(HtmlTag.I);
         }
 
 

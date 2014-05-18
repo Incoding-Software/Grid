@@ -7,6 +7,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentValidation;
 using FluentValidation.Mvc;
+using Grid.Options;
 using Incoding.Block.IoC;
 using Incoding.Block.Logging;
 using Incoding.CQRS;
@@ -63,6 +64,8 @@ namespace GridUI.Infrastructure
 
             var ajaxDef = JqueryAjaxOptions.Default;
             ajaxDef.Cache = false; // disabled cache as default
+
+            GridOptions.Default.NoRecordsText = "no records";
         }
     }
 

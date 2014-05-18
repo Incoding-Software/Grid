@@ -15,18 +15,7 @@
 
         #region Properties
 
-        public virtual string Arrows { get; set; }
-
         public virtual string NoRecordsText { get; set; }
-
-        #endregion
-
-        #region Api Methods
-
-        public virtual bool IsArrowsBootstrap()
-        {
-            return Arrows == "bootstrap";
-        }
 
         #endregion
     }

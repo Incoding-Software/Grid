@@ -101,13 +101,13 @@
 
             <div class="example">
                 @(Html.Grid<ProductVm>()                
-                      .GridClass(BootstrapTable.Hover)
+                      .GridClass(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
             <div class="sourceCode">
                 <pre>
                      Html.Grid<ProductVm>()                
-                      .GridClass(BootstrapTable.Hover)
+                      .GridClass(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                     
                     
@@ -167,7 +167,7 @@
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Hover)
-                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .HeadHtmlAttr(BootstrapClass.Info)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -540,7 +540,7 @@
 
             <div class="example">
                 @(Html.Grid<ProductVm>()
-                      .GridClass(BootstrapTable.Hover)
+                      .GridClass(BootstrapTable.Striped)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -563,7 +563,7 @@
             <div class="sourceCode">
                 <pre>
                       Html.Grid<ProductVm>()
-                      .GridClass(BootstrapTable.Hover)
+                      .GridClass(BootstrapTable.Striped)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
