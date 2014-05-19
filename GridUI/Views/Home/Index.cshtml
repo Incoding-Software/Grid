@@ -23,12 +23,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -38,12 +38,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
-
+                                .Title("Product Name");
+                     
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -57,7 +57,7 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
@@ -69,7 +69,7 @@
                                                   .AsHtmlAttributes()
                                                   .ToLink(item.For(r => r.Date)))
                                         </text>)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -79,7 +79,7 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
@@ -91,7 +91,7 @@
                                                .AsHtmlAttributes()
                                                .ToLink(item.For(r => r.Date)))
                                       </text>)
-                               .Title("Date of made")
+                                 .Title("Date of made")
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -107,8 +107,8 @@
             <div class="sourceCode">
                 <pre>
                      Html.Grid<ProductVm>()                
-                      .GridClass(BootstrapTable.Striped)
-                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                         .GridClass(BootstrapTable.Striped)
+                         .AjaxGet(Url.Action("GetProducts", "Home"))
                     
                     
                     
@@ -134,12 +134,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -150,12 +150,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -171,12 +171,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -188,12 +188,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -209,12 +209,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                       .RowHtmlAttr(BootstrapClass.Warning))
@@ -227,12 +227,12 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                                .Title("Product Name");
 
                           column.Bound(r => r.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                       .RowHtmlAttr(BootstrapClass.Warning)
@@ -248,15 +248,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger);
+                                .Title("Product Name")
+                                .HeaderHtmlAttr(BootstrapClass.Danger);
 
                           column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
+                                .HeaderHtmlAttr(BootstrapClass.Success);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                                .Title("Date of made")
+                                .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -267,15 +267,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger);
+                                .Title("Product Name")
+                                .HeaderHtmlAttr(BootstrapClass.Danger);
 
                           column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
+                                .HeaderHtmlAttr(BootstrapClass.Success);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                                .Title("Date of made")
+                                .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -290,17 +290,17 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger)
-                              .HtmlAttr(BootstrapClass.Success);
+                                .Title("Product Name")
+                                .HeaderHtmlAttr(BootstrapClass.Danger)
+                                .HtmlAttr(BootstrapClass.Success);
 
 
                           column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
+                                .HeaderHtmlAttr(BootstrapClass.Success);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                                .Title("Date of made")
+                                .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -311,17 +311,17 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger)
-                              .HtmlAttr(BootstrapClass.Success);
+                                .Title("Product Name")
+                                .HeaderHtmlAttr(BootstrapClass.Danger)
+                                .HtmlAttr(BootstrapClass.Success);
                           
 
                           column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
+                                .HeaderHtmlAttr(BootstrapClass.Success);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
+                                .Title("Date of made")
+                                .HeaderHtmlAttr(BootstrapClass.Warning);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -336,15 +336,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(100);
+                                .Title("Product Name")
+                                .Width(100);
 
                           column.Bound(r => r.Price)
-                              .Width(500);
+                                .Width(500);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -355,15 +355,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(100);
+                                .Title("Product Name")
+                                .Width(100);
 
                           column.Bound(r => r.Price)
-                              .Width(500);
+                                .Width(500);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -378,14 +378,14 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .WidthPct(50);
+                                .Title("Product Name")
+                                .WidthPct(50);
 
                           column.Bound(r => r.Price)
-                              .WidthPct(20);
+                                .WidthPct(20);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -396,14 +396,14 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .WidthPct(50);
+                                .Title("Product Name")
+                                .WidthPct(50);
 
                           column.Bound(r => r.Price)
-                              .WidthPct(20);
+                                .WidthPct(20);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made");
+                                .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -418,15 +418,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .WidthPct(50);
+                                .Title("Product Name")
+                                .WidthPct(50);
 
                           column.Bound(r => r.Price)
-                              .WidthPct(50);
+                                .WidthPct(50);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Visible(false);
+                                .Title("Date of made")
+                                .Visible(false);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -437,15 +437,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .WidthPct(50);
+                                .Title("Product Name")
+                                .WidthPct(50);
 
                           column.Bound(r => r.Price)
-                              .WidthPct(20);
+                                .WidthPct(20);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Visible(false);
+                                .Title("Date of made")
+                                .Visible(false);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -460,14 +460,14 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(500);
+                                .Title("Product Name")
+                                .Width(500);
 
                           column.Bound(r => r.Price)
-                              .Width(500);
+                                .Width(500);
 
                           column.Bound(r => r.Comment)
-                              .Raw();
+                                .Raw();
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -478,14 +478,14 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .WidthPct(50);
+                                .Title("Product Name")
+                                .WidthPct(50);
 
                           column.Bound(r => r.Price)
-                              .WidthPct(50);
+                                .WidthPct(50);
 
                           column.Bound(r => r.Comment)
-                              .Raw();
+                                .Raw();
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
@@ -500,15 +500,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
                       .NoRecordsTemplate("Нет записей!"))
@@ -520,18 +520,61 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
                       .NoRecordsTemplate("Нет записей!")
+                </pre>
+            </div>
+            
+            <h1>NoRecordsTemplate from Default GridOptions</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+
+                          column.Bound(r => r.Price)
+                                .Width(200);
+
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                    
+                    
+                     //in Bootstrapper.cs
+                     GridOptions.Default.NoRecordsText = "no records";
                 </pre>
             </div>
 
@@ -544,15 +587,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                       .NextRow(@<text>
@@ -567,15 +610,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                       .NextRow(<text>
@@ -587,7 +630,7 @@
             </div>
 
 
-            <h1>Sortable</h1>
+            <h1>Sortable for column</h1>
 
             <div class="example">
                 @(Html.Grid<ProductVm>()
@@ -595,17 +638,17 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Sortable(GetProductsQuery.SortType.Name, true)
-                              .Width(200);
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200)
-                              .Sortable(GetProductsQuery.SortType.Price);
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
@@ -616,18 +659,59 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Sortable(GetProductsQuery.SortType.Name, true)
-                              .Width(200);
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200)
-                              .Sortable(GetProductsQuery.SortType.Price);
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
+            
+            <h1>Sortable for grid</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+
+                          column.Bound(r => r.Price)
+                                .Width(200);
+
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .Sortable()
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .Sortable()
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
             </div>
@@ -641,15 +725,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .Pageable())
@@ -661,15 +745,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .Pageable()
@@ -685,15 +769,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet()))
@@ -705,15 +789,15 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Width(200);
+                                .Title("Product Name")
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200);
+                                .Width(200);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet())
@@ -741,17 +825,17 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Sortable(GetProductsQuery.SortType.Name, true)
-                              .Width(200);
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200)
-                              .Sortable(GetProductsQuery.SortType.Price);
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .OnBind(dsl =>
@@ -767,22 +851,22 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .Sortable(GetProductsQuery.SortType.Name, true)
-                              .Width(200);
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .Width(200);
 
                           column.Bound(r => r.Price)
-                              .Width(200)
-                              .Sortable(GetProductsQuery.SortType.Price);
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
 
                           column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .Width(150);
+                                .Title("Date of made")
+                                .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
                       .OnBind(dsl =>
                       {
-                                                             dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(Bind Success);
+                          dsl.With(r => r.Id("console")).Core().JQuery.Manipulation.Append(Bind Success);
                       })
                       .Pageable()
                </pre>

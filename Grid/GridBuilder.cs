@@ -165,6 +165,18 @@ namespace Grid
             return this;
         }
 
+        public IGridBuilder<T> Sortable()
+        {
+            if (_сolumnList.Any())
+            {
+                foreach (var column in _сolumnList)
+                    column.SortBy = column.Expression;
+
+                _сolumnList.First().SortDefault = true;
+            }
+            return this;
+        }
+
         public IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
         {
             this.onBindAction = action;

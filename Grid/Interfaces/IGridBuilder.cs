@@ -21,6 +21,7 @@ namespace Grid.Interfaces
         IGridBuilder<T> HeadHtmlAttr(object htmlAttributes);
         IGridBuilder<T> HeadHtmlAttr(BootstrapClass htmlAttributes);
         IGridBuilder<T> AjaxGet(string actionString);
+        IGridBuilder<T> Sortable();
         IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
         IGridBuilder<T> NoRecordsTemplate(string text);
         IGridBuilder<T> Pageable();
