@@ -47,7 +47,8 @@ namespace GridUI.Setups
                                      {
                                              Name = "Продукт " + i,
                                              Price = (decimal)55.5 + (decimal)i,
-                                             Date = DateTime.Now.AddDays(-i)
+                                             Date = DateTime.Now.AddDays(-i),
+                                             IsSoldOut = i%3 == 0
                                      });
             }
         }

@@ -491,6 +491,47 @@
                 </pre>
             </div>
 
+            
+            <h1>IsInline And NotInline</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+
+                          column.Bound(r => r.Price);
+
+                          column.Template(@<text>
+                                               <div class="@(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("redbox"))) @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("greenbox")))">
+                                                   @(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("Продан")))
+                                                   @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("Доступен")))
+                                               </div>
+                                           </text>)
+                                .Title("Available");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+                          column.Bound(r => r.Price);
+                          column.Template(<text>
+                                                @*<div class="@(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("redbox"))) @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("greenbox")))">
+                                                   @(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("Продан")))
+                                                   @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("Доступен")))
+                                               </div>*@
+                                           </text>)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+            </div>
 
             <h1>NoRecordsTemplate</h1>
 

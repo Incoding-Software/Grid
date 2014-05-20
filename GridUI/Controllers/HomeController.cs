@@ -14,6 +14,11 @@ namespace GridUI.Controllers
             return View("Index");
         }
 
+        public ActionResult New()
+        {
+            return View("New");
+        }
+
         public ActionResult GetProducts(GetProductsQuery query)
         {
             var products = this.dispatcher.Query(query);

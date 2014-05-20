@@ -20,6 +20,7 @@ namespace GridUI.Models
             Name = product.Name;
             Price = product.Price.ToString();
             Date = product.Date.ToShortDateString();
+            IsSoldOut = product.IsSoldOut;
             Comment =
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br /> Integer hendrerit placerat posuere.<br /> Sed vitae condimentum est.";
         }
@@ -42,6 +43,7 @@ namespace GridUI.Models
 
         [AutoBind(Raw = true, WidthPct = 35)]
         public string Comment { get; set; }
+        public bool IsSoldOut { get; set; }
 
         #endregion
     }

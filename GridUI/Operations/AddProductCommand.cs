@@ -20,6 +20,8 @@ namespace GridUI.Operations
 
         public DateTime Date { get; set; }
 
+        public bool IsSoldOut { get; set; }
+
         #endregion
 
         public override void Execute()
@@ -28,6 +30,7 @@ namespace GridUI.Operations
             product.Name = Name;
             product.Price = Price;
             product.Date = Date;
+            product.IsSoldOut = IsSoldOut;
             Repository.Save(product);
         }
     }

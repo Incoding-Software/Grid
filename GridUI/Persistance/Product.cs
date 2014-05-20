@@ -23,6 +23,8 @@ namespace GridUI.Persistance
 
         public virtual DateTime Date { get; set; }
 
+        public virtual bool IsSoldOut { get; set; }
+
         #endregion
 
         #region Nested classes
@@ -40,6 +42,7 @@ namespace GridUI.Persistance
                 Map(r => r.Name).Length(100);
                 Map(r => r.Price);
                 Map(r => r.Date);
+                Map(r => r.IsSoldOut);
             }
 
             #endregion
