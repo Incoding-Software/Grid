@@ -23,12 +23,17 @@ namespace GridUI.Queries
 
         protected override IncPaginatedResult<Product> ExecuteResult()
         {
-           return this.Repository.Paginated(new PaginatedSpecification(this.Page, 10), orderSpecification: new ProductPagingOrderSpec(SortBy, Desc));
+            return this.Repository.Paginated(new PaginatedSpecification(this.Page, PageSize), orderSpecification: new ProductPagingOrderSpec(SortBy, Desc));
         }
 
         [HashUrl]
         public int Page { get; set; }
-        public int PageSize { get { return 10; } private set { } }
+
+        public int PageSize
+        {
+            get { return pageSize; } 
+            set { pageSize = value; }
+        }
 
         public string BuildUrl(int page = 0)
         {
@@ -38,5 +43,7 @@ namespace GridUI.Queries
 
         public SortType SortBy { get; set; }
         public bool Desc { get; set; }
+
+        private int pageSize = 10;
     }
 }

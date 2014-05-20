@@ -800,7 +800,50 @@
                       .Pageable()
                 </pre>
             </div>
+            
+            <h1>PageSize</h1>
 
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+
+                          column.Bound(r => r.Price)
+                                .Width(200);
+
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home", new { PageSize = 30 }))
+                      .Pageable())
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home", new { PageSize = 30 }))
+                      .Pageable()
+                    
+                    
+                    By Default PageSize = 10
+                </pre>
+            </div>
 
             <h1>Custom Pageable</h1>
 
