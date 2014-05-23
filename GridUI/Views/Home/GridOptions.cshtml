@@ -1,0 +1,195 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Grid Options";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+
+        <h1>NoRecords</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .NoRecords("Нет записей!"))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .NoRecords("Нет записей!")
+                </pre>
+        </div>
+
+        <h1>NoRecords from Default GridOptions</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                    
+                    
+                     //in Bootstrapper.cs
+                     GridOptions.Default.NoRecordsText = "no records";
+                </pre>
+        </div>
+
+
+        <h1>NextRow</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Striped)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .NextRow(@<text>
+                        <td style="width: 200px;"></td>
+                        <td colspan="2">Notes: @item.ForRaw(r => r.Comment)</td>
+                    </text>))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Striped)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .NextRow(<text>
+            <td style="width: 200px;"></td>
+            <td colspan="2">Notes: item.ForRaw(r => r.Comment)</td>
+                    </text>)
+                    
+                </pre>
+        </div>
+
+
+        <h1>IsInline And NotInline</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          column.Bound(r => r.Price);
+
+                          column.Template(@<text>
+                            <div class="@(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("redbox"))) @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("greenbox")))">
+                                @(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("Продан")))
+                                @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("Доступен")))
+                            </div>
+                        </text>)
+                              .Title("Available");
+                      })
+                                                                                                  .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+                          column.Bound(r => r.Price);
+                          column.Template(<text>
+                                                @*<div class="@(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("redbox"))) @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("greenbox")))">
+                                                   @(item.IsInline(r => r.IsSoldOut, MvcHtmlString.Create("Продан")))
+                                                   @(item.NotInline(r => r.IsSoldOut, MvcHtmlString.Create("Доступен")))
+                                               </div>*@
+                                           </text>)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+    </div>
+</div>

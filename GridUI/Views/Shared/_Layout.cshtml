@@ -15,7 +15,6 @@
         <script type="text/javascript" src="@Url.Content("~/Scripts/handlebars-1.1.2.js")"> </script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/incoding.framework.min.js")"> </script>                 
         <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"> </script>             
-
         <style>
             .redbox {
                 border: 1px solid red;
@@ -32,10 +31,24 @@
             }
         </style>
         <script>
-            TemplateFactory.Version = '100';
+            TemplateFactory.Version = '102';
         </script>
     </head>
-    <body>        
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="@Url.Action("Basic", "Home")">Basic</a></li>
+                        <li><a href="@Url.Action("Styling", "Home")">Styling</a></li>
+                        <li><a href="@Url.Action("ColumnOptions", "Home")">Column Options</a></li>
+                        <li><a href="@Url.Action("Sorting", "Home")">Sorting</a></li>
+                        <li><a href="@Url.Action("Paging", "Home")">Paging</a></li>
+                        <li><a href="@Url.Action("GridOptions", "Home")">Grid Options</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>        
         @RenderBody()
     </body>
 </html>

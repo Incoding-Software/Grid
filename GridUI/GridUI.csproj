@@ -197,9 +197,14 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Basic.cshtml" />
     <Content Include="Views\Shared\TemplatePaging.cshtml" />
     <Content Include="Views\Home\New.cshtml" />
+    <Content Include="Views\Home\Paging.cshtml" />
+    <Content Include="Views\Home\Sorting.cshtml" />
+    <Content Include="Views\Home\Styling.cshtml" />
+    <Content Include="Views\Home\ColumnOptions.cshtml" />
+    <Content Include="Views\Home\GridOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

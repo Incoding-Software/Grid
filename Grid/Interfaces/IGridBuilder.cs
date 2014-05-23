@@ -23,8 +23,9 @@ namespace Grid.Interfaces
         IGridBuilder<T> AjaxGet(string actionString);
         IGridBuilder<T> Sortable();
         IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
-        IGridBuilder<T> NoRecordsTemplate(string text);
+        IGridBuilder<T> NoRecords(string text);
         IGridBuilder<T> Pageable();
         IGridBuilder<T> Pageable(Selector customPagingTemplate);
+        IGridBuilder<T> Pageable(Action<PageableBuilder<T>> builderAction);
     }
 }

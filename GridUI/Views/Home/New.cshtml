@@ -1,4 +1,5 @@
 ﻿@using Grid.Extensions
+@using Grid.Paging
 @using Grid.Styles
 @using GridUI.Models
 @using Incoding.Extensions
@@ -14,8 +15,48 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            
-            
-        </div>
+            <h1>Pageable options</h1>
+
+            <div class="example">
+                @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+
+                          column.Bound(r => r.Price)
+                                .Width(200);
+
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(dsl =>  dsl.ItemsCount(true)
+                                            .PageSizes(true)))
+            </div>
+            <div class="sourceCode">
+                <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(dsl => dsl.ItemsCount(true)
+                                          .PageSizes(true))
+                </pre>
+            </div>
+         </div>
     </div>
 </div>

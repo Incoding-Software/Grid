@@ -1,0 +1,176 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Column Options";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+
+        <h1>Width</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(100);
+
+                          column.Bound(r => r.Price)
+                              .Width(500);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                    Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(100);
+                          column.Bound(r => r.Price)
+                                .Width(500);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>WidthPct</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(20);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(20);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>Visible</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(20);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>Raw</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(500);
+
+                          column.Bound(r => r.Price)
+                              .Width(500);
+
+                          column.Bound(r => r.Comment)
+                              .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(50);
+                          column.Bound(r => r.Comment)
+                                .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+    </div>
+</div>

@@ -9,14 +9,39 @@ namespace GridUI.Controllers
 {
     public class HomeController : IncControllerBase
     {
-        public ActionResult Index()
+        public ActionResult Basic()
         {
-            return View("Index");
+            return View("Basic");
+        }
+
+        public ActionResult Styling()
+        {
+            return View("Styling");
+        }
+
+        public ActionResult Paging()
+        {
+            return View("Paging");
+        }
+
+        public ActionResult Sorting()
+        {
+            return View("Sorting");
         }
 
         public ActionResult New()
         {
             return View("New");
+        }
+
+        public ActionResult ColumnOptions()
+        {
+            return View("ColumnOptions");
+        }
+
+        public ActionResult GridOptions()
+        {
+            return View("GridOptions");
         }
 
         public ActionResult GetProducts(GetProductsQuery query)

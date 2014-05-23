@@ -9,7 +9,7 @@ namespace GridUI.Queries
 {
     #region << Using >>
 
-    
+
 
     #endregion
 
@@ -29,9 +29,10 @@ namespace GridUI.Queries
         [HashUrl]
         public int Page { get; set; }
 
+        [HashUrl]
         public int PageSize
         {
-            get { return pageSize; } 
+            get { return pageSize; }
             set { pageSize = value; }
         }
 

@@ -76,9 +76,11 @@
     <Compile Include="GridBuilder.cs" />
     <Compile Include="GridParts\Column.cs" />
     <Compile Include="GridParts\ColumnsBuilder.cs" />
+    <Compile Include="GridParts\PageableBuilder.cs" />
     <Compile Include="GridParts\Row.cs" />
     <Compile Include="GridParts\SortArrowSetting.cs" />
     <Compile Include="Interfaces\IColumn.cs" />
+    <Compile Include="Interfaces\IPageableBuilder.cs" />
     <Compile Include="Interfaces\IColumnsBuilder.cs" />
     <Compile Include="Interfaces\IGridBuilder.cs" />
     <Compile Include="Interfaces\ISortable.cs" />

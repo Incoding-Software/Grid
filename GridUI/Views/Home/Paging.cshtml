@@ -1,0 +1,190 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Paging";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+
+        <h1>Pageable</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable())
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable()
+                </pre>
+        </div>
+
+        <h1>Custom Pageable</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet()))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet())
+                </pre>
+        </div>
+        
+        <h1>PageSize</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home", new { PageSize = 30 }))
+                      .Pageable())
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home", new { PageSize = 30 }))
+                      .Pageable()
+                    
+                    
+                    By Default PageSize = 10
+                </pre>
+        </div>
+        
+        
+        <h1>Pageable options</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+
+                          column.Bound(r => r.Price)
+                                .Width(200);
+
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(dsl => dsl.ItemsCount(true)
+                                          .PageSizes(true)))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Bordered)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
+                      .Pageable(dsl => dsl.ItemsCount(true)
+                                          .PageSizes(true)))
+                </pre>
+        </div>
+    </div>
+</div>

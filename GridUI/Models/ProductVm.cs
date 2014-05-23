@@ -32,17 +32,19 @@ namespace GridUI.Models
         [AutoBind(Hide = true)]
         public string Id { get; set; }
 
-        [AutoBind(Title = "Product Name from attr")]
+        [AutoBind(Title = "Product Name")]
         public string Name { get; set; }
 
         [AutoBind(Width = 100, SortBy = GetProductsQuery.SortType.Price, SortDefault = true)]
         public string Price { get; set; }
 
-        [AutoBind(Title = "Date of made from attr", SortBy = GetProductsQuery.SortType.Date)]
+        [AutoBind(Title = "Date of made", SortBy = GetProductsQuery.SortType.Date)]
         public string Date { get; set; }
 
         [AutoBind(Raw = true, WidthPct = 35)]
         public string Comment { get; set; }
+
+        [AutoBind(Title = "Status")]
         public bool IsSoldOut { get; set; }
 
         #endregion

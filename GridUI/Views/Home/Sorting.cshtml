@@ -1,0 +1,104 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Sorting";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+
+        <h1>Sortable for column</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+        <h1>Sortable for grid</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .Sortable()
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridClass(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .Sortable()
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+    </div>
+</div>

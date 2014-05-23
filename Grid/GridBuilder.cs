@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ using Grid.Interfaces;
 using Grid.Options;
 using Grid.Paging;
 using Grid.Styles;
+using Incoding.CQRS;
 using Incoding.Extensions;
 using Incoding.MvcContrib;
 
@@ -23,7 +25,7 @@ namespace Grid
 {
     #region << Using >>
 
-    
+
 
     #endregion
 
@@ -56,6 +58,8 @@ namespace Grid
 
         string pagingContainer = "pagingContainer_" + Guid.NewGuid().ToString().Substring(0, 5);
 
+        string pageSizesSelect = "pageSizesSelect_" + Guid.NewGuid().ToString().Substring(0, 5);
+
         string gridClass;
 
         string idMainDiv;
@@ -80,7 +84,15 @@ namespace Grid
 
         Selector customPagingTemplate;
 
-        Action<IIncodingMetaLanguageCallbackBodyDsl> onBindAction = dsl => {};
+        Action<IIncodingMetaLanguageCallbackBodyDsl> onBindAction = dsl => { };
+
+        bool _showItemsCount;
+
+        bool _showPageSizes;
+
+        int[] _pageSizesArray;
+
+        int _buttonCount = 5;
 
         #endregion
 
@@ -94,7 +106,12 @@ namespace Grid
 
         public IGridBuilder<T> GridClass(BootstrapTable @class)
         {
-            return GridClass(@class.ToLocalization());
+            var classes = Enum.GetValues(typeof(BootstrapTable))
+                .Cast<BootstrapTable>()
+                .Where(r => @class.HasFlag(r))
+                .Select(r => r.ToLocalization())
+                .AsString(" ");
+            return GridClass(classes);
         }
 
         public IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction)
@@ -183,7 +200,7 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilder<T> NoRecordsTemplate(string text)
+        public IGridBuilder<T> NoRecords(string text)
         {
             var div = new TagBuilder("div");
             div.GenerateId(this.noRecords);
@@ -214,8 +231,14 @@ namespace Grid
             return Pageable();
         }
 
+        public IGridBuilder<T> Pageable(Action<PageableBuilder<T>> builderAction)
+        {
+            builderAction(new PageableBuilder<T>(this));
+            return Pageable();
+        }
+
         #endregion
-        
+
 
         #region PrivateMethods
 
@@ -243,12 +266,12 @@ namespace Grid
             table.InnerHtml = thead.ToString();
             divMain.InnerHtml = table.ToString();
 
-            if(isPageable)
+            if (isPageable)
                 divMain.InnerHtml += AddPageableTemplate();
             else
                 divMain.InnerHtml += AddTemplate();
 
-            divMain.InnerHtml += this.noRecordsTemplate ?? this.NoRecordsTemplateDefault();
+            divMain.InnerHtml += this.noRecordsTemplate ?? this.NoRecordsDefault();
 
             if (this._сolumnList.Any(r => r.SortBy != null))
             {
@@ -304,7 +327,7 @@ namespace Grid
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxGet(this.ajaxGetAction)
                     .OnSuccess(dsl =>
-                    {
+                    {                        
                         dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
 
                         dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
@@ -317,7 +340,7 @@ namespace Grid
 
             return new MvcHtmlString(string.Format("{0}{1}", table.ToHtmlString(), CreateTemplate()));
         }
-    
+
         MvcHtmlString AddPageableTemplate()
         {
             var tableWithPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
@@ -329,10 +352,13 @@ namespace Grid
                                 .WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
 
                         dsl.With(selector => selector.Id(pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
-                                .WithTemplate(customPagingTemplate != null ? customPagingTemplate : Selector.Jquery.Id(this.pagingTemplateId)).Html();
+                                .WithTemplate(customPagingTemplate ?? Selector.Jquery.Id(this.pagingTemplateId)).Html();
 
                         dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
                                 .If(r => r.Data<List<T>>(data => data.IsEmpty()));
+
+                        if (_showItemsCount)
+                            dsl.With(selector => selector.Id(pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
                     })
                     .OnSuccess(onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
@@ -344,7 +370,21 @@ namespace Grid
             divPagingContainer.GenerateId(pagingContainer);
             divPagingContainer.AddCssClass("pagination");
 
-            return new MvcHtmlString(string.Format("{0}{1}{2}", tableWithPageable.ToHtmlString(), CreateTemplate(), divPagingContainer.ToString()));
+            var selectPageSizes = this._htmlHelper.DropDownList("PageSize", new SelectList(_pageSizesArray ?? new int[] { 5, 10, 50, 100 }), null,
+                _htmlHelper.When(JqueryBind.Change)
+                    .Direct()
+                    .OnSuccess(dsl =>
+                    {
+                        dsl.Self().Core().Store.Hash.Insert();
+                        dsl.Self().Core().Store.Hash.Manipulate(manipulateDsl => manipulateDsl.Set("Page", 1));
+                    })
+                    .AsHtmlAttributes(new { style = "width: 50px;", id = pageSizesSelect }));
+
+            return new MvcHtmlString(string.Format("{0}{1}{2}{3}", 
+                                                                    tableWithPageable.ToHtmlString(), 
+                                                                    CreateTemplate(), 
+                                                                    divPagingContainer.ToString(), 
+                                                                    _showPageSizes ? selectPageSizes.ToString() : ""));
         }
 
         private StringBuilder CreateTemplate()
@@ -461,9 +501,9 @@ namespace Grid
             return sb;
         }
 
-        string NoRecordsTemplateDefault()
+        string NoRecordsDefault()
         {
-            NoRecordsTemplate(GridOptions.Default.NoRecordsText);
+            NoRecords(GridOptions.Default.NoRecordsText);
             return this.noRecordsTemplate;
         }
 
@@ -476,25 +516,25 @@ namespace Grid
                 AddColumn(new Column<T>(propInfo.Name)
                 {
                     Expression = propInfo.Name,
-                    ColumnWidth = attrs != null ? 
+                    ColumnWidth = attrs != null ?
                                   attrs.Width == 0 ? String.Empty : attrs.Width.ToString() :
                                   String.Empty,
-                   
+
                     ColumnWidthPct = attrs != null ?
                                      attrs.WidthPct == 0 ? String.Empty : attrs.WidthPct.ToString() :
                                      String.Empty,
 
                     IsRaw = attrs != null && attrs.Raw,
                     IsVisible = attrs == null || !attrs.Hide,
-                    Name = attrs != null ? 
+                    Name = attrs != null ?
                            attrs.Title ?? propInfo.Name :
                            propInfo.Name,
 
                     SortBy = attrs != null ? attrs.SortBy : null,
                     SortDefault = attrs != null && attrs.SortDefault
-                });     
+                });
             }
-                 
+
         }
 
         MvcHtmlString SortArrow(Action<SortArrowSetting> action)
@@ -563,6 +603,26 @@ namespace Grid
         public void AddColumn(Column<T> column)
         {
             this._сolumnList.Add(column);
+        }
+
+        public void SetItemsCount(bool showItemsCount)
+        {
+            _showItemsCount = showItemsCount;
+        }
+
+        public void SetPageSizes(bool showPageSizes)
+        {
+            _showPageSizes = showPageSizes;
+        }
+
+        public void SetPageSizesArray(params int[] pageSizesArray)
+        {
+            _pageSizesArray = pageSizesArray;
+        }
+
+        public void SetButtonCount(int count)
+        {
+            _buttonCount = count;
         }
 
         public string ToHtmlString()

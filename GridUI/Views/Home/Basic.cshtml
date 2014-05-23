@@ -1,0 +1,126 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Basic";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+
+        <h1>Bound</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          column.Bound(r => r.Price);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+                     
+                          column.Bound(r => r.Price);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>Template</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          column.Bound(r => r.Price);
+
+                          column.Template(@<text>
+                                               @(Html.When(JqueryBind.Click)
+                                                     .DoWithPreventDefault()
+                                                     .Direct()
+                                                     .OnSuccess(s => s.Utilities.Window.Alert(item.For(r => r.Date)))
+                                                     .AsHtmlAttributes()
+                                                     .ToLink(item.For(r => r.Date)))
+                                           </text>)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+                          column.Bound(r => r.Price);
+                          column.Template(<text>
+                                         Html.When(JqueryBind.Click)
+                                               .DoWithPreventDefault()
+                                               .Direct()
+                                               .OnSuccess(s => s.Utilities.Window.Alert(item.For(r => r.Date)))
+                                               .AsHtmlAttributes()
+                                               .ToLink(item.For(r => r.Date)))
+                                      </text>)
+                                 .Title("Date of made")
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+        <h1>AutoBind</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridClass(BootstrapTable.Striped)
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                     Html.Grid<productvm>()                
+                         .GridClass(BootstrapTable.Striped)
+                         .AjaxGet(Url.Action("GetProducts", "Home"))
+                    
+                    
+                    
+        [AutoBind(Hide = true)]
+        public string Id { get; set; }
+        [AutoBind(Title = "Product Name from attr")]
+        public string Name { get; set; }
+        [AutoBind(Width = 100, SortBy = GetProductsQuery.SortType.Price, SortDefault = true)]
+        public string Price { get; set; }
+        [AutoBind(Title = "Date of made from attr", SortBy = GetProductsQuery.SortType.Date)]
+        public string Date { get; set; }
+        [AutoBind(Raw = true, WidthPct = 35)]
+        public string Comment { get; set; }
+                </pre>
+        </div>
+    </div>
+</div>
