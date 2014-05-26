@@ -74,6 +74,8 @@ namespace Grid
 
         IDictionary<string, object> HeaderRowAttributes;
 
+        IDictionary<string, object> NextRowRowAttributes;
+
         Func<ITemplateSyntax<T>, HelperResult> RowTemplateAttributes;
 
         readonly List<Column<T>> _сolumnList = new List<Column<T>>();
@@ -171,6 +173,20 @@ namespace Grid
 
         //end for thead tr
 
+
+        //for nextrow
+        public IGridBuilder<T> NextRowHtmlAttr(RouteValueDictionary htmlAttributes)
+        {
+            this.NextRowRowAttributes = htmlAttributes;
+            return this;
+        }
+
+        public IGridBuilder<T> NextRowHtmlAttr(object htmlAttributes)
+        {
+            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+        }
+
+        //end for nextrow
 
         public IGridBuilder<T> AjaxGet(string actionString)
         {
@@ -446,6 +462,17 @@ namespace Grid
                             foreach (var row in this.rowList)
                             {
                                 var trNext = new TagBuilder("tr");
+
+                                if (this.NextRowRowAttributes != null)
+                                {
+                                    foreach (var att in this.NextRowRowAttributes)
+                                    {
+                                        if (att.Key == "class")
+                                            trNext.AddCssClass(att.Value.ToString());
+                                    }
+                                    trNext.MergeAttributes(this.NextRowRowAttributes);
+                                }
+
                                 if (this.RowAttributes != null)
                                 {
                                     foreach (var att in this.RowAttributes)
@@ -455,10 +482,13 @@ namespace Grid
                                     }
                                     trNext.MergeAttributes(this.RowAttributes);
                                 }
+
                                 if (this.RowTemplateAttributes != null)
                                     trNext.AddCssClass(this.RowTemplateAttributes.Invoke(each).ToString());
 
-                                trNext.InnerHtml = row.Content.Invoke(each).ToString();
+                               
+
+                                trNext.InnerHtml += row.Content.Invoke(each).ToString();
                                 tbody.InnerHtml += trNext.ToString();
                             }
                         }

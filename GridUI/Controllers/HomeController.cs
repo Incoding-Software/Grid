@@ -29,6 +29,11 @@ namespace GridUI.Controllers
             return View("Sorting");
         }
 
+        public ActionResult Hierarchy()
+        {
+            return View("Hierarchy");
+        }
+
         public ActionResult New()
         {
             return View("New");
@@ -44,11 +49,17 @@ namespace GridUI.Controllers
             return View("GridOptions");
         }
 
+        public ActionResult SubTableTemplate()
+        {
+            return IncPartialView("SubTableTemplate");
+        }
+
         public ActionResult GetProducts(GetProductsQuery query)
         {
             var products = this.dispatcher.Query(query);
             return IncJson(products);
         }
+
 
         public ActionResult GetProductsWithPaging(GetProductsPagingQuery query)
         {

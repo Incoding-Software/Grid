@@ -1,4 +1,5 @@
-﻿using Grid.Attributes;
+﻿using System;
+using Grid.Attributes;
 using GridUI.Persistance;
 using GridUI.Queries;
 
@@ -16,7 +17,7 @@ namespace GridUI.Models
 
         public ProductVm(Product product)
         {
-            Id = product.Id.ToString();
+            Id = product.Id;
             Name = product.Name;
             Price = product.Price.ToString();
             Date = product.Date.ToShortDateString();
@@ -30,7 +31,7 @@ namespace GridUI.Models
         #region Properties
 
         [AutoBind(Hide = true)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [AutoBind(Title = "Product Name")]
         public string Name { get; set; }

@@ -20,6 +20,8 @@ namespace Grid.Interfaces
         IGridBuilder<T> HeadHtmlAttr(RouteValueDictionary htmlAttributes);
         IGridBuilder<T> HeadHtmlAttr(object htmlAttributes);
         IGridBuilder<T> HeadHtmlAttr(BootstrapClass htmlAttributes);
+        IGridBuilder<T> NextRowHtmlAttr(RouteValueDictionary htmlAttributes);
+        IGridBuilder<T> NextRowHtmlAttr(object htmlAttributes);
         IGridBuilder<T> AjaxGet(string actionString);
         IGridBuilder<T> Sortable();
         IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action);

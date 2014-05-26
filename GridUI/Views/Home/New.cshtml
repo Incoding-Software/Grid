@@ -2,6 +2,7 @@
 @using Grid.Paging
 @using Grid.Styles
 @using GridUI.Models
+@using GridUI.Queries
 @using Incoding.Extensions
 @using Incoding.MvcContrib
 @{
@@ -15,13 +16,37 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Pageable options</h1>
+            <h1>Hierarchy</h1>
 
             <div class="example">
                 @(Html.Grid<ProductVm>()
                       .GridClass(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
+                          column.Template(@<text>
+                                               @(Html.When(JqueryBind.Click)
+                                                     .Direct()
+                                                     .OnSuccess(dsl =>
+                                                     {
+                                                         var subTableId = "sub-table" + item.For(i => i.Id);
+                                                         
+                                                         dsl.With(r => r.Id(subTableId)).Core().Trigger.Incoding()
+                                                             .If(builder => builder.Is(() => Selector.Jquery.Self().HasClass("glyphicon-plus")));
+                                                         
+                                                         dsl.With(selector => selector.Id(subTableId).Parent().Parent()).Core().JQuery.Attributes.ToggleClass("hide");
+
+                                                         dsl.With(selector => selector.Self()).Core().JQuery.Attributes.RemoveClass("glyphicon-minus glyphicon-plus");
+
+                                                         dsl.With(selector => selector.Self()).Core().JQuery.Attributes.AddClass("glyphicon-plus")
+                                                             .If(builder => builder.Is(() => Selector.Jquery.Id(subTableId).Parent().Parent().HasClass("hide")));
+                                                         dsl.With(selector => selector.Self()).Core().JQuery.Attributes.AddClass("glyphicon-minus")
+                                                             .If(builder => builder.Is(() => !Selector.Jquery.Id(subTableId).Parent().Parent().HasClass("hide")));
+                                                     })
+                                                     .AsHtmlAttributes(new { @class = "glyphicon-plus", id="control"+item.For(r => r.Id) })
+                                                     .ToI())
+                                           </text>)
+                                .Width(50);
+                
                           column.Bound(r => r.Name)
                                 .Title("Product Name")
                                 .Width(200);
@@ -33,28 +58,26 @@
                                 .Title("Date of made")
                                 .Width(150);
                       })
-                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
-                      .Pageable(dsl =>  dsl.ItemsCount(true)
-                                            .PageSizes(true)))
+                      .NextRow(@<text>
+                                    <td></td>
+                                    <td colspan="3">
+                                        @(Html.When(JqueryBind.None)
+                                              .DoWithPreventDefaultAndStopPropagation()
+                                              .AjaxGet(Url.Dispatcher().Query(new GetUsersByProductQuery() { ProductId = item.For(r => r.Id) }).AsJson())
+                                              .OnSuccess(dsl =>
+                                              {
+                                                  dsl.Self().Core().Insert.WithTemplate(Selector.Incoding.AjaxGet(Url.Action("SubTableTemplate"))).Html(); 
+                                              })
+                                              .AsHtmlAttributes(new { id = "sub-table" + item.For(r => r.Id) })
+                                              .ToTag(HtmlTag.Div))
+                                    </td>
+                                </text>)
+                      .NextRowHtmlAttr(new { @class="hide" })             
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
             </div>
             <div class="sourceCode">
                 <pre>
-                      Html.Grid<productvm>()
-                      .GridClass(BootstrapTable.Bordered)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                                .Title("Product Name")
-                                .Width(200);
-                          column.Bound(r => r.Price)
-                                .Width(200);
-                          column.Bound(r => r.Date)
-                                .Title("Date of made")
-                                .Width(150);
-                      })
-                      .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
-                      .Pageable(dsl => dsl.ItemsCount(true)
-                                          .PageSizes(true))
+                      
                 </pre>
             </div>
          </div>

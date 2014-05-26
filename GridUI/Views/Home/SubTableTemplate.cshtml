@@ -1,0 +1,23 @@
+﻿@using GridUI.Models
+@using Incoding.MvcContrib
+
+@using (var template = Html.Incoding().Template<UserVm>())
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @using (var each = template.ForEach())
+            {
+                <tr>
+                    <td>@each.For(r => r.FirstName)</td>
+                    <td>@each.For(r => r.LastName)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
