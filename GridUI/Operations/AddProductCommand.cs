@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using GridUI.Persistance;
 using Incoding.CQRS;
+using NHibernate.Mapping;
 
 namespace GridUI.Operations
 {
@@ -22,6 +24,8 @@ namespace GridUI.Operations
 
         public bool IsSoldOut { get; set; }
 
+        public List<User> Users { get; set; }
+
         #endregion
 
         public override void Execute()
@@ -31,6 +35,7 @@ namespace GridUI.Operations
             product.Price = Price;
             product.Date = Date;
             product.IsSoldOut = IsSoldOut;
+            product.Users = Users;
             Repository.Save(product);
         }
     }

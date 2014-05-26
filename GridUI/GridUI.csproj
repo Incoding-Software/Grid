@@ -150,6 +150,7 @@
     <Compile Include="Models\ProductVm.cs" />
     <Compile Include="Models\UserVm.cs" />
     <Compile Include="Operations\AddProductCommand.cs" />
+    <Compile Include="Operations\AddUserCommand.cs" />
     <Compile Include="Persistance\Product.cs" />
     <Compile Include="Persistance\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
