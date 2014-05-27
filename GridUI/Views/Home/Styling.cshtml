@@ -207,5 +207,49 @@
                       .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
         </div>
+        
+        
+        <h1>NextRowHtmlAttr</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name");
+
+                      column.Bound(r => r.Price);
+
+                      column.Bound(r => r.Date)
+                          .Title("Date of made");
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home"))
+                  .RowHtmlAttr(BootstrapClass.Success)
+                  .NextRow(@<text>
+                                <td style="width: 200px;"></td>
+                                <td colspan="2">Notes: @item.ForRaw(r => r.Comment)</td>
+                            </text>)
+                  .NextRowHtmlAttr(BootstrapClass.Warning))
+        </div>
+        <div class="sourceCode">
+            <pre>
+            Html.Grid<ProductVm>()
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name");
+                      column.Bound(r => r.Price);
+                      column.Bound(r => r.Date)
+                          .Title("Date of made");
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home"))
+                  .RowHtmlAttr(BootstrapClass.Success)
+                  .NextRow(<text>
+                            <td style="width: 200px;"></td>
+                            <td colspan="2">Notes: item.ForRaw(r => r.Comment)</td>
+                           </text>)
+                  .NextRowHtmlAttr(BootstrapClass.Warning)
+            </pre>
+        </div>
     </div>
 </div>

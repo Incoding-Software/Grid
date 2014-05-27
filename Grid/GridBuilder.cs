@@ -186,6 +186,11 @@ namespace Grid
             return NextRowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
+        public IGridBuilder<T> NextRowHtmlAttr(BootstrapClass htmlAttributes)
+        {
+            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+        }
+
         //end for nextrow
 
         public IGridBuilder<T> AjaxGet(string actionString)
