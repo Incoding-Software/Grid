@@ -4,6 +4,10 @@
     margin-bottom: 0;
 }
 
+.inc-grid .table:nth-child(even) {
+    min-height: 100px;
+}
+
 .inc-grid .table td {
     overflow: hidden;
     -moz-text-overflow: ellipsis;
@@ -40,3 +44,4 @@
 .inc-grid .table-striped  > tbody:nth-child(odd)  {
     background-color: #f9f9f9;
 }
+

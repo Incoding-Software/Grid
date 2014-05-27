@@ -1,4 +1,14 @@
-﻿
+﻿@using JetBrains.Annotations
+
+@helper IsActive([AspMvcController]string controller, [AspMvcAction]string action = null)
+{
+    if (ViewContext.RouteData.Values["controller"].ToString().ToLower() == controller.ToLower()
+        && action != null && ViewContext.RouteData.Values["action"].ToString().ToLower() == action.ToLower())
+    {
+        @:active
+    }
+}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,13 +49,13 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="@Url.Action("Basic", "Home")">Basic</a></li>
-                        <li><a href="@Url.Action("Styling", "Home")">Styling</a></li>
-                        <li><a href="@Url.Action("ColumnOptions", "Home")">Column Options</a></li>
-                        <li><a href="@Url.Action("Sorting", "Home")">Sorting</a></li>
-                        <li><a href="@Url.Action("Paging", "Home")">Paging</a></li>
-                        <li><a href="@Url.Action("GridOptions", "Home")">Grid Options</a></li>
-                        <li><a href="@Url.Action("Hierarchy", "Home")">Hierarchy</a></li>
+                        <li class="@IsActive("Home", "Basic")"><a href="@Url.Action("Basic", "Home")">Basic</a></li>
+                        <li class="@IsActive("Home", "Styling")"><a href="@Url.Action("Styling", "Home")">Styling</a></li>
+                        <li class="@IsActive("Home", "ColumnOptions")"><a href="@Url.Action("ColumnOptions", "Home")">Column Options</a></li>
+                        <li class="@IsActive("Home", "Sorting")"><a href="@Url.Action("Sorting", "Home")">Sorting</a></li>
+                        <li class="@IsActive("Home", "Paging")"><a href="@Url.Action("Paging", "Home")">Paging</a></li>
+                        <li class="@IsActive("Home", "GridOptions")"><a href="@Url.Action("GridOptions", "Home")">Grid Options</a></li>
+                        <li class="@IsActive("Home", "Hierarchy")"><a href="@Url.Action("Hierarchy", "Home")">Hierarchy</a></li>
                     </ul>
                 </div>
             </div>

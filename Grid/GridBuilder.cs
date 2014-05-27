@@ -100,20 +100,20 @@ namespace Grid
 
         #region Api Methods
 
-        public IGridBuilder<T> GridClass(string @class)
+        public IGridBuilder<T> GridCssStyling(string @class)
         {
             this.gridClass = @class;
             return this;
         }
 
-        public IGridBuilder<T> GridClass(BootstrapTable @class)
+        public IGridBuilder<T> GridCssStyling(BootstrapTable @class)
         {
             var classes = Enum.GetValues(typeof(BootstrapTable))
                 .Cast<BootstrapTable>()
                 .Where(r => @class.HasFlag(r))
                 .Select(r => r.ToLocalization())
                 .AsString(" ");
-            return GridClass(classes);
+            return GridCssStyling(classes);
         }
 
         public IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction)

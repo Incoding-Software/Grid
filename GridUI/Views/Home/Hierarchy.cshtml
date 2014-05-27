@@ -17,7 +17,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                  .GridClass(BootstrapTable.Bordered)
+                  .GridCssStyling(BootstrapTable.Bordered)
                   .Columns(column =>
                   {
                       column.Template(@<text>

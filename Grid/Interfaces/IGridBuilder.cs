@@ -9,8 +9,8 @@ namespace Grid.Interfaces
 {
     public interface IGridBuilder<T> where T : class
     {
-        IGridBuilder<T> GridClass(string @class);
-        IGridBuilder<T> GridClass(BootstrapTable @class);
+        IGridBuilder<T> GridCssStyling(string @class);
+        IGridBuilder<T> GridCssStyling(BootstrapTable @class);
         IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction);
         IGridBuilder<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content);
         IGridBuilder<T> RowHtmlAttr(Func<ITemplateSyntax<T>, HelperResult> template);

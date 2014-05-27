@@ -24,7 +24,7 @@
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                              .Title("Product Name").Width(165);
 
                           column.Bound(r => r.Price);
 
@@ -99,13 +99,13 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                      .GridClass(BootstrapTable.Striped)
+                      .GridCssStyling(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
             <pre>
                      Html.Grid<productvm>()                
-                         .GridClass(BootstrapTable.Striped)
+                         .GridCssStyling(BootstrapTable.Striped)
                          .AjaxGet(Url.Action("GetProducts", "Home"))
                     
                     
@@ -122,5 +122,6 @@
         public string Comment { get; set; }
                 </pre>
         </div>
+        
     </div>
 </div>
