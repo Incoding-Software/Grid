@@ -44,57 +44,41 @@ namespace Grid
 
         readonly HtmlHelper _htmlHelper;
 
-        string contentTable = "contentTable_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _contentTable = "contentTable_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string templateId = "templateId_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _templateId = "templateId_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string pagingTemplateId = "pagingTemplateId_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _pagingTemplateId = "pagingTemplateId_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string noRecords = "noRecords_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _noRecords = "noRecords_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string sortBySelector = "sortBySelector_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _sortBySelector = "sortBySelector_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string descSelector = "descSelector_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _descSelector = "descSelector_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string pagingContainer = "pagingContainer_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _pagingContainer = "pagingContainer_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string pageSizesSelect = "pageSizesSelect_" + Guid.NewGuid().ToString().Substring(0, 5);
+        string _pageSizesSelect = "pageSizesSelect_" + Guid.NewGuid().ToString().Substring(0, 5);
 
-        string gridClass;
+        string _noRecordsTemplate, _ajaxGetAction, _gridClass;
 
-        string idMainDiv;
+        bool _isPageable, _isScrolling, _showItemsCount, _showPageSizes;
 
-        string noRecordsTemplate;
-
-        string arrowsType;
-
-        bool isPageable;
-
-        IDictionary<string, object> RowAttributes;
-
-        IDictionary<string, object> HeaderRowAttributes;
-
-        IDictionary<string, object> NextRowRowAttributes;
+        IDictionary<string, object> RowAttributes, HeaderRowAttributes, NextRowRowAttributes;
 
         Func<ITemplateSyntax<T>, HelperResult> RowTemplateAttributes;
 
         readonly List<Column<T>> _сolumnList = new List<Column<T>>();
 
-        List<Row<T>> rowList = new List<Row<T>>();
+        readonly List<Row<T>> _rowList = new List<Row<T>>();
 
-        string ajaxGetAction;
+        Selector _customPagingTemplate;
 
-        Selector customPagingTemplate;
-
-        Action<IIncodingMetaLanguageCallbackBodyDsl> onBindAction = dsl => { };
-
-        bool _showItemsCount;
-
-        bool _showPageSizes;
+        Action<IIncodingMetaLanguageCallbackBodyDsl> _onBindAction = dsl => { };
 
         int[] _pageSizesArray;
 
-        int _buttonCount = 5;
+        int _buttonCount = 5, _contentTableHeight;
 
         #endregion
 
@@ -102,7 +86,7 @@ namespace Grid
 
         public IGridBuilder<T> GridCssStyling(string @class)
         {
-            this.gridClass = @class;
+            this._gridClass = @class;
             return this;
         }
 
@@ -124,7 +108,14 @@ namespace Grid
 
         public IGridBuilder<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content)
         {
-            this.rowList.Add(new Row<T>(content));
+            this._rowList.Add(new Row<T>(content));
+            return this;
+        }
+
+        public IGridBuilder<T> Scrolling(int height)
+        {
+            this._isScrolling = true;
+            this._contentTableHeight = height;
             return this;
         }
 
@@ -195,10 +186,10 @@ namespace Grid
 
         public IGridBuilder<T> AjaxGet(string actionString)
         {
-            this.ajaxGetAction = actionString.AppendToQueryString(new
+            this._ajaxGetAction = actionString.AppendToQueryString(new
                                                      {
-                                                         Desc = Selector.Jquery.Name(this.descSelector),
-                                                         SortBy = Selector.Jquery.Name(this.sortBySelector)
+                                                         Desc = Selector.Jquery.Name(this._descSelector),
+                                                         SortBy = Selector.Jquery.Name(this._sortBySelector)
                                                      });
             return this;
         }
@@ -217,14 +208,14 @@ namespace Grid
 
         public IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
         {
-            this.onBindAction = action;
+            this._onBindAction = action;
             return this;
         }
 
         public IGridBuilder<T> NoRecords(string text)
         {
             var div = new TagBuilder("div");
-            div.GenerateId(this.noRecords);
+            div.GenerateId(this._noRecords);
             div.Attributes.Add("style", "display: none;");
             var table = new TagBuilder("table");
             var tbody = new TagBuilder("tbody");
@@ -236,19 +227,19 @@ namespace Grid
             table.InnerHtml = tbody.ToString();
             div.InnerHtml = table.ToString();
 
-            this.noRecordsTemplate = div.ToString();
+            this._noRecordsTemplate = div.ToString();
             return this;
         }
 
         public IGridBuilder<T> Pageable()
         {
-            this.isPageable = true;
+            this._isPageable = true;
             return this;
         }
 
         public IGridBuilder<T> Pageable(Selector customPagingTemplate)
         {
-            this.customPagingTemplate = customPagingTemplate;
+            this._customPagingTemplate = customPagingTemplate;
             return Pageable();
         }
 
@@ -269,8 +260,8 @@ namespace Grid
             divMain.AddCssClass("inc-grid");
 
             var table = new TagBuilder("table");
-            if (!string.IsNullOrWhiteSpace(this.gridClass))
-                table.AddCssClass(this.gridClass);
+            if (!string.IsNullOrWhiteSpace(this._gridClass))
+                table.AddCssClass(this._gridClass);
             table.AddCssClass("table");
 
 
@@ -287,17 +278,17 @@ namespace Grid
             table.InnerHtml = thead.ToString();
             divMain.InnerHtml = table.ToString();
 
-            if (isPageable)
+            if (_isPageable)
                 divMain.InnerHtml += AddPageableTemplate();
             else
                 divMain.InnerHtml += AddTemplate();
 
-            divMain.InnerHtml += this.noRecordsTemplate ?? this.NoRecordsDefault();
+            divMain.InnerHtml += this._noRecordsTemplate ?? this.NoRecordsDefault();
 
             if (this._сolumnList.Any(r => r.SortBy != null))
             {
-                divMain.InnerHtml += this._htmlHelper.Hidden(this.sortBySelector, "");
-                divMain.InnerHtml += this._htmlHelper.CheckBox(this.descSelector, true, new { style = "display: none;" });
+                divMain.InnerHtml += this._htmlHelper.Hidden(this._sortBySelector, "");
+                divMain.InnerHtml += this._htmlHelper.CheckBox(this._descSelector, true, new { style = "display: none;" });
             }
 
             return new MvcHtmlString(divMain.ToString());
@@ -315,7 +306,7 @@ namespace Grid
                 var link = SortArrow(setting =>
                 {
                     setting.Content = column.Name;
-                    setting.TargetId = this.contentTable;
+                    setting.TargetId = this._contentTable;
                     setting.By = column.SortBy;
                     setting.SortDefault = column.SortDefault;
                 });
@@ -346,49 +337,58 @@ namespace Grid
         {
             var table = this._htmlHelper.When(JqueryBind.InitIncoding)
                     .DoWithPreventDefaultAndStopPropagation()
-                    .AjaxGet(this.ajaxGetAction)
+                    .AjaxGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
                     {                        
-                        dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
+                        dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
-                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
+                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this._noRecords).Text())
                                 .If(r => r.Data<List<T>>(data => data.IsEmpty()));
                     })
-                    .OnSuccess(onBindAction)
+                    .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this.contentTable, @class = "table " + gridClass })
+                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + _gridClass })
                     .ToTag(HtmlTag.Table);
 
-            return new MvcHtmlString(string.Format("{0}{1}", table.ToHtmlString(), CreateTemplate()));
+            var divContent = new TagBuilder("div");
+            divContent.AddCssClass("content-table");
+            if(this._isScrolling)
+                divContent.MergeAttribute("style", string.Format("height: {0}px; overflow: auto;", this._contentTableHeight));
+            divContent.InnerHtml = table.ToString();
+
+            return new MvcHtmlString(string.Format("{0}{1}", divContent, CreateTemplate()));
         }
 
         MvcHtmlString AddPageableTemplate()
         {
             var tableWithPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
                     .DoWithPreventDefaultAndStopPropagation()
-                    .AjaxHashGet(this.ajaxGetAction)
+                    .AjaxHashGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
                     {
                         dsl.Self().Core().Insert.For<PagingResult<T>>(result => result.Items)
-                                .WithTemplate(Selector.Jquery.Id(this.templateId)).Html();
+                                .WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
-                        dsl.With(selector => selector.Id(pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
-                                .WithTemplate(customPagingTemplate ?? Selector.Jquery.Id(this.pagingTemplateId)).Html();
+                        dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
+                                .WithTemplate(_customPagingTemplate ?? Selector.Jquery.Id(this._pagingTemplateId)).Html();
 
-                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this.noRecords).Text())
+                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this._noRecords).Text())
                                 .If(r => r.Data<List<T>>(data => data.IsEmpty()));
 
                         if (_showItemsCount)
-                            dsl.With(selector => selector.Id(pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
+                            dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
                     })
-                    .OnSuccess(onBindAction)
+                    .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this.contentTable, @class = "table " + gridClass })
+                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + _gridClass })
                     .ToTag(HtmlTag.Table);
 
+            var divContent = new TagBuilder("div");
+            divContent.AddCssClass("content-table");
+            divContent.InnerHtml = tableWithPageable.ToString();
 
             var divPagingContainer = new TagBuilder("div");
-            divPagingContainer.GenerateId(pagingContainer);
+            divPagingContainer.GenerateId(_pagingContainer);
             divPagingContainer.AddCssClass("pagination");
 
             var selectPageSizes = this._htmlHelper.DropDownList("PageSize", new SelectList(_pageSizesArray ?? new int[] { 5, 10, 50, 100 }), null,
@@ -399,10 +399,10 @@ namespace Grid
                         dsl.Self().Core().Store.Hash.Insert();
                         dsl.Self().Core().Store.Hash.Manipulate(manipulateDsl => manipulateDsl.Set("Page", 1));
                     })
-                    .AsHtmlAttributes(new { style = "width: 50px;", id = pageSizesSelect }));
+                    .AsHtmlAttributes(new { style = "width: 50px;", id = _pageSizesSelect }));
 
-            return new MvcHtmlString(string.Format("{0}{1}{2}{3}", 
-                                                                    tableWithPageable.ToHtmlString(), 
+            return new MvcHtmlString(string.Format("{0}{1}{2}{3}",
+                                                                    divContent, 
                                                                     CreateTemplate(), 
                                                                     divPagingContainer.ToString(), 
                                                                     _showPageSizes ? selectPageSizes.ToString() : ""));
@@ -419,7 +419,7 @@ namespace Grid
                 }, new ViewPage());
 
                 //create template
-                using (var template = writerHtmlHelper.Incoding().ScriptTemplate<T>(this.templateId))
+                using (var template = writerHtmlHelper.Incoding().ScriptTemplate<T>(this._templateId))
                 {
                     using (var each = template.ForEach())
                     {
@@ -462,9 +462,9 @@ namespace Grid
 
                         tbody.InnerHtml += tr.ToString();
 
-                        if (this.rowList.Count > 0)
+                        if (this._rowList.Count > 0)
                         {
-                            foreach (var row in this.rowList)
+                            foreach (var row in this._rowList)
                             {
                                 var trNext = new TagBuilder("tr");
 
@@ -502,9 +502,9 @@ namespace Grid
                 }
                 //end create template
 
-                if (isPageable && customPagingTemplate == null)
+                if (_isPageable && _customPagingTemplate == null)
                 {
-                    using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this.pagingTemplateId))
+                    using (var template = writerHtmlHelper.Incoding().ScriptTemplate<PagingModel>(this._pagingTemplateId))
                     {
                         sb.Append("<ul class=\"pagination\">");
                         using (var each = template.ForEach())
@@ -539,7 +539,7 @@ namespace Grid
         string NoRecordsDefault()
         {
             NoRecords(GridOptions.Default.NoRecordsText);
-            return this.noRecordsTemplate;
+            return this._noRecordsTemplate;
         }
 
         private void AutoBind()
@@ -582,8 +582,8 @@ namespace Grid
                     .Direct()
                     .OnSuccess(dsl =>
                     {
-                        dsl.With(selector => selector.Name(this.sortBySelector)).Core().JQuery.Attributes.Val(setting.By);
-                        dsl.With(selector => selector.Name(this.descSelector)).Core().Trigger.Invoke(JqueryBind.Click);
+                        dsl.With(selector => selector.Name(this._sortBySelector)).Core().JQuery.Attributes.Val(setting.By);
+                        dsl.With(selector => selector.Name(this._descSelector)).Core().Trigger.Invoke(JqueryBind.Click);
                         dsl.With(selector => selector.Class("sort-arrow")).Core().Trigger.Incoding();
                         dsl.With(selector => selector.Id(setting.TargetId)).Core().Trigger.Incoding();
                     })
@@ -608,24 +608,24 @@ namespace Grid
                         dsl.Self().Core().JQuery.Attributes.AddClass("hide");
                         dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
                                 .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
+                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString())
                                         .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
+                                        .Is(() => Selector.Jquery.Name(this._descSelector) == desc)
                                 );
 
                         dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
                                 .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == "")
+                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == "")
                                         .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) == desc)
+                                        .Is(() => Selector.Jquery.Name(this._descSelector) == desc)
                                         .And
                                         .Is(() => sortDefault == true));
 
                         dsl.Self().Core().JQuery.Attributes.AddClass("hide")
                                 .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this.sortBySelector) == sort.ToString())
+                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString())
                                         .And
-                                        .Is(() => Selector.Jquery.Name(this.descSelector) != desc)
+                                        .Is(() => Selector.Jquery.Name(this._descSelector) != desc)
                                 );
                     })
                                 .AsHtmlAttributes(new { @class = arrowsBootstrap + " sort-arrow hide" })

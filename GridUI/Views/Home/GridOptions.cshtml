@@ -149,6 +149,42 @@
                     
                 </pre>
         </div>
+        
+      
+        <h1>Scrolling</h1>
+        
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(300);
+
+                          column.Bound(r => r.Price).Width(300);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .Scrolling(200))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                 Html.Grid<ProductVm>()
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(300);
+                          column.Bound(r => r.Price).Width(300);
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .Scrolling(200)
+            </pre>
+        </div>
 
 
         <h1>IsInline And NotInline</h1>

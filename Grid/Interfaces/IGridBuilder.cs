@@ -13,6 +13,7 @@ namespace Grid.Interfaces
         IGridBuilder<T> GridCssStyling(BootstrapTable @class);
         IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction);
         IGridBuilder<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content);
+        IGridBuilder<T> Scrolling(int height);
         IGridBuilder<T> RowHtmlAttr(Func<ITemplateSyntax<T>, HelperResult> template);
         IGridBuilder<T> RowHtmlAttr(RouteValueDictionary htmlAttributes);
         IGridBuilder<T> RowHtmlAttr(object htmlAttributes);
