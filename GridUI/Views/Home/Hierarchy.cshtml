@@ -17,6 +17,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                  .Name("HierarchyExample")
                   .GridCssStyling(BootstrapTable.Bordered)
                   .Columns(column =>
                   {

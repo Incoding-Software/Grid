@@ -21,6 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("TitleExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -53,22 +54,7 @@
                       .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
-            <pre>
-                      Html.Grid<productvm>()
-                      .GridCssStyling(BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                                .Title("Product Name")
-                                .WidthPct(50);
-                          column.Bound(r => r.Price)
-                                .WidthPct(20);
-                          column.Bound(r => r.Date)
-                                .Title("Date of made")
-                                .Visible(false);
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home"))
-                </pre>
+            
         </div>
 
 
@@ -76,6 +62,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("WidthExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -95,6 +82,7 @@
         <div class="sourceCode">
             <pre>
                     Html.Grid<productvm>()
+                      .Name("WidthExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -116,6 +104,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("WidthPctExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -134,6 +123,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("WidthPctExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -154,6 +144,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("VisibleExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -173,6 +164,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("VisibleExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -194,6 +186,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("RawExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -212,6 +205,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("RawExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {

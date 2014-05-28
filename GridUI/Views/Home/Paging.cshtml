@@ -21,6 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("PageableExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -41,6 +42,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("PageableExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -62,6 +64,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("CustomPageableExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -82,6 +85,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("CustomPageableExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -103,6 +107,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("PageSizeExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -123,6 +128,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("PageSizeExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -144,10 +150,11 @@
         </div>
         
         
-        <h1>Pageable options</h1>
+        <h1>Pageable Options</h1>
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("PageableOptionsExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {
@@ -169,6 +176,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("PageableOptionsExample")
                       .GridCssStyling(BootstrapTable.Bordered)
                       .Columns(column =>
                       {

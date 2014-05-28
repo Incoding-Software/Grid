@@ -80,6 +80,7 @@
     <Compile Include="GridParts\Row.cs" />
     <Compile Include="GridParts\SortArrowSetting.cs" />
     <Compile Include="Interfaces\IColumn.cs" />
+    <Compile Include="Interfaces\IGridBuilderOptions.cs" />
     <Compile Include="Interfaces\IPageableBuilder.cs" />
     <Compile Include="Interfaces\IColumnsBuilder.cs" />
     <Compile Include="Interfaces\IGridBuilder.cs" />

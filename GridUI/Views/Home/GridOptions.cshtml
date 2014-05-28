@@ -21,6 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("NoRecordsExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -41,6 +42,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("NoRecordsExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -62,6 +64,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("NoRecordsDefaultExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -81,6 +84,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("NoRecordsDefaultExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -106,6 +110,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("NextRowExample")
                       .GridCssStyling(BootstrapTable.Striped)
                       .Columns(column =>
                       {
@@ -129,6 +134,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("NextRowExample")
                       .GridCssStyling(BootstrapTable.Striped)
                       .Columns(column =>
                       {
@@ -155,6 +161,7 @@
         
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("ScrollingExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -172,6 +179,7 @@
         <div class="sourceCode">
             <pre>
                  Html.Grid<ProductVm>()
+                      .Name("ScrollingExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -191,6 +199,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("IsInlineExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -211,6 +220,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("IsInlineExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)

@@ -21,6 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("GridCssStylingExample")
                       .GridCssStyling(BootstrapTable.Bordered | BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -37,6 +38,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("GridCssStylingExample")
                       .GridCssStyling(BootstrapTable.Bordered | BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -55,6 +57,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("HeadHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
                       .Columns(column =>
@@ -72,6 +75,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("HeadHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success) //.HeadHtmlAttr("success")
                       .Columns(column =>
@@ -91,6 +95,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("RowHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
                       .Columns(column =>
@@ -109,6 +114,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("RowHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .HeadHtmlAttr(BootstrapClass.Success)
                       .Columns(column =>
@@ -129,6 +135,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("HeaderHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -148,6 +155,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("HeaderHtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -169,6 +177,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("HtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -190,6 +199,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("HtmlAttrExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -213,6 +223,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                  .Name("NextRowHtmlAttrExample")
                   .Columns(column =>
                   {
                       column.Bound(r => r.Name)
@@ -234,6 +245,7 @@
         <div class="sourceCode">
             <pre>
             Html.Grid<ProductVm>()
+                  .Name("NextRowHtmlAttrExample")
                   .Columns(column =>
                   {
                       column.Bound(r => r.Name)

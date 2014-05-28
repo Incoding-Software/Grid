@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +16,6 @@ using Grid.Interfaces;
 using Grid.Options;
 using Grid.Paging;
 using Grid.Styles;
-using Incoding.CQRS;
 using Incoding.Extensions;
 using Incoding.MvcContrib;
 
@@ -29,7 +27,7 @@ namespace Grid
 
     #endregion
 
-    public class GridBuilder<T> : IGridBuilder<T>, IHtmlString where T : class
+    public class GridBuilder<T> : IGridBuilder<T>, IGridBuilderOptions<T>, IHtmlString where T : class
     {
         #region Constructors
 
@@ -43,26 +41,14 @@ namespace Grid
         #region Fields
 
         readonly HtmlHelper _htmlHelper;
-
-        string _contentTable = "contentTable_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _templateId = "templateId_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _pagingTemplateId = "pagingTemplateId_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _noRecords = "noRecords_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _sortBySelector = "sortBySelector_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _descSelector = "descSelector_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _pagingContainer = "pagingContainer_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _pageSizesSelect = "pageSizesSelect_" + Guid.NewGuid().ToString().Substring(0, 5);
-
-        string _noRecordsTemplate, _ajaxGetAction, _gridClass;
+        
+        string _noRecordsTemplate, _ajaxGetAction, _gridClass, _templateId, _contentTable, _pagingTemplateId, _noRecords, _sortBySelector, _descSelector, _pagingContainer, _pageSizesSelect;
 
         bool _isPageable, _isScrolling, _showItemsCount, _showPageSizes;
+
+        int[] _pageSizesArray;
+
+        int _buttonCount = 5, _contentTableHeight;
 
         IDictionary<string, object> RowAttributes, HeaderRowAttributes, NextRowRowAttributes;
 
@@ -76,21 +62,33 @@ namespace Grid
 
         Action<IIncodingMetaLanguageCallbackBodyDsl> _onBindAction = dsl => { };
 
-        int[] _pageSizesArray;
-
-        int _buttonCount = 5, _contentTableHeight;
-
         #endregion
 
         #region Api Methods
 
-        public IGridBuilder<T> GridCssStyling(string @class)
+        public IGridBuilderOptions<T> Name(string name)
+        {
+            Func<string, string> SetName = (part) => "{0}-{1}".F(name, part);
+
+            this._templateId = SetName("template");
+            this._pagingTemplateId = SetName("pagingTemplateId");
+            this._contentTable = SetName("contentTable");
+            this._noRecords = SetName("noRecords");
+            this._sortBySelector = SetName("sortBySelector");
+            this._descSelector = SetName("descSelector");
+            this._pagingContainer = SetName("pagingContainer");
+            this._pageSizesSelect = SetName("pageSizesSelect");
+
+            return this;
+        }
+
+        public IGridBuilderOptions<T> GridCssStyling(string @class)
         {
             this._gridClass = @class;
             return this;
         }
 
-        public IGridBuilder<T> GridCssStyling(BootstrapTable @class)
+        public IGridBuilderOptions<T> GridCssStyling(BootstrapTable @class)
         {
             var classes = Enum.GetValues(typeof(BootstrapTable))
                 .Cast<BootstrapTable>()
@@ -100,19 +98,19 @@ namespace Grid
             return GridCssStyling(classes);
         }
 
-        public IGridBuilder<T> Columns(Action<ColumnsBuilder<T>> builderAction)
+        public IGridBuilderOptions<T> Columns(Action<ColumnsBuilder<T>> builderAction)
         {
             builderAction(new ColumnsBuilder<T>(this));
             return this;
         }
 
-        public IGridBuilder<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content)
+        public IGridBuilderOptions<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content)
         {
             this._rowList.Add(new Row<T>(content));
             return this;
         }
 
-        public IGridBuilder<T> Scrolling(int height)
+        public IGridBuilderOptions<T> Scrolling(int height)
         {
             this._isScrolling = true;
             this._contentTableHeight = height;
@@ -120,24 +118,24 @@ namespace Grid
         }
 
         //for tbody tr
-        public IGridBuilder<T> RowHtmlAttr(Func<ITemplateSyntax<T>, HelperResult> template)
+        public IGridBuilderOptions<T> RowHtmlAttr(Func<ITemplateSyntax<T>, HelperResult> template)
         {
             this.RowTemplateAttributes = template;
             return this;
         }
 
-        public IGridBuilder<T> RowHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> RowHtmlAttr(RouteValueDictionary htmlAttributes)
         {
             this.RowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilder<T> RowHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> RowHtmlAttr(object htmlAttributes)
         {
             return RowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilder<T> RowHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> RowHtmlAttr(BootstrapClass htmlAttributes)
         {
             return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
         }
@@ -146,18 +144,18 @@ namespace Grid
 
 
         //for thead tr
-        public IGridBuilder<T> HeadHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> HeadHtmlAttr(RouteValueDictionary htmlAttributes)
         {
             this.HeaderRowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilder<T> HeadHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> HeadHtmlAttr(object htmlAttributes)
         {
             return HeadHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilder<T> HeadHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> HeadHtmlAttr(BootstrapClass htmlAttributes)
         {
             return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
         }
@@ -166,25 +164,25 @@ namespace Grid
 
 
         //for nextrow
-        public IGridBuilder<T> NextRowHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> NextRowHtmlAttr(RouteValueDictionary htmlAttributes)
         {
             this.NextRowRowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilder<T> NextRowHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> NextRowHtmlAttr(object htmlAttributes)
         {
             return NextRowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilder<T> NextRowHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> NextRowHtmlAttr(BootstrapClass htmlAttributes)
         {
             return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
         }
 
         //end for nextrow
 
-        public IGridBuilder<T> AjaxGet(string actionString)
+        public IGridBuilderOptions<T> AjaxGet(string actionString)
         {
             this._ajaxGetAction = actionString.AppendToQueryString(new
                                                      {
@@ -194,7 +192,7 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilder<T> Sortable()
+        public IGridBuilderOptions<T> Sortable()
         {
             if (_сolumnList.Any())
             {
@@ -206,13 +204,13 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilder<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
+        public IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
         {
             this._onBindAction = action;
             return this;
         }
 
-        public IGridBuilder<T> NoRecords(string text)
+        public IGridBuilderOptions<T> NoRecords(string text)
         {
             var div = new TagBuilder("div");
             div.GenerateId(this._noRecords);
@@ -231,19 +229,19 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilder<T> Pageable()
+        public IGridBuilderOptions<T> Pageable()
         {
             this._isPageable = true;
             return this;
         }
 
-        public IGridBuilder<T> Pageable(Selector customPagingTemplate)
+        public IGridBuilderOptions<T> Pageable(Selector customPagingTemplate)
         {
             this._customPagingTemplate = customPagingTemplate;
             return Pageable();
         }
 
-        public IGridBuilder<T> Pageable(Action<PageableBuilder<T>> builderAction)
+        public IGridBuilderOptions<T> Pageable(Action<PageableBuilder<T>> builderAction)
         {
             builderAction(new PageableBuilder<T>(this));
             return Pageable();
@@ -325,7 +323,7 @@ namespace Grid
                 th.MergeAttributes(attributes, true);
 
             if (!String.IsNullOrWhiteSpace(thWidth) && (attributes == null || !attributes.ContainsKey("style")))
-                th.MergeAttribute("style", String.Format("width:{0}{1};", thWidth, String.IsNullOrWhiteSpace(column.ColumnWidthPct) ? "px" : "%"));
+                th.MergeAttribute("style", "width:{0}{1};".F(thWidth, String.IsNullOrWhiteSpace(column.ColumnWidthPct) ? "px" : "%"));
 
             if (!column.IsVisible)
                 th.AddCssClass("hide");
@@ -353,10 +351,10 @@ namespace Grid
             var divContent = new TagBuilder("div");
             divContent.AddCssClass("content-table");
             if(this._isScrolling)
-                divContent.MergeAttribute("style", string.Format("height: {0}px; overflow: auto;", this._contentTableHeight));
+                divContent.MergeAttribute("style", "height: {0}px; overflow: auto;".F(this._contentTableHeight));
             divContent.InnerHtml = table.ToString();
 
-            return new MvcHtmlString(string.Format("{0}{1}", divContent, CreateTemplate()));
+            return new MvcHtmlString("{0}{1}".F(divContent, CreateTemplate()));
         }
 
         MvcHtmlString AddPageableTemplate()
@@ -401,11 +399,10 @@ namespace Grid
                     })
                     .AsHtmlAttributes(new { style = "width: 50px;", id = _pageSizesSelect }));
 
-            return new MvcHtmlString(string.Format("{0}{1}{2}{3}",
-                                                                    divContent, 
-                                                                    CreateTemplate(), 
-                                                                    divPagingContainer.ToString(), 
-                                                                    _showPageSizes ? selectPageSizes.ToString() : ""));
+            return new MvcHtmlString("{0}{1}{2}{3}".F(divContent, 
+                                                      CreateTemplate(), 
+                                                      divPagingContainer.ToString(), 
+                                                      _showPageSizes ? selectPageSizes.ToString() : ""));
         }
 
         private StringBuilder CreateTemplate()
@@ -452,7 +449,7 @@ namespace Grid
                                 td.MergeAttributes(column.ColumnAttributes);
 
                             if (!String.IsNullOrWhiteSpace(tdWidth) && (column.ColumnAttributes == null || !column.ColumnAttributes.ContainsKey("style")))
-                                td.MergeAttribute("style", String.Format("width:{0}{1};", tdWidth, String.IsNullOrWhiteSpace(column.ColumnWidthPct) ? "px" : "%"));
+                                td.MergeAttribute("style", "width:{0}{1};".F(tdWidth, String.IsNullOrWhiteSpace(column.ColumnWidthPct) ? "px" : "%"));
 
                             if (!column.IsVisible)
                                 td.AddCssClass("hide");
@@ -665,5 +662,4 @@ namespace Grid
             return Render().ToString();
         }
     }
-
 }

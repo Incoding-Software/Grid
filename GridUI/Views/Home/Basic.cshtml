@@ -21,21 +21,23 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                              .Title("Product Name").Width(165);
+                  .Name("BoundExample")
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name").Width(165);
 
-                          column.Bound(r => r.Price);
+                      column.Bound(r => r.Price);
 
-                          column.Bound(r => r.Date)
-                              .Title("Date of made");
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home")))
+                      column.Bound(r => r.Date)
+                          .Title("Date of made");
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("BoundExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -54,6 +56,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("TemplateExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -76,6 +79,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("TemplateExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -99,12 +103,14 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("AutoBindExample")
                       .GridCssStyling(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
             <pre>
-                     Html.Grid<productvm>()                
+                     Html.Grid<productvm>() 
+                         .Name("AutoBindExample")               
                          .GridCssStyling(BootstrapTable.Striped)
                          .AjaxGet(Url.Action("GetProducts", "Home"))
                     

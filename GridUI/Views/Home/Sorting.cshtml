@@ -21,6 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("ColumnSortableExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -42,6 +43,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("ColumnSortableExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -64,6 +66,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
+                      .Name("GridSortableExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -84,6 +87,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
+                      .Name("GridSortableExample")
                       .GridCssStyling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
