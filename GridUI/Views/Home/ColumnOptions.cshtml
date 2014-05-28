@@ -16,6 +16,61 @@
 
 <div class="container">
     <div class="row col-md-12" style="margin-top:50px;">
+        
+        <h1>Title</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .GridCssStyling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Template(@<text>
+                                               <input type="checkbox" />
+                                           </text>)
+                              .Title(@<text>
+                                          @(Html.When(JqueryBind.Click)
+                                                .Direct()
+                                                .OnSuccess(dsl =>
+                                                {
+                                                    dsl.With(r => r.Custom(":checkbox")).Core().JQuery.Attributes.SetAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => Selector.Jquery.Self()));
+                                                    dsl.With(r => r.Custom(":checkbox")).Core().JQuery.Attributes.RemoveAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => !Selector.Jquery.Self()));
+                                                })
+                                                .AsHtmlAttributes()
+                                                .ToCheckBox(false))
+                                      </text>)
+                              .Width(50);
+                              
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(30);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(30);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .GridCssStyling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(20);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
 
         <h1>Width</h1>
 

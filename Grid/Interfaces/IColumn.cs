@@ -15,6 +15,7 @@ namespace Grid.Interfaces
         IColumn<T> HtmlAttr(object htmlAttributes); 
         IColumn<T> HtmlAttr(BootstrapClass htmlAttributes);
         IColumn<T> Title(string title);
+        IColumn<T> Title(Func<object, HelperResult> title);
         IColumn<T> Width(int width);
         IColumn<T> WidthPct(int width);
         IColumn<T> Visible(bool visible);

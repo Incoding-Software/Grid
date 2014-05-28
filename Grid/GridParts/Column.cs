@@ -91,6 +91,12 @@ namespace Grid.GridParts
             return this;
         }
 
+        public IColumn<T> Title(Func<object, HelperResult> title)
+        {
+            this.Name = title.Invoke(null).ToHtmlString();
+            return this;
+        }
+
         public IColumn<T> Width(int width)
         {
             this.ColumnWidth = width.ToString();
