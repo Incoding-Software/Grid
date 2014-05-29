@@ -157,6 +157,7 @@
     <Compile Include="Queries\GetProductsPagingQuery.cs" />
     <Compile Include="Queries\GetProductsQuery.cs" />
     <Compile Include="Queries\GetUsersByProductQuery.cs" />
+    <Compile Include="CurrentSettings.cs" />
     <Compile Include="Setups\DataBaseSetup.cs" />
     <Compile Include="Setups\ProductsSetup.cs" />
     <Compile Include="Specifications\ProductOrderSpec.cs" />
