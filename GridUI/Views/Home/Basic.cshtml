@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="row col-md-12" style="margin-top:50px;">
-
+        
         <h1>Bound</h1>
 
         <div class="example">
@@ -25,7 +25,8 @@
                   .Columns(column =>
                   {
                       column.Bound(r => r.Name)
-                          .Title("Product Name").Width(165);
+                          .Title("Product Name")
+                          .Width(165);
 
                       column.Bound(r => r.Price);
 
@@ -100,7 +101,7 @@
         </div>
         
         <h1>AutoBind</h1>
-
+       
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Name("AutoBindExample")

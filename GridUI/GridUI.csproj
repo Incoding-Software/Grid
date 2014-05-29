@@ -169,12 +169,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\grid.css" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\images\sprites.png" />
-    <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\images\sprites.png" />
+    <Content Include="Content\livetemplate.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\snippets.zip" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\handlebars-1.1.2.js" />
@@ -204,7 +206,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Basic.cshtml" />
     <Content Include="Views\Shared\TemplatePaging.cshtml" />
-    <Content Include="Views\Home\New.cshtml" />
     <Content Include="Views\Home\Paging.cshtml" />
     <Content Include="Views\Home\Sorting.cshtml" />
     <Content Include="Views\Home\Styling.cshtml" />
@@ -212,9 +213,12 @@
     <Content Include="Views\Home\GridOptions.cshtml" />
     <Content Include="Views\Home\SubTableTemplate.cshtml" />
     <Content Include="Views\Home\Hierarchy.cshtml" />
+    <Content Include="Views\Home\New.cshtml" />
+    <Content Include="Views\Home\LiveTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

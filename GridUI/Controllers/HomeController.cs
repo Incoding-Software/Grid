@@ -34,6 +34,11 @@ namespace GridUI.Controllers
             return View("Hierarchy");
         }
 
+        public ActionResult LiveTemplate()
+        {
+            return View("LiveTemplate");
+        }
+
         public ActionResult New()
         {
             return View("New");

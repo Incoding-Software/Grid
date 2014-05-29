@@ -1,0 +1,26 @@
+﻿
+@using Grid.Extensions
+@using Grid.Styles
+@using GridUI.Models
+@using GridUI.Queries
+@using Incoding.Extensions
+@using Incoding.MvcContrib
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Live Template";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+        
+        <h1>Live Template</h1>
+        <div class="btn-toolbar">
+            <a href="@Url.Content("~/Content/snippets.zip")">Download C# ReSharper snippet</a>
+        </div>
+        <img src="@Url.Content("~/Content/livetemplate.png")" />
+    </div>
+</div>
