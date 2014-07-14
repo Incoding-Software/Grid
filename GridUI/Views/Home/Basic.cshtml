@@ -21,7 +21,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                  .Name("BoundExample")
+                  .Id("BoundExample")
                   .Columns(column =>
                   {
                       column.Bound(r => r.Name)
@@ -38,7 +38,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
-                      .Name("BoundExample")
+                      .Id("BoundExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -57,7 +57,7 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                      .Name("TemplateExample")
+                      .Id("TemplateExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -80,7 +80,7 @@
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
-                      .Name("TemplateExample")
+                      .Id("TemplateExample")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -104,14 +104,14 @@
        
         <div class="example">
             @(Html.Grid<ProductVm>()
-                      .Name("AutoBindExample")
+                      .Id("AutoBindExample")
                       .GridCssStyling(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
             <pre>
                      Html.Grid<productvm>() 
-                         .Name("AutoBindExample")               
+                         .Id("AutoBindExample")               
                          .GridCssStyling(BootstrapTable.Striped)
                          .AjaxGet(Url.Action("GetProducts", "Home"))
                     

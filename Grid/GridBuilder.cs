@@ -66,13 +66,13 @@ namespace Grid
 
         #region Api Methods
 
-        public IGridBuilderOptions<T> Name(string name)
+        public IGridBuilderOptions<T> Id(string gridId)
         {
-            Func<string, string> SetName = (part) => "{0}-{1}".F(name, part);
-
+            Func<string, string> SetName = (part) => "{0}-{1}".F(gridId, part);
+            
+            this._contentTable = gridId;
             this._templateId = SetName("template");
-            this._pagingTemplateId = SetName("pagingTemplateId");
-            this._contentTable = SetName("contentTable");
+            this._pagingTemplateId = SetName("pagingTemplateId");           
             this._noRecords = SetName("noRecords");
             this._sortBySelector = SetName("sortBySelector");
             this._descSelector = SetName("descSelector");
