@@ -22,7 +22,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("NoRecordsExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -43,7 +43,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("NoRecordsExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -65,7 +65,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("NoRecordsDefaultExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -85,7 +85,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("NoRecordsDefaultExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -111,7 +111,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("NextRowExample")
-                      .GridCssStyling(BootstrapTable.Striped)
+                      .Styling(BootstrapTable.Striped)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -135,7 +135,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("NextRowExample")
-                      .GridCssStyling(BootstrapTable.Striped)
+                      .Styling(BootstrapTable.Striped)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)

@@ -22,7 +22,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("ColumnSortableExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -44,7 +44,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("ColumnSortableExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -67,7 +67,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("GridSortableExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -88,7 +88,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("GridSortableExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)

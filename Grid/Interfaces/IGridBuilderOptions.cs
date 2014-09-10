@@ -9,8 +9,8 @@ namespace Grid.Interfaces
 {
     public interface IGridBuilderOptions<T> where T : class
     {
-        IGridBuilderOptions<T> GridCssStyling(string @class);
-        IGridBuilderOptions<T> GridCssStyling(BootstrapTable @class);
+        IGridBuilderOptions<T> Styling(string @class);
+        IGridBuilderOptions<T> Styling(BootstrapTable @class);
         IGridBuilderOptions<T> Columns(Action<ColumnsBuilder<T>> builderAction);
         IGridBuilderOptions<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content);
         IGridBuilderOptions<T> Scrolling(int height);

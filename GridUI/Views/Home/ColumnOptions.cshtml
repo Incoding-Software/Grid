@@ -22,7 +22,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("TitleExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Template(@<text>
@@ -63,7 +63,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("WidthExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -83,7 +83,7 @@
             <pre>
                     Html.Grid<productvm>()
                       .Id("WidthExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -105,7 +105,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("WidthPctExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -124,7 +124,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("WidthPctExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -145,7 +145,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("VisibleExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -165,7 +165,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("VisibleExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -187,7 +187,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("RawExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -206,7 +206,7 @@
             <pre>
                       Html.Grid<productvm>()
                       .Id("RawExample")
-                      .GridCssStyling(BootstrapTable.Hover)
+                      .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)

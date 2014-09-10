@@ -18,7 +18,7 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                   .Id("HierarchyExample")
-                  .GridCssStyling(BootstrapTable.Bordered)
+                  .Styling(BootstrapTable.Bordered)
                   .Columns(column =>
                   {
                       column.Template(@<text>

@@ -82,20 +82,20 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilderOptions<T> GridCssStyling(string @class)
+        public IGridBuilderOptions<T> Styling(string @class)
         {
             this._gridClass = @class;
             return this;
         }
 
-        public IGridBuilderOptions<T> GridCssStyling(BootstrapTable @class)
+        public IGridBuilderOptions<T> Styling(BootstrapTable @class)
         {
             var classes = Enum.GetValues(typeof(BootstrapTable))
                 .Cast<BootstrapTable>()
                 .Where(r => @class.HasFlag(r))
                 .Select(r => r.ToLocalization())
                 .AsString(" ");
-            return GridCssStyling(classes);
+            return Styling(classes);
         }
 
         public IGridBuilderOptions<T> Columns(Action<ColumnsBuilder<T>> builderAction)

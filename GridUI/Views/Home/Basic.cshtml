@@ -105,14 +105,14 @@
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("AutoBindExample")
-                      .GridCssStyling(BootstrapTable.Striped)
+                      .Styling(BootstrapTable.Striped)
                       .AjaxGet(Url.Action("GetProducts", "Home")))
         </div>
         <div class="sourceCode">
             <pre>
                      Html.Grid<productvm>() 
                          .Id("AutoBindExample")               
-                         .GridCssStyling(BootstrapTable.Striped)
+                         .Styling(BootstrapTable.Striped)
                          .AjaxGet(Url.Action("GetProducts", "Home"))
                     
                     
