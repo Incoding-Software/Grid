@@ -1,10 +1,5 @@
 ﻿namespace Grid.Options
 {
-
-    #region << Using >>
-
-    #endregion
-
     public class GridOptions
     {
         #region Static Fields

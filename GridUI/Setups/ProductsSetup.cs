@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using GridUI.Operations;
 using GridUI.Persistance;
-using GridUI.Queries;
 using Incoding.CQRS;
 
 namespace GridUI.Setups
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class ProductsSetup : ISetUp
     {
         #region Fields

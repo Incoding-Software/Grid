@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Web.Routing;
 using System.Web.WebPages;
-using Grid.Styles;
-using Incoding.MvcContrib;
+using Grid.Components;
 
 namespace Grid.Interfaces
 {
@@ -21,6 +20,5 @@ namespace Grid.Interfaces
         IColumn<T> Visible(bool visible);
         IColumn<T> Raw();
         IColumn<T> Sortable(object sortBy, bool sortDefault = false);
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace Grid.Styles
+﻿namespace Grid.Components
 {
+    using System.ComponentModel;
+
     public enum BootstrapClass
     {
         [Description("active")]

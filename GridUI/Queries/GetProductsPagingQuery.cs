@@ -7,12 +7,6 @@ using Incoding.Data;
 
 namespace GridUI.Queries
 {
-    #region << Using >>
-
-
-
-    #endregion
-
     public class GetProductsPagingQuery : QueryBase<IncPaginatedResult<Product>>, IRoutableQuery, ISortable<GetProductsPagingQuery.SortType>
     {
         public enum SortType

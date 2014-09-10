@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Incoding.Data;
 using Incoding.Quality;
@@ -7,12 +6,6 @@ using JetBrains.Annotations;
 
 namespace GridUI.Persistance
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class Product : IncEntityBase
     {
         #region Properties

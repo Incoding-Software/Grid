@@ -1,5 +1,4 @@
-﻿using System;
-using GridUI.Persistance;
+﻿using GridUI.Persistance;
 using Incoding.CQRS;
 
 namespace GridUI.Operations

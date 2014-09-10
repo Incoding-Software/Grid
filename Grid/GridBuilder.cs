@@ -15,18 +15,12 @@ using Grid.GridParts;
 using Grid.Interfaces;
 using Grid.Options;
 using Grid.Paging;
-using Grid.Styles;
 using Incoding.Extensions;
 using Incoding.MvcContrib;
+using Grid.Components;
 
 namespace Grid
 {
-    #region << Using >>
-
-
-
-    #endregion
-
     public class GridBuilder<T> : IGridBuilder<T>, IGridBuilderOptions<T>, IHtmlString where T : class
     {
         #region Constructors

@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AutoBindAttribute.cs" />
-    <Compile Include="Extensions\HtmlExtension.cs" />
+    <Compile Include="Components\HtmlExtension.cs" />
     <Compile Include="GridBuilder.cs" />
     <Compile Include="GridParts\Column.cs" />
     <Compile Include="GridParts\ColumnsBuilder.cs" />
@@ -96,8 +96,8 @@
     <Compile Include="Paging\PagingModel.cs" />
     <Compile Include="Paging\PagingResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Styles\BootstrapClass.cs" />
-    <Compile Include="Styles\BootstrapTable.cs" />
+    <Compile Include="Components\BootstrapClass.cs" />
+    <Compile Include="Components\BootstrapTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />

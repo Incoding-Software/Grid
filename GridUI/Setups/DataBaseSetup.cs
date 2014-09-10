@@ -3,12 +3,6 @@ using Incoding.Data;
 
 namespace GridUI.Setups
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class DataBaseSetup : ISetUp
     {
         #region Fields

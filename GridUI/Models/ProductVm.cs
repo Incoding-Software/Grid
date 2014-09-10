@@ -5,12 +5,6 @@ using GridUI.Queries;
 
 namespace GridUI.Models
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class ProductVm
     {
         #region Constructors

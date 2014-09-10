@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using GridUI.Persistance;
 using Incoding.CQRS;
-using NHibernate.Mapping;
 
 namespace GridUI.Operations
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class AddProductCommand : CommandBase
     {
         #region Properties

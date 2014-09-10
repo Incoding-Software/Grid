@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Grid.Styles
+﻿namespace Grid.Components
 {
+    using System;
+    using System.ComponentModel;
+
     [Flags]
     public enum BootstrapTable
     {

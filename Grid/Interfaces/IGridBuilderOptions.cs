@@ -2,8 +2,8 @@
 using System.Web.Routing;
 using System.Web.WebPages;
 using Grid.GridParts;
-using Grid.Styles;
 using Incoding.MvcContrib;
+using Grid.Components;
 
 namespace Grid.Interfaces
 {

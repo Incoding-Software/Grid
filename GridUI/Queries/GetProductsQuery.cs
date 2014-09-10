@@ -7,12 +7,6 @@ using Incoding.CQRS;
 
 namespace GridUI.Queries
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class GetProductsQuery : QueryBase<List<ProductVm>>, ISortable<GetProductsQuery.SortType>
     {
         #region ISortable<SortType> Members

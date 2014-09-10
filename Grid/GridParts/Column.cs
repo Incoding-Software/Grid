@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web.Routing;
 using System.Web.WebPages;
 using Grid.Interfaces;
-using Grid.Styles;
 using Incoding.Extensions;
 using Incoding.MvcContrib;
+using Grid.Components;
 
 namespace Grid.GridParts
 {

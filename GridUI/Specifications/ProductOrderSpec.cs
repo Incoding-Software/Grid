@@ -5,12 +5,6 @@ using Incoding.Data;
 
 namespace GridUI.Specifications
 {
-    #region << Using >>
-
-    
-
-    #endregion
-
     public class ProductOrderSpec : OrderSpecification<Product>
     {
         #region Fields
