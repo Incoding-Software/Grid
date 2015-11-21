@@ -21,7 +21,7 @@ namespace GridUI.Operations
 
         #endregion
 
-        public override void Execute()
+        protected override void Execute()
         {
             var product = new Product();
             product.Name = Name;

@@ -14,7 +14,7 @@ namespace GridUI.Operations
 
         #endregion
 
-        public override void Execute()
+        protected override void Execute()
         {
             var user = new User();
             user.FirstName = FirstName;
