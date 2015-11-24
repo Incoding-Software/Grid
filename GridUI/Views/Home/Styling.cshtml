@@ -1,6 +1,7 @@
 ﻿
 @using Grid.Components
 @using GridUI.Models
+@using Incoding.MvcContrib
 
 
 @{
@@ -45,6 +46,49 @@
                                 .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+        <h1>HeaderClass and Class</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                  .Id("NextRowHtmlAttrExample2")
+                  .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name")
+                          .HeaderClass(B.Active | B.Disabled);
+
+                      column.Bound(r => r.Price)
+                          .Class(B.Container);
+
+                      column.Bound(r => r.Date)
+                          .Title("Date of made")
+                          .Class("success");
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<ProductVm>()
+                          .Id("NextRowHtmlAttrExample2")
+                          .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
+                          .Columns(column =>
+                          {
+                              column.Bound(r => r.Name)
+                                  .Title("Product Name")
+                                  .HeaderClass(B.Active | B.Disabled);
+
+                              column.Bound(r => r.Price)
+                                  .Class(B.Container);
+
+                              column.Bound(r => r.Date)
+                                  .Title("Date of made")
+                                  .Class("success");
+                          })
+                          .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
         </div>
 

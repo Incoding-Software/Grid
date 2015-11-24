@@ -64,9 +64,14 @@ namespace Grid.GridParts
             return HeaderHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IColumn<T> HeaderHtmlAttr(BootstrapClass htmlAttributes)
+        public IColumn<T> HeaderClass(B htmlClass)
         {
-            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+        }
+
+        public IColumn<T> HeaderClass(string htmlClass)
+        {
+            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         public IColumn<T> HtmlAttr(RouteValueDictionary htmlAttributes)
@@ -80,9 +85,14 @@ namespace Grid.GridParts
             return HtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IColumn<T> HtmlAttr(BootstrapClass htmlAttributes)
+        public IColumn<T> Class(B htmlClass)
         {
-            return HtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+            return HtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+        }
+
+        public IColumn<T> Class(string htmlClass)
+        {
+            return HtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         public IColumn<T> Title(string title)
