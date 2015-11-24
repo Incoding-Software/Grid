@@ -598,26 +598,22 @@ namespace Grid
                     {
                         dsl.Self().Core().JQuery.Attributes.AddClass("hide");
                         dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString())
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this._descSelector) == desc)
-                                );
+                                .If(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString()
+                                        &&
+                                        Selector.Jquery.Name(this._descSelector) == desc)
+                                ;
 
                         dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == "")
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this._descSelector) == desc)
-                                        .And
-                                        .Is(() => sortDefault == true));
+                                .If(() => Selector.Jquery.Name(this._sortBySelector) == ""
+                                        &&
+                                        Selector.Jquery.Name(this._descSelector) == desc
+                                        &&
+                                        sortDefault == true);
 
                         dsl.Self().Core().JQuery.Attributes.AddClass("hide")
-                                .If(builder => builder
-                                        .Is(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString())
-                                        .And
-                                        .Is(() => Selector.Jquery.Name(this._descSelector) != desc)
-                                );
+                                .If(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString()
+                                        &&
+                                        Selector.Jquery.Name(this._descSelector) != desc);
                     })
                                 .AsHtmlAttributes(new { @class = arrowsBootstrap + " sort-arrow hide" })
                                 .ToTag(HtmlTag.I);
@@ -653,7 +649,8 @@ namespace Grid
 
         public string ToHtmlString()
         {
-            return Render().ToString();
+            var srt = Render().ToString();
+            return srt;
         }
     }
 }

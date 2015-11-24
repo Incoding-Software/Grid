@@ -184,7 +184,9 @@
     <Content Include="Content\images\sprites.png" />
     <Content Include="Content\livetemplate.png" />
     <Content Include="Global.asax" />
-    <Content Include="Content\snippets.zip" />
+    <Content Include="Content\snippets.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\handlebars-1.1.2.js" />
     <Content Include="Scripts\handlebars.amd.js" />
@@ -196,6 +198,7 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\incoding.framework.js" />
     <Content Include="Scripts\incoding.framework.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
