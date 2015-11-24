@@ -129,9 +129,14 @@ namespace Grid
             return RowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> RowHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> RowHtmlClass(B htmlClass)
         {
-            return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+            return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+        }
+
+        public IGridBuilderOptions<T> RowHtmlClass(string htmlClass)
+        {
+            return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for tbody tr
@@ -149,9 +154,14 @@ namespace Grid
             return HeadHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> HeadHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> HeadHtmlClass(B htmlClass)
         {
-            return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+            return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+        }
+
+        public IGridBuilderOptions<T> HeadHtmlClass(string htmlClass)
+        {
+            return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for thead tr
@@ -169,9 +179,14 @@ namespace Grid
             return NextRowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> NextRowHtmlAttr(BootstrapClass htmlAttributes)
+        public IGridBuilderOptions<T> NextRowHtmlClass(B htmlClass)
         {
-            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlAttributes.ToLocalization() }));
+            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+        }
+
+        public IGridBuilderOptions<T> NextRowHtmlClass(string htmlClass)
+        {
+            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for nextrow

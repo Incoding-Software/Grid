@@ -34,35 +34,35 @@
         </div>
         <div class="sourceCode">
             <pre>
-                      Html.Grid<productvm>()
-                      .Id("GridCssStylingExample")
-                      .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                                .Title("Product Name");
-                          column.Bound(r => r.Price);
-                          column.Bound(r => r.Date)
-                                .Title("Date of made");
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      Html.Grid<ProductVm>()
+                          .Id("GridCssStylingExample")
+                          .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
+                          .Columns(column =>
+                          {
+                              column.Bound(r => r.Name)
+                                  .Title("Product Name");
+
+                              column.Bound(r => r.Price);
+
+                              column.Bound(r => r.Date)
+                                  .Title("Date of made");
+                          })
+                          .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
         </div>
         
-        <h1>HeaderClass and Class</h1>
+        <h1>Class</h1>
 
         <div class="example">
             @(Html.Grid<ProductVm>()
                   .Id("NextRowHtmlAttrExample2")
-                  .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
                   .Columns(column =>
                   {
                       column.Bound(r => r.Name)
-                          .Title("Product Name")
-                          .HeaderClass(B.Active | B.Disabled);
+                          .Title("Product Name");
 
                       column.Bound(r => r.Price)
-                          .Class(B.Container);
+                          .Class(B.Active);
 
                       column.Bound(r => r.Date)
                           .Title("Date of made")
@@ -74,15 +74,13 @@
             <pre>
                       Html.Grid<ProductVm>()
                           .Id("NextRowHtmlAttrExample2")
-                          .Styling(BootstrapTable.Bordered | BootstrapTable.Hover)
                           .Columns(column =>
                           {
                               column.Bound(r => r.Name)
-                                  .Title("Product Name")
-                                  .HeaderClass(B.Active | B.Disabled);
+                                  .Title("Product Name");
 
                               column.Bound(r => r.Price)
-                                  .Class(B.Container);
+                                  .Class(B.Active);
 
                               column.Bound(r => r.Date)
                                   .Title("Date of made")
@@ -91,15 +89,134 @@
                           .AjaxGet(Url.Action("GetProducts", "Home"))
                 </pre>
         </div>
+        
+         <h1>HtmlAttr</h1>
 
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("HtmlAttrExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HtmlAttr(new { @class = "success", style = "color: #567890;" });
 
+                          column.Bound(r => r.Price);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<ProductVm>()
+                          .Id("HtmlAttrExample")
+                          .Styling(BootstrapTable.Hover)
+                          .Columns(column =>
+                          {
+                              column.Bound(r => r.Name)
+                                  .Title("Product Name")
+                                  .HtmlAttr(new { class = "success", style = "color: #567890;" });
+
+                              column.Bound(r => r.Price);
+
+                              column.Bound(r => r.Date)
+                                  .Title("Date of made");
+                          })
+                          .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+         <h1>HeaderClass</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("HeadHtmlAttrExample")
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderClass(B.Active);
+
+                          column.Bound(r => r.Price)
+                              .HeaderClass("success");
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<ProductVm>()
+                      .Id("HeadHtmlAttrExample")
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderClass(B.Active);
+
+                          column.Bound(r => r.Price)
+                              .HeaderClass("success");
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+        
+        <h1>HeaderHtmlAttr</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("HeaderHtmlAttrExample")
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(new { @class = "danger" });
+
+                          column.Bound(r => r.Price)
+                              .HeaderHtmlAttr(new { style = "color: #567890;" });
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(new { @class = "warning" });
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<ProductVm>()
+                      .Id("HeaderHtmlAttrExample")
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .HeaderHtmlAttr(new { class = "danger" });
+
+                          column.Bound(r => r.Price)
+                              .HeaderHtmlAttr(new { style = "color: #567890;" });
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .HeaderHtmlAttr(new { class = "warning" });
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+        
         <h1>HeadHtmlAttr</h1>
 
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("HeadHtmlAttrExample")
-                      .Styling(BootstrapTable.Hover)
-                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .HeadHtmlAttr(new { style = "color: red;" })
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -117,7 +234,7 @@
                       Html.Grid<productvm>()
                       .Id("HeadHtmlAttrExample")
                       .Styling(BootstrapTable.Hover)
-                      .HeadHtmlAttr(BootstrapClass.Success) //.HeadHtmlAttr("success")
+                      .HeadHtmlAttr(new { style = "color: red;" })
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -131,17 +248,57 @@
         </div>
 
 
+        <h1>RowHtmlClass</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("RowHtmlAttrExample")
+                      .Styling(BootstrapTable.Hover)
+                      .HeadHtmlAttr(new { style = "color: red;" })
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name");
+
+                          column.Bound(r => r.Price);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .RowHtmlClass("success"))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<productvm>()
+                      .Id("RowHtmlAttrExample")
+                      .Styling(BootstrapTable.Hover)
+                      .HeadHtmlAttr(new { style = "color: red;" })
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name");
+                          column.Bound(r => r.Price);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .RowHtmlClass("success")
+                </pre>
+        </div>
+        
         <h1>RowHtmlAttr</h1>
 
         <div class="example">
             @(Html.Grid<ProductVm>()
                       .Id("RowHtmlAttrExample")
                       .Styling(BootstrapTable.Hover)
-                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .HeadHtmlAttr(new { style = "color: red;" })
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
-                              .Title("Product Name");
+                              .Title("Product Name")
+                              .HeaderClass();
 
                           column.Bound(r => r.Price);
 
@@ -149,14 +306,14 @@
                               .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
-                      .RowHtmlAttr(BootstrapClass.Warning))
+                      .RowHtmlAttr(new { style = "color: #456789;" }))
         </div>
         <div class="sourceCode">
             <pre>
                       Html.Grid<productvm>()
                       .Id("RowHtmlAttrExample")
                       .Styling(BootstrapTable.Hover)
-                      .HeadHtmlAttr(BootstrapClass.Success)
+                      .HeadHtmlAttr("success")
                       .Columns(column =>
                       {
                           column.Bound(r => r.Name)
@@ -166,99 +323,10 @@
                                 .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
-                      .RowHtmlAttr(BootstrapClass.Warning)
+                      .RowHtmlAttr("warning")
                 </pre>
         </div>
 
-
-        <h1>HeaderHtmlAttr</h1>
-
-        <div class="example">
-            @(Html.Grid<ProductVm>()
-                      .Id("HeaderHtmlAttrExample")
-                      .Styling(BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger);
-
-                          column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
-
-                          column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home")))
-        </div>
-        <div class="sourceCode">
-            <pre>
-                      Html.Grid<productvm>()
-                      .Id("HeaderHtmlAttrExample")
-                      .Styling(BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                                .Title("Product Name")
-                                .HeaderHtmlAttr(BootstrapClass.Danger);
-                          column.Bound(r => r.Price)
-                                .HeaderHtmlAttr(BootstrapClass.Success);
-                          column.Bound(r => r.Date)
-                                .Title("Date of made")
-                                .HeaderHtmlAttr(BootstrapClass.Warning);
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home"))
-                </pre>
-        </div>
-
-
-        <h1>HtmlAttr</h1>
-
-        <div class="example">
-            @(Html.Grid<ProductVm>()
-                      .Id("HtmlAttrExample")
-                      .Styling(BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                              .Title("Product Name")
-                              .HeaderHtmlAttr(BootstrapClass.Danger)
-                              .HtmlAttr(BootstrapClass.Success);
-
-
-                          column.Bound(r => r.Price)
-                              .HeaderHtmlAttr(BootstrapClass.Success);
-
-                          column.Bound(r => r.Date)
-                              .Title("Date of made")
-                              .HeaderHtmlAttr(BootstrapClass.Warning);
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home")))
-        </div>
-        <div class="sourceCode">
-            <pre>
-                      Html.Grid<productvm>()
-                      .Id("HtmlAttrExample")
-                      .Styling(BootstrapTable.Hover)
-                      .Columns(column =>
-                      {
-                          column.Bound(r => r.Name)
-                                .Title("Product Name")
-                                .HeaderHtmlAttr(BootstrapClass.Danger)
-                                .HtmlAttr(BootstrapClass.Success);
-                          
-                          column.Bound(r => r.Price)
-                                .HeaderHtmlAttr(BootstrapClass.Success);
-                          column.Bound(r => r.Date)
-                                .Title("Date of made")
-                                .HeaderHtmlAttr(BootstrapClass.Warning);
-                      })
-                      .AjaxGet(Url.Action("GetProducts", "Home"))
-                </pre>
-        </div>
-        
-        
         <h1>NextRowHtmlAttr</h1>
 
         <div class="example">
@@ -275,12 +343,12 @@
                           .Title("Date of made");
                   })
                   .AjaxGet(Url.Action("GetProducts", "Home"))
-                  .RowHtmlAttr(BootstrapClass.Success)
+                  .RowHtmlAttr(new { @class = "success" })
                   .NextRow(@<text>
                                 <td style="width: 200px;"></td>
                                 <td colspan="2">Notes: @item.ForRaw(r => r.Comment)</td>
                             </text>)
-                  .NextRowHtmlAttr(BootstrapClass.Warning))
+                  .NextRowHtmlAttr(new { @class = "warning" }))
         </div>
         <div class="sourceCode">
             <pre>
@@ -295,12 +363,12 @@
                           .Title("Date of made");
                   })
                   .AjaxGet(Url.Action("GetProducts", "Home"))
-                  .RowHtmlAttr(BootstrapClass.Success)
+                  .RowHtmlAttr(new { class = "success" })
                   .NextRow(<text>
                             <td style="width: 200px;"></td>
                             <td colspan="2">Notes: item.ForRaw(r => r.Comment)</td>
                            </text>)
-                  .NextRowHtmlAttr(BootstrapClass.Warning)
+                  .NextRowHtmlAttr(new { class = "warning" })
             </pre>
         </div>
     </div>
