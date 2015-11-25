@@ -53,46 +53,46 @@ namespace Grid.GridParts
 
         #endregion
 
-        public IColumn<T> HeaderHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IColumn<T> HeadAttr(RouteValueDictionary htmlAttributes)
         {
             this.ColumnHeaderAttributes = htmlAttributes;
             return this;
         }
 
-        public IColumn<T> HeaderHtmlAttr(object htmlAttributes)
+        public IColumn<T> HeadAttr(object htmlAttributes)
         {
-            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+            return HeadAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IColumn<T> HeaderClass(B htmlClass)
+        public IColumn<T> HeadClass(B htmlClass)
         {
-            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+            return HeadAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
         }
 
-        public IColumn<T> HeaderClass(string htmlClass)
+        public IColumn<T> HeadClass(string htmlClass)
         {
-            return HeaderHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
+            return HeadAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
-        public IColumn<T> HtmlAttr(RouteValueDictionary htmlAttributes)
+        public IColumn<T> Attr(RouteValueDictionary htmlAttributes)
         {
             this.ColumnAttributes = htmlAttributes;
             return this;
         }
 
-        public IColumn<T> HtmlAttr(object htmlAttributes)
+        public IColumn<T> Attr(object htmlAttributes)
         {
-            return HtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+            return Attr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
         public IColumn<T> Class(B htmlClass)
         {
-            return HtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+            return Attr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
         }
 
         public IColumn<T> Class(string htmlClass)
         {
-            return HtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
+            return Attr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         public IColumn<T> Title(string title)

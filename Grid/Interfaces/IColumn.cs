@@ -7,12 +7,12 @@ namespace Grid.Interfaces
 {
     public interface IColumn<T> where T : class
     {
-        IColumn<T> HeaderHtmlAttr(RouteValueDictionary htmlAttributes);
-        IColumn<T> HeaderHtmlAttr(object htmlAttributes);
-        IColumn<T> HeaderClass(B htmlClass);
-        IColumn<T> HeaderClass(string htmlClass);
-        IColumn<T> HtmlAttr(RouteValueDictionary htmlAttributes);
-        IColumn<T> HtmlAttr(object htmlAttributes);
+        IColumn<T> HeadAttr(RouteValueDictionary htmlAttributes);
+        IColumn<T> HeadAttr(object htmlAttributes);
+        IColumn<T> HeadClass(B htmlClass);
+        IColumn<T> HeadClass(string htmlClass);
+        IColumn<T> Attr(RouteValueDictionary htmlAttributes);
+        IColumn<T> Attr(object htmlAttributes);
         IColumn<T> Class(B htmlClass);
         IColumn<T> Class(string htmlClass);
         IColumn<T> Title(string title);

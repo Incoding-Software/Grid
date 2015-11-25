@@ -112,81 +112,81 @@ namespace Grid
         }
 
         //for tbody tr
-        public IGridBuilderOptions<T> RowHtmlAttr(Func<ITemplateSyntax<T>, HelperResult> template)
+        public IGridBuilderOptions<T> RowAttr(Func<ITemplateSyntax<T>, HelperResult> template)
         {
             this.RowTemplateAttributes = template;
             return this;
         }
 
-        public IGridBuilderOptions<T> RowHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes)
         {
             this.RowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilderOptions<T> RowHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> RowAttr(object htmlAttributes)
         {
-            return RowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+            return RowAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> RowHtmlClass(B htmlClass)
+        public IGridBuilderOptions<T> RowClass(B htmlClass)
         {
-            return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+            return RowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
         }
 
-        public IGridBuilderOptions<T> RowHtmlClass(string htmlClass)
+        public IGridBuilderOptions<T> RowClass(string htmlClass)
         {
-            return RowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
+            return RowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for tbody tr
 
 
         //for thead tr
-        public IGridBuilderOptions<T> HeadHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> HeadAttr(RouteValueDictionary htmlAttributes)
         {
             this.HeaderRowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilderOptions<T> HeadHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> HeadAttr(object htmlAttributes)
         {
-            return HeadHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+            return HeadAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> HeadHtmlClass(B htmlClass)
+        public IGridBuilderOptions<T> HeadClass(B htmlClass)
         {
-            return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+            return HeadAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
         }
 
-        public IGridBuilderOptions<T> HeadHtmlClass(string htmlClass)
+        public IGridBuilderOptions<T> HeadClass(string htmlClass)
         {
-            return HeadHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
+            return HeadAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for thead tr
 
 
         //for nextrow
-        public IGridBuilderOptions<T> NextRowHtmlAttr(RouteValueDictionary htmlAttributes)
+        public IGridBuilderOptions<T> NextRowAttr(RouteValueDictionary htmlAttributes)
         {
             this.NextRowRowAttributes = htmlAttributes;
             return this;
         }
 
-        public IGridBuilderOptions<T> NextRowHtmlAttr(object htmlAttributes)
+        public IGridBuilderOptions<T> NextRowAttr(object htmlAttributes)
         {
-            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(htmlAttributes));
+            return NextRowAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
 
-        public IGridBuilderOptions<T> NextRowHtmlClass(B htmlClass)
+        public IGridBuilderOptions<T> NextRowClass(B htmlClass)
         {
-            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
+            return NextRowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
         }
 
-        public IGridBuilderOptions<T> NextRowHtmlClass(string htmlClass)
+        public IGridBuilderOptions<T> NextRowClass(string htmlClass)
         {
-            return NextRowHtmlAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
+            return NextRowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
         }
 
         //end for nextrow
