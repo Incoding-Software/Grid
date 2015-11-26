@@ -68,6 +68,7 @@ namespace GridUI.Infrastructure
             ajaxDef.Cache = false; // disabled cache as default
 
             GridOptions.Default.NoRecordsText = "no records";
+            GridOptions.Default.Styling = "table-bordered table-hover";
         }
     }
 

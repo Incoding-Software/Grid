@@ -12,6 +12,8 @@
 
         public virtual string NoRecordsText { get; set; }
 
+        public virtual string Styling { get; set; }
+
         #endregion
     }
 }

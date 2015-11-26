@@ -13,6 +13,7 @@
 
 <div class="container">
     <div class="row col-md-12" style="margin-top:50px;">
+        
 
         <h1>GridCssStyling</h1>
 
@@ -51,6 +52,47 @@
                 </pre>
         </div>
         
+        
+        <h1>GridCssStyling from Default GridOptions</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                  .Id("GridCssStylingExample")           
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name");
+
+                      column.Bound(r => r.Price);
+
+                      column.Bound(r => r.Date)
+                          .Title("Date of made");
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid<ProductVm>()
+                          .Id("GridCssStylingExample")
+                          .Columns(column =>
+                          {
+                              column.Bound(r => r.Name)
+                                  .Title("Product Name");
+
+                              column.Bound(r => r.Price);
+
+                              column.Bound(r => r.Date)
+                                  .Title("Date of made");
+                          })
+                          .AjaxGet(Url.Action("GetProducts", "Home"))
+                          
+                          //in Bootstrapper.cs
+                          GridOptions.Default.Styling = "table-bordered table-hover";
+                </pre>
+        </div>
+        
+        
+
         <h1>Class</h1>
 
         <div class="example">
@@ -370,5 +412,6 @@
                   .NextRowAttr(new { class = "warning" })
             </pre>
         </div>
+        
     </div>
 </div>
