@@ -7,6 +7,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentValidation;
 using FluentValidation.Mvc;
+using Grid.Components;
 using Grid.Options;
 using Incoding.Block.IoC;
 using Incoding.Block.Logging;
@@ -68,7 +69,7 @@ namespace GridUI.Infrastructure
             ajaxDef.Cache = false; // disabled cache as default
 
             GridOptions.Default.NoRecordsText = "no records";
-            GridOptions.Default.Styling = "table-bordered table-hover";
+            GridOptions.Default.AddStyling(BootstrapTable.Bordered | BootstrapTable.Hover);
         }
     }
 

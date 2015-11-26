@@ -1,19 +1,37 @@
-﻿namespace Grid.Options
+﻿using System;
+using System.Linq;
+using Grid.Components;
+using Incoding.Extensions;
+
+namespace Grid.Options
 {
     public class GridOptions
     {
-        #region Static Fields
-
         public static readonly GridOptions Default = new GridOptions();
 
-        #endregion
-
-        #region Properties
+        private string _styling = null;
 
         public virtual string NoRecordsText { get; set; }
 
-        public virtual string Styling { get; set; }
+        public virtual void AddStyling(string @class)
+        {
+            _styling = @class;
+        }
 
-        #endregion
+        public virtual void AddStyling(BootstrapTable @class)
+        {
+            var classes = Enum.GetValues(typeof(BootstrapTable))
+                .Cast<BootstrapTable>()
+                .Where(r => @class.HasFlag(r))
+                .Select(r => r.ToLocalization())
+                .AsString(" ");
+
+            AddStyling(classes);
+        }
+
+        public virtual string GetStyling()
+        {
+            return _styling;
+        }
     }
 }

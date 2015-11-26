@@ -267,7 +267,7 @@ namespace Grid
             divMain.AddCssClass("inc-grid");
 
             var table = new TagBuilder("table");
-            table.AddCssClass(string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.Styling : this._gridClass);
+            table.AddCssClass(string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass);
             table.AddCssClass("table");
 
 
@@ -354,7 +354,7 @@ namespace Grid
                     })
                     .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.Styling : this._gridClass) })
+                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
                     .ToTag(HtmlTag.Table);
 
             var divContent = new TagBuilder("div");
@@ -387,7 +387,7 @@ namespace Grid
                     })
                     .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.Styling : this._gridClass) })
+                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
                     .ToTag(HtmlTag.Table);
 
             var divContent = new TagBuilder("div");

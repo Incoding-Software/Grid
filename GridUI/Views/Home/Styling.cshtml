@@ -87,7 +87,7 @@
                           .AjaxGet(Url.Action("GetProducts", "Home"))
                           
                           //in Bootstrapper.cs
-                          GridOptions.Default.Styling = "table-bordered table-hover";
+                          GridOptions.Default.AddStyling(BootstrapTable.Bordered | BootstrapTable.Hover);
                 </pre>
         </div>
         
