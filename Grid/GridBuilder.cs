@@ -44,13 +44,13 @@ namespace Grid
 
         int _buttonCount = 5, _contentTableHeight;
 
-        IDictionary<string, object> RowAttributes, HeaderRowAttributes, NextRowRowAttributes;
+        IDictionary<string, object> RowAttributes, HeaderRowAttributes;
 
         Func<ITemplateSyntax<T>, HelperResult> RowTemplateAttributes;
 
         readonly List<Column<T>> _сolumnList = new List<Column<T>>();
 
-        readonly List<Row<T>> _rowList = new List<Row<T>>();
+        readonly List<Row<T>> _nextRowList = new List<Row<T>>();
 
         Selector _customPagingTemplate;
 
@@ -100,7 +100,15 @@ namespace Grid
 
         public IGridBuilderOptions<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content)
         {
-            this._rowList.Add(new Row<T>(content));
+            this._nextRowList.Add(new Row<T>(content));
+            return this;
+        }
+
+        public IGridBuilderOptions<T> NextRow(Action<Row<T>> action)
+        {
+            Row<T> row = new Row<T>();
+            action(row);
+            this._nextRowList.Add(row);
             return this;
         }
 
@@ -165,31 +173,6 @@ namespace Grid
         }
 
         //end for thead tr
-
-
-        //for nextrow
-        public IGridBuilderOptions<T> NextRowAttr(RouteValueDictionary htmlAttributes)
-        {
-            this.NextRowRowAttributes = htmlAttributes;
-            return this;
-        }
-
-        public IGridBuilderOptions<T> NextRowAttr(object htmlAttributes)
-        {
-            return NextRowAttr(AnonymousHelper.ToDictionary(htmlAttributes));
-        }
-
-        public IGridBuilderOptions<T> NextRowClass(B htmlClass)
-        {
-            return NextRowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass.ToLocalization() }));
-        }
-
-        public IGridBuilderOptions<T> NextRowClass(string htmlClass)
-        {
-            return NextRowAttr(AnonymousHelper.ToDictionary(new { @class = htmlClass }));
-        }
-
-        //end for nextrow
 
         public IGridBuilderOptions<T> AjaxGet(string actionString)
         {
@@ -468,20 +451,21 @@ namespace Grid
 
                         tbody.InnerHtml += tr.ToString();
 
-                        if (this._rowList.Count > 0)
+                        if (this._nextRowList.Count > 0)
                         {
-                            foreach (var row in this._rowList)
+                            foreach (var row in this._nextRowList)
                             {
                                 var trNext = new TagBuilder("tr");
-
-                                if (this.NextRowRowAttributes != null)
+                                
+                                if (row.MetaAttribute != null)
                                 {
-                                    foreach (var att in this.NextRowRowAttributes)
-                                    {
-                                        if (att.Key == "class")
-                                            trNext.AddCssClass(att.Value.ToString());
-                                    }
-                                    trNext.MergeAttributes(this.NextRowRowAttributes);
+                                    trNext.MergeAttributes(row.MetaAttribute(each).AsHtmlAttributes());
+                                }
+                                
+                                List<string> classes = row.GetClasses(each);
+                                foreach (var cls in classes)
+                                {
+                                    trNext.AddCssClass(cls);
                                 }
 
                                 if (this.RowAttributes != null)
@@ -497,9 +481,14 @@ namespace Grid
                                 if (this.RowTemplateAttributes != null)
                                     trNext.AddCssClass(this.RowTemplateAttributes.Invoke(each).ToString());
 
-                               
+                                var innerHtml = row.Content.Invoke(each).ToString();
 
-                                trNext.InnerHtml += row.Content.Invoke(each).ToString();
+                                if (row.HtmlAttributes != null)
+                                {
+                                    innerHtml = innerHtml.Insert(3, " " + row.HtmlAttributes.Invoke(each) + " "); // insert raw html attributes right after "<tr" tag opened
+                                }
+
+                                trNext.InnerHtml += innerHtml;
                                 tbody.InnerHtml += trNext.ToString();
                             }
                         }

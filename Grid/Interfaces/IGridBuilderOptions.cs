@@ -13,6 +13,7 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> Styling(BootstrapTable @class);
         IGridBuilderOptions<T> Columns(Action<ColumnsBuilder<T>> builderAction);
         IGridBuilderOptions<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content);
+        IGridBuilderOptions<T> NextRow(Action<Row<T>> action);
         IGridBuilderOptions<T> Scrolling(int height);
         IGridBuilderOptions<T> RowAttr(Func<ITemplateSyntax<T>, HelperResult> template);
         IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes);
@@ -23,10 +24,6 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> HeadAttr(object htmlAttributes);
         IGridBuilderOptions<T> HeadClass(B htmlClass);
         IGridBuilderOptions<T> HeadClass(string htmlClass);
-        IGridBuilderOptions<T> NextRowAttr(RouteValueDictionary htmlAttributes);
-        IGridBuilderOptions<T> NextRowAttr(object htmlAttributes);
-        IGridBuilderOptions<T> NextRowClass(B htmlClass);
-        IGridBuilderOptions<T> NextRowClass(string htmlClass);
         IGridBuilderOptions<T> AjaxGet(string actionString);
         IGridBuilderOptions<T> Sortable();
         IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
