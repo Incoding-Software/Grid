@@ -5,13 +5,20 @@ using Incoding.Extensions;
 
 namespace Grid.Options
 {
+    using Incoding.MvcContrib;
+
     public class GridOptions
     {
-        public static readonly GridOptions Default = new GridOptions();
+        public static readonly GridOptions Default = new GridOptions
+                                                     {
+                                                             InitBind = JqueryBind.InitIncoding
+                                                     };
 
         private string _styling = null;
 
         public virtual string NoRecordsText { get; set; }
+
+        public virtual JqueryBind InitBind { get; set; }
 
         public virtual void AddStyling(string @class)
         {

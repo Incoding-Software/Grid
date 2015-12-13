@@ -46,7 +46,7 @@ namespace Grid
 
         IDictionary<string, object> RowAttributes, HeaderRowAttributes;
 
-        Func<ITemplateSyntax<T>, HelperResult> RowTemplateAttributes;
+        Func<ITemplateSyntax<T>, HelperResult> RowTemplateClass;
 
         readonly List<Column<T>> _сolumnList = new List<Column<T>>();
 
@@ -120,12 +120,7 @@ namespace Grid
         }
 
         //for tbody tr
-        public IGridBuilderOptions<T> RowAttr(Func<ITemplateSyntax<T>, HelperResult> template)
-        {
-            this.RowTemplateAttributes = template;
-            return this;
-        }
-
+        
         public IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes)
         {
             this.RowAttributes = htmlAttributes;
@@ -136,6 +131,13 @@ namespace Grid
         {
             return RowAttr(AnonymousHelper.ToDictionary(htmlAttributes));
         }
+
+        public IGridBuilderOptions<T> RowClass(Func<ITemplateSyntax<T>, HelperResult> template)
+        {
+            this.RowTemplateClass = template;
+            return this;
+        }
+
 
         public IGridBuilderOptions<T> RowClass(B htmlClass)
         {
@@ -324,8 +326,8 @@ namespace Grid
 
         MvcHtmlString AddTemplate()
         {
-            
-            var table = this._htmlHelper.When(JqueryBind.InitIncoding)
+
+            var table = this._htmlHelper.When(GridOptions.Default.InitBind)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
@@ -351,7 +353,7 @@ namespace Grid
 
         MvcHtmlString AddPageableTemplate()
         {
-            var tableWithPageable = this._htmlHelper.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
+            var tableWithPageable = this._htmlHelper.When(GridOptions.Default.InitBind | JqueryBind.IncChangeUrl)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxHashGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
@@ -418,8 +420,8 @@ namespace Grid
                         if (this.RowAttributes != null)
                             tr.MergeAttributes(this.RowAttributes);
 
-                        if (this.RowTemplateAttributes != null)
-                            tr.AddCssClass(this.RowTemplateAttributes.Invoke(each).ToString());
+                        if (this.RowTemplateClass != null)
+                            tr.AddCssClass(this.RowTemplateClass.Invoke(each).ToString());
 
                         foreach (var column in this._сolumnList)
                         {
@@ -478,8 +480,8 @@ namespace Grid
                                     trNext.MergeAttributes(this.RowAttributes);
                                 }
 
-                                if (this.RowTemplateAttributes != null)
-                                    trNext.AddCssClass(this.RowTemplateAttributes.Invoke(each).ToString());
+                                if (this.RowTemplateClass != null)
+                                    trNext.AddCssClass(this.RowTemplateClass.Invoke(each).ToString());
 
                                 var innerHtml = row.Content.Invoke(each).ToString();
 
@@ -596,7 +598,7 @@ namespace Grid
         {
             string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
 
-            return this._htmlHelper.When(JqueryBind.InitIncoding)
+            return this._htmlHelper.When(GridOptions.Default.InitBind)
                     .DoWithStopPropagation().Direct()
                     .OnSuccess(dsl =>
                     {

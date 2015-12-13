@@ -15,9 +15,9 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> NextRow(Func<ITemplateSyntax<T>, HelperResult> content);
         IGridBuilderOptions<T> NextRow(Action<Row<T>> action);
         IGridBuilderOptions<T> Scrolling(int height);
-        IGridBuilderOptions<T> RowAttr(Func<ITemplateSyntax<T>, HelperResult> template);
         IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes);
         IGridBuilderOptions<T> RowAttr(object htmlAttributes);
+        IGridBuilderOptions<T> RowClass(Func<ITemplateSyntax<T>, HelperResult> template);
         IGridBuilderOptions<T> RowClass(B htmlClass);
         IGridBuilderOptions<T> RowClass(string htmlClass);
         IGridBuilderOptions<T> HeadAttr(RouteValueDictionary htmlAttributes);
