@@ -56,6 +56,10 @@ namespace Grid
 
         Action<IIncodingMetaLanguageCallbackBodyDsl> _onBindAction = dsl => { };
 
+        JqueryBind _onJqueryBind;
+
+
+
         #endregion
 
         #region Api Methods
@@ -198,9 +202,10 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
+        public IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action, JqueryBind jqueryBind = JqueryBind.InitIncoding)
         {
             this._onBindAction = action;
+            this._onJqueryBind = jqueryBind;
             return this;
         }
 
@@ -337,6 +342,7 @@ namespace Grid
                         dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this._noRecords).Text())
                                 .If(r => r.Data<List<T>>(data => data.IsEmpty()));
                     })
+                    .When(_onJqueryBind)
                     .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                     .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
@@ -370,6 +376,7 @@ namespace Grid
                         if (_showItemsCount)
                             dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
                     })
+                    .When(_onJqueryBind)
                     .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                     .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })

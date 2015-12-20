@@ -1,6 +1,7 @@
 ﻿
 @using Grid.Components
 @using GridUI.Models
+@using Incoding.MvcContrib
 
 
 @{
@@ -231,6 +232,48 @@
                                 .Title("Date of made");
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+        
+        
+        <h1>OnBind</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                  .Id("OnBindExample")
+                  .Columns(column =>
+                  {
+                      column.Bound(r => r.Name)
+                          .Title("Product Name")
+                          .Width(200);
+
+                      column.Bound(r => r.Price)
+                          .Width(200);
+
+                      column.Bound(r => r.Date)
+                          .Title("Date of made")
+                          .Width(150);
+                  })
+                  .AjaxGet(Url.Action("GetProducts", "Home"))
+                  .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString()), JqueryBind.Click))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("OnBindExample")
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString()), JqueryBind.Click))
                 </pre>
         </div>
     </div>
