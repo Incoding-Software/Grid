@@ -46,6 +46,8 @@ namespace Grid
 
         IDictionary<string, object> RowAttributes, HeaderRowAttributes;
 
+        Dictionary<string, Func<ITemplateSyntax<T>, HelperResult>> TBodyAttrs = new Dictionary<string, Func<ITemplateSyntax<T>, HelperResult>>();
+
         Func<ITemplateSyntax<T>, HelperResult> RowTemplateClass;
 
         readonly List<Column<T>> _сolumnList = new List<Column<T>>();
@@ -55,6 +57,8 @@ namespace Grid
         Selector _customPagingTemplate;
 
         Action<IIncodingMetaLanguageCallbackBodyDsl> _onBindAction = dsl => { };
+
+        JqueryBind _bindEvent = JqueryBind.InitIncoding;
 
         #endregion
 
@@ -151,6 +155,11 @@ namespace Grid
 
         //end for tbody tr
 
+        public IGridBuilderOptions<T> SetTBodyAttrValue(string key, Func<ITemplateSyntax<T>, HelperResult> keyValue)
+        {
+            this.TBodyAttrs.Add(key, keyValue);
+            return this;
+        }
 
         //for thead tr
         public IGridBuilderOptions<T> HeadAttr(RouteValueDictionary htmlAttributes)
@@ -241,6 +250,12 @@ namespace Grid
             return Pageable();
         }
 
+        public IGridBuilderOptions<T> BindEvent(JqueryBind bindEvent)
+        {
+            this._bindEvent = bindEvent;
+            return this;
+        }
+
         #endregion
 
 
@@ -327,7 +342,7 @@ namespace Grid
         MvcHtmlString AddTemplate()
         {
 
-            var table = this._htmlHelper.When(GridOptions.Default.InitBind)
+            var table = this._htmlHelper.When(this._bindEvent)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
@@ -353,7 +368,7 @@ namespace Grid
 
         MvcHtmlString AddPageableTemplate()
         {
-            var tableWithPageable = this._htmlHelper.When(GridOptions.Default.InitBind | JqueryBind.IncChangeUrl)
+            var tableWithPageable = this._htmlHelper.When(this._bindEvent | JqueryBind.IncChangeUrl)
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxHashGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
@@ -415,6 +430,11 @@ namespace Grid
                     using (var each = template.ForEach())
                     {
                         var tbody = new TagBuilder("tbody");
+                        foreach (var bodyAttr in this.TBodyAttrs)
+                        {
+                            tbody.MergeAttribute(bodyAttr.Key, bodyAttr.Value.Invoke(each).ToString());
+                        }
+                            
                         var tr = new TagBuilder("tr");
 
                         if (this.RowAttributes != null)
@@ -598,7 +618,7 @@ namespace Grid
         {
             string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
 
-            return this._htmlHelper.When(GridOptions.Default.InitBind)
+            return this._htmlHelper.When(this._bindEvent)
                     .DoWithStopPropagation().Direct()
                     .OnSuccess(dsl =>
                     {

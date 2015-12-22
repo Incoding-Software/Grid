@@ -18,6 +18,7 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes);
         IGridBuilderOptions<T> RowAttr(object htmlAttributes);
         IGridBuilderOptions<T> RowClass(Func<ITemplateSyntax<T>, HelperResult> template);
+        IGridBuilderOptions<T> SetTBodyAttrValue(string key, Func<ITemplateSyntax<T>, HelperResult> tbodyMeta);
         IGridBuilderOptions<T> RowClass(B htmlClass);
         IGridBuilderOptions<T> RowClass(string htmlClass);
         IGridBuilderOptions<T> HeadAttr(RouteValueDictionary htmlAttributes);
@@ -31,5 +32,6 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> Pageable();
         IGridBuilderOptions<T> Pageable(Selector customPagingTemplate);
         IGridBuilderOptions<T> Pageable(Action<PageableBuilder<T>> builderAction);
+        IGridBuilderOptions<T> BindEvent(JqueryBind bindEvent);
     }
 }

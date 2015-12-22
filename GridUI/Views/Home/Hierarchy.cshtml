@@ -18,6 +18,7 @@
             @(Html.Grid<ProductVm>()
                       .Id("HierarchyExample")
                       .Styling(BootstrapTable.Bordered)
+                      .SetTBodyAttrValue("data-id", @<text>@item.For(r => r.Id)</text>)
                       .Columns(column =>
                                {
                                    column.Template(@<text>

@@ -9,17 +9,12 @@ namespace Grid.Options
 
     public class GridOptions
     {
-        public static readonly GridOptions Default = new GridOptions
-                                                     {
-                                                             InitBind = JqueryBind.InitIncoding
-                                                     };
+        public static readonly GridOptions Default = new GridOptions();
 
         private string _styling = null;
 
         public virtual string NoRecordsText { get; set; }
-
-        public virtual JqueryBind InitBind { get; set; }
-
+        
         public virtual void AddStyling(string @class)
         {
             _styling = @class;
