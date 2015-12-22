@@ -240,22 +240,23 @@
 
         <div class="example">
             @(Html.Grid<ProductVm>()
-                  .Id("OnBindExample")
-                  .Columns(column =>
-                  {
-                      column.Bound(r => r.Name)
-                          .Title("Product Name")
-                          .Width(200);
+                      .Id("OnBindExample")
+                      .Columns(column =>
+                               {
+                                   column.Bound(r => r.Name)
+                                           .Title("Product Name")
+                                           .Width(200);
 
-                      column.Bound(r => r.Price)
-                          .Width(200);
+                                   column.Bound(r => r.Price)
+                                           .Width(200);
 
-                      column.Bound(r => r.Date)
-                          .Title("Date of made")
-                          .Width(150);
-                  })
-                  .AjaxGet(Url.Action("GetProducts", "Home"))
-                  .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString()), JqueryBind.Click))
+                                   column.Bound(r => r.Date)
+                                           .Title("Date of made")
+                                           .Width(150);
+                               })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                      .BindEvent(JqueryBind.Click)
+                      .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString())))
         </div>
         <div class="sourceCode">
             <pre>
