@@ -239,6 +239,7 @@
     <Content Include="Views\Home\New.cshtml" />
     <Content Include="Views\Home\LiveTemplate.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\Home\NoRecordsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

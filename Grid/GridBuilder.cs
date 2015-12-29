@@ -21,6 +21,8 @@ using Grid.Components;
 
 namespace Grid
 {
+    using Incoding.Maybe;
+
     public class GridBuilder<T> : IGridBuilder<T>, IGridBuilderOptions<T>, IHtmlString where T : class
     {
         #region Constructors
@@ -35,8 +37,10 @@ namespace Grid
         #region Fields
 
         readonly HtmlHelper _htmlHelper;
-        
-        string _noRecordsTemplate, _ajaxGetAction, _gridClass, _templateId, _contentTable, _pagingTemplateId, _noRecords, _sortBySelector, _descSelector, _pagingContainer, _pageSizesSelect;
+
+        string _ajaxGetAction, _gridClass, _templateId, _contentTable, _pagingTemplateId, _sortBySelector, _descSelector, _pagingContainer, _pageSizesSelect;
+
+        Selector _noRecordsSelector;
 
         bool _isPageable, _isScrolling, _showItemsCount, _showPageSizes;
 
@@ -67,11 +71,10 @@ namespace Grid
         public IGridBuilderOptions<T> Id(string gridId)
         {
             Func<string, string> SetName = (part) => "{0}-{1}".F(gridId, part);
-            
+
             this._contentTable = gridId;
             this._templateId = SetName("template");
-            this._pagingTemplateId = SetName("pagingTemplateId");           
-            this._noRecords = SetName("noRecords");
+            this._pagingTemplateId = SetName("pagingTemplateId");
             this._sortBySelector = SetName("sortBySelector");
             this._descSelector = SetName("descSelector");
             this._pagingContainer = SetName("pagingContainer");
@@ -124,7 +127,7 @@ namespace Grid
         }
 
         //for tbody tr
-        
+
         public IGridBuilderOptions<T> RowAttr(RouteValueDictionary htmlAttributes)
         {
             this.RowAttributes = htmlAttributes;
@@ -213,22 +216,9 @@ namespace Grid
             return this;
         }
 
-        public IGridBuilderOptions<T> NoRecords(string text)
+        public IGridBuilderOptions<T> NoRecords(Selector noRecordsSelector)
         {
-            var div = new TagBuilder("div");
-            div.GenerateId(this._noRecords);
-            div.Attributes.Add("style", "display: none;");
-            var table = new TagBuilder("table");
-            var tbody = new TagBuilder("tbody");
-            var tr = new TagBuilder("tr");
-            var td = new TagBuilder("td");
-            td.InnerHtml = text;
-            tr.InnerHtml = td.ToString();
-            tbody.InnerHtml = tr.ToString();
-            table.InnerHtml = tbody.ToString();
-            div.InnerHtml = table.ToString();
-
-            this._noRecordsTemplate = div.ToString();
+            this._noRecordsSelector = noRecordsSelector;
             return this;
         }
 
@@ -289,12 +279,11 @@ namespace Grid
             else
                 divMain.InnerHtml += AddTemplate();
 
-            divMain.InnerHtml += this._noRecordsTemplate ?? this.NoRecordsDefault();
-
             if (this._сolumnList.Any(r => r.SortBy != null))
             {
-                divMain.InnerHtml += this._htmlHelper.Hidden(this._sortBySelector, "");
-                divMain.InnerHtml += this._htmlHelper.CheckBox(this._descSelector, true, new { style = "display: none;" });
+                var defaultSortColumn = this._сolumnList.FirstOrDefault(r => r.SortDefault);
+                divMain.InnerHtml += this._htmlHelper.Hidden(this._sortBySelector, defaultSortColumn.With(r => r.SortBy.ToString()));
+                divMain.InnerHtml += this._htmlHelper.CheckBox(this._descSelector, defaultSortColumn.With(r => r.IsDescDefault), new { style = "display: none;" });
             }
 
             return new MvcHtmlString(divMain.ToString());
@@ -315,8 +304,9 @@ namespace Grid
                     setting.TargetId = this._contentTable;
                     setting.By = column.SortBy;
                     setting.SortDefault = column.SortDefault;
+                    setting.IsDescDefault = column.IsDescDefault;
                 });
-
+                th.AddCssClass("col-sortable");
                 th.InnerHtml = link.ToString();
             }
             else
@@ -346,11 +336,10 @@ namespace Grid
                     .DoWithPreventDefaultAndStopPropagation()
                     .AjaxGet(this._ajaxGetAction)
                     .OnSuccess(dsl =>
-                    {                        
+                    {
                         dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
-                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this._noRecords).Text())
-                                .If(r => r.Data<List<T>>(data => data.IsEmpty()));
+                        dsl.Self().JQuery.Dom.Use(this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>").Html().If(() => Selector.Result.IsEmpty());
                     })
                     .OnSuccess(_onBindAction)
                     .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
@@ -359,7 +348,7 @@ namespace Grid
 
             var divContent = new TagBuilder("div");
             divContent.AddCssClass("content-table");
-            if(this._isScrolling)
+            if (this._isScrolling)
                 divContent.MergeAttribute("style", "height: {0}px; overflow: auto;".F(this._contentTableHeight));
             divContent.InnerHtml = table.ToString();
 
@@ -379,8 +368,7 @@ namespace Grid
                         dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
                                 .WithTemplate(_customPagingTemplate ?? Selector.Jquery.Id(this._pagingTemplateId)).Html();
 
-                        dsl.Self().Core().JQuery.Manipulation.Html(Selector.Jquery.Id(this._noRecords).Text())
-                                .If(r => r.Data<List<T>>(data => data.IsEmpty()));
+                        dsl.Self().JQuery.Dom.Use(this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>").Html().If(() => Selector.Result.IsEmpty());
 
                         if (_showItemsCount)
                             dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
@@ -408,9 +396,9 @@ namespace Grid
                     })
                     .AsHtmlAttributes(new { style = "width: 50px;", id = _pageSizesSelect }));
 
-            return new MvcHtmlString("{0}{1}{2}{3}".F(divContent, 
-                                                      CreateTemplate(), 
-                                                      divPagingContainer.ToString(), 
+            return new MvcHtmlString("{0}{1}{2}{3}".F(divContent,
+                                                      CreateTemplate(),
+                                                      divPagingContainer.ToString(),
                                                       _showPageSizes ? selectPageSizes.ToString() : ""));
         }
 
@@ -434,7 +422,7 @@ namespace Grid
                         {
                             tbody.MergeAttribute(bodyAttr.Key, bodyAttr.Value.Invoke(each).ToString());
                         }
-                            
+
                         var tr = new TagBuilder("tr");
 
                         if (this.RowAttributes != null)
@@ -478,12 +466,12 @@ namespace Grid
                             foreach (var row in this._nextRowList)
                             {
                                 var trNext = new TagBuilder("tr");
-                                
+
                                 if (row.MetaAttribute != null)
                                 {
                                     trNext.MergeAttributes(row.MetaAttribute(each).AsHtmlAttributes());
                                 }
-                                
+
                                 List<string> classes = row.GetClasses(each);
                                 foreach (var cls in classes)
                                 {
@@ -553,12 +541,6 @@ namespace Grid
             return sb;
         }
 
-        string NoRecordsDefault()
-        {
-            NoRecords(GridOptions.Default.NoRecordsText);
-            return this._noRecordsTemplate;
-        }
-
         private void AutoBind()
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
@@ -595,14 +577,21 @@ namespace Grid
             action(setting);
 
             var link = this._htmlHelper.When(JqueryBind.Click)
-                    .DoWithPreventDefaultAndStopPropagation()
-                    .Direct()
+                    .PreventDefault().StopPropagation()
                     .OnSuccess(dsl =>
                     {
-                        dsl.With(selector => selector.Name(this._sortBySelector)).Core().JQuery.Attributes.Val(setting.By);
-                        dsl.With(selector => selector.Name(this._descSelector)).Core().Trigger.Invoke(JqueryBind.Click);
-                        dsl.With(selector => selector.Class("sort-arrow")).Core().Trigger.Incoding();
-                        dsl.With(selector => selector.Id(setting.TargetId)).Core().Trigger.Incoding();
+                        dsl.WithName(this._descSelector).Trigger.Invoke(JqueryBind.Click)
+                            .If(() => Selector.Jquery.Name(this._sortBySelector) == setting.By.ToString());
+                        if (setting.IsDescDefault)
+                            dsl.WithName(this._descSelector).JQuery.Attr.SetProp(HtmlAttribute.Checked)
+                                .If(() => Selector.Jquery.Name(this._sortBySelector) != setting.By.ToString());
+                        else
+                            dsl.WithName(this._descSelector).JQuery.Attr.RemoveProp(HtmlAttribute.Checked)
+                                .If(() => Selector.Jquery.Name(this._sortBySelector) != setting.By.ToString());
+
+                        dsl.WithName(this._sortBySelector).JQuery.Attr.Val(setting.By);
+                        dsl.WithClass("sort-arrow").Trigger.Incoding();
+                        dsl.WithId(setting.TargetId).Trigger.Incoding();
                     })
                     .AsHtmlAttributes()
                     .ToLink(setting.Content);
@@ -616,31 +605,18 @@ namespace Grid
 
         MvcHtmlString RenderSortArrow<TEnum>(TEnum sort, bool desc, bool sortDefault)
         {
-            string arrowsBootstrap = desc ? "icon-arrow-up" : "icon-arrow-down";
+            string arrowsBootstrap = desc ? "icon-arrow-down" : "icon-arrow-up";
 
             return this._htmlHelper.When(this._bindEvent)
-                    .DoWithStopPropagation().Direct()
+                    .StopPropagation()
                     .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().JQuery.Attributes.AddClass("hide");
-                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString()
-                                        &&
-                                        Selector.Jquery.Name(this._descSelector) == desc)
-                                ;
-
-                        dsl.Self().Core().JQuery.Attributes.RemoveClass("hide")
-                                .If(() => Selector.Jquery.Name(this._sortBySelector) == ""
-                                        &&
-                                        Selector.Jquery.Name(this._descSelector) == desc
-                                        &&
-                                        sortDefault == true);
-
-                        dsl.Self().Core().JQuery.Attributes.AddClass("hide")
-                                .If(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString()
-                                        &&
-                                        Selector.Jquery.Name(this._descSelector) != desc);
-                    })
+                               {
+                                   dsl.Self().JQuery.Attr.AddClass("hide");
+                                   dsl.Self().JQuery.Attr.RemoveClass("hide")
+                                           .If(() => Selector.Jquery.Name(this._sortBySelector) == sort.ToString()
+                                                     &&
+                                                     Selector.Jquery.Name(this._descSelector) == desc);
+                               })
                                 .AsHtmlAttributes(new { @class = arrowsBootstrap + " sort-arrow hide" })
                                 .ToTag(HtmlTag.I);
         }

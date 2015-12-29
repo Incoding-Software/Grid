@@ -40,7 +40,7 @@ namespace GridUI.Infrastructure
 
                                                                                                          var configure = Fluently
                                                                                                                  .Configure()
-                                                                                                                 .Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConfigurationManager.ConnectionStrings["Main"].ConnectionString))
+                                                                                                                 .Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConfigurationManager.ConnectionStrings["GridUITest"].ConnectionString))
                                                                                                                  .Mappings(configuration => configuration.FluentMappings.AddFromAssembly(typeof(Bootstrapper).Assembly));
                                                                                                                  //.CurrentSessionContext<ThreadStaticSessionContext>();
                                                                                                          registry.For<IManagerDataBase>().Singleton().Use(() => new NhibernateManagerDataBase(configure));
@@ -68,7 +68,7 @@ namespace GridUI.Infrastructure
             var ajaxDef = JqueryAjaxOptions.Default;
             ajaxDef.Cache = false; // disabled cache as default
 
-            GridOptions.Default.NoRecordsText = "no records";
+            GridOptions.Default.NoRecordsSelector = "no records default global";
             GridOptions.Default.AddStyling(BootstrapTable.Bordered | BootstrapTable.Hover);
         }
     }

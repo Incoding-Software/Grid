@@ -59,6 +59,53 @@
                 </pre>
         </div>
 
+        <h1>Sortable for column desc default</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("ColumnSortableExample2")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Sortable(GetProductsQuery.SortType.Name, true)
+                              .DescDefault()
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200)
+                              .Sortable(GetProductsQuery.SortType.Price);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("ColumnSortableExample2")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Sortable(GetProductsQuery.SortType.Name, true)
+                                .DescDefault()
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200)
+                                .Sortable(GetProductsQuery.SortType.Price);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
         <h1>Sortable for grid</h1>
 
         <div class="example">
@@ -72,6 +119,10 @@
                               .Width(200);
 
                           column.Bound(r => r.Price)
+                              .Width(200);
+                          
+                          column.Bound(r => r.Comment)
+                              .DescDefault()
                               .Width(200);
 
                           column.Bound(r => r.Date)
@@ -93,6 +144,9 @@
                                 .Width(200);
                           column.Bound(r => r.Price)
                                 .Width(200);
+                          column.Bound(r => r.Comment)
+                              .DescDefault()
+                              .Width(200);
                           column.Bound(r => r.Date)
                                 .Title("Date of made")
                                 .Width(150);

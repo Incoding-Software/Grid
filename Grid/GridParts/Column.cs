@@ -51,6 +51,8 @@ namespace Grid.GridParts
 
         public IDictionary<string, object> ColumnAttributes { get; set; }
 
+        public bool IsDescDefault { get; set; }
+
         #endregion
 
         public IColumn<T> HeadAttr(RouteValueDictionary htmlAttributes)
@@ -135,6 +137,12 @@ namespace Grid.GridParts
         {
             this.SortBy = sortBy;
             this.SortDefault = sortDefault;
+            return this;
+        }
+
+        public IColumn<T> DescDefault()
+        {
+            this.IsDescDefault = true;
             return this;
         }
     }

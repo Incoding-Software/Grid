@@ -8,6 +8,7 @@
         public string TargetId { get; set; }
         public string Content { get; set; }
         public bool SortDefault { get; set; }
+        public bool IsDescDefault { get; set; }
 
         #endregion
     }

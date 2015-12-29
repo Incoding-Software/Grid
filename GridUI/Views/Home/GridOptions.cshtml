@@ -1,6 +1,7 @@
 ﻿
 @using Grid.Components
 @using GridUI.Models
+@using Incoding.Extensions
 @using Incoding.MvcContrib
 
 
@@ -34,12 +35,12 @@
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
-                      .NoRecords("Нет записей!"))
+                      .NoRecords("<div style=\"color: green\">Нет записей!</div>"))
         </div>
         <div class="sourceCode">
             <pre>
                       Html.Grid&lt;ProductVm&gt;()
-                      .Id("NoRecordsExample")
+                      .Id("NoRecordsExample1")
                       .Styling(BootstrapTable.Hover)
                       .Columns(column =>
                       {
@@ -53,7 +54,50 @@
                                 .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
-                      .NoRecords("Нет записей!")
+                      .NoRecords(Нет записей!")
+                </pre>
+        </div>
+
+        <h1>NoRecords from Ajax view</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("NoRecordsExample2")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(200);
+
+                          column.Bound(r => r.Price)
+                              .Width(200);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .NoRecords(Url.Dispatcher().AsView("~/Views/Home/NoRecordsTemplate.cshtml").ToAjaxGet()))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("NoRecordsExample2")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(200);
+                          column.Bound(r => r.Price)
+                                .Width(200);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetNullProducts", "Home"))
+                      .NoRecords(Url.Dispatcher().AsView("~/Views/Home/NoRecordsTemplate.cshtml").ToAjaxGet())
                 </pre>
         </div>
 
@@ -274,7 +318,8 @@
                                 .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProducts", "Home"))
-                      .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString()), JqueryBind.Click))
+                      .BindEvent(JqueryBind.Click)
+                      .OnBind(dsl => dsl.Window.Alert(JqueryBind.Click.ToString())))
                 </pre>
         </div>
     </div>

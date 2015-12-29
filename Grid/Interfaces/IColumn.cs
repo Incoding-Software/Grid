@@ -22,5 +22,6 @@ namespace Grid.Interfaces
         IColumn<T> Visible(bool visible);
         IColumn<T> Raw();
         IColumn<T> Sortable(object sortBy, bool sortDefault = false);
+        IColumn<T> DescDefault();
     }
 }

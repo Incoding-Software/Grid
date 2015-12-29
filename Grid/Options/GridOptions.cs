@@ -5,6 +5,7 @@ using Incoding.Extensions;
 
 namespace Grid.Options
 {
+    using System.Web.WebPages;
     using Incoding.MvcContrib;
 
     public class GridOptions
@@ -13,8 +14,8 @@ namespace Grid.Options
 
         private string _styling = null;
 
-        public virtual string NoRecordsText { get; set; }
-        
+        public Selector NoRecordsSelector { get; set; }
+
         public virtual void AddStyling(string @class)
         {
             _styling = @class;
