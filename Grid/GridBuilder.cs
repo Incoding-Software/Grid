@@ -333,18 +333,20 @@ namespace Grid
         {
 
             var table = this._htmlHelper.When(this._bindEvent)
-                    .DoWithPreventDefaultAndStopPropagation()
-                    .AjaxGet(this._ajaxGetAction)
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
+                            .DoWithPreventDefaultAndStopPropagation()
+                            .AjaxGet(this._ajaxGetAction)
+                            .OnSuccess(dsl =>
+                                       {
+                                           dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
-                        dsl.Self().JQuery.Dom.Use(this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>").Html().If(() => Selector.Result.IsEmpty());
-                    })
-                    .OnSuccess(_onBindAction)
-                    .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
-                    .ToTag(HtmlTag.Table);
+                                           var noRecordContent = this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>";
+                                           dsl.Self().JQuery.Dom.Use(noRecordContent).Html().If(() => Selector.Result.IsEmpty());
+                                           if (this._onBindAction != null)
+                                               this._onBindAction(dsl);
+                                       })
+                            .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
+                            .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
+                            .ToTag(HtmlTag.Table);
 
             var divContent = new TagBuilder("div");
             divContent.AddCssClass("content-table");
@@ -358,25 +360,25 @@ namespace Grid
         MvcHtmlString AddPageableTemplate()
         {
             var tableWithPageable = this._htmlHelper.When(this._bindEvent | JqueryBind.IncChangeUrl)
-                    .DoWithPreventDefaultAndStopPropagation()
-                    .AjaxHashGet(this._ajaxGetAction)
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().Insert.For<PagingResult<T>>(result => result.Items)
-                                .WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
+                                        .DoWithPreventDefaultAndStopPropagation()
+                                        .AjaxHashGet(this._ajaxGetAction)
+                                        .OnSuccess(dsl =>
+                                                   {
+                                                       dsl.Self().Core().Insert.For<PagingResult<T>>(result => result.Items).WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
-                        dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
-                                .WithTemplate(_customPagingTemplate ?? Selector.Jquery.Id(this._pagingTemplateId)).Html();
+                                                       dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.Paging)
+                                                          .WithTemplate(_customPagingTemplate ?? Selector.Jquery.Id(this._pagingTemplateId)).Html();
 
-                        dsl.Self().JQuery.Dom.Use(this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>").Html().If(() => Selector.Result.IsEmpty());
+                                                       var noRecordContent = this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>";
+                                                       dsl.Self().JQuery.Dom.Use(noRecordContent).Html().If(() => Selector.Result.For<PagingResult<T>>(r => r.Items).IsEmpty());
 
-                        if (_showItemsCount)
-                            dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
-                    })
-                    .OnSuccess(_onBindAction)
-                    .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
-                    .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
-                    .ToTag(HtmlTag.Table);
+                                                       if (_showItemsCount)
+                                                           dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
+                                                   })
+                                        .OnSuccess(_onBindAction)
+                                        .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
+                                        .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
+                                        .ToTag(HtmlTag.Table);
 
             var divContent = new TagBuilder("div");
             divContent.AddCssClass("content-table");
@@ -387,14 +389,14 @@ namespace Grid
             divPagingContainer.AddCssClass("pagination");
 
             var selectPageSizes = this._htmlHelper.DropDownList("PageSize", new SelectList(_pageSizesArray ?? new int[] { 5, 10, 50, 100 }), null,
-                _htmlHelper.When(JqueryBind.Change)
-                    .Direct()
-                    .OnSuccess(dsl =>
-                    {
-                        dsl.Self().Core().Store.Hash.Insert();
-                        dsl.Self().Core().Store.Hash.Manipulate(manipulateDsl => manipulateDsl.Set("Page", 1));
-                    })
-                    .AsHtmlAttributes(new { style = "width: 50px;", id = _pageSizesSelect }));
+                                                                _htmlHelper.When(JqueryBind.Change)
+                                                                           .Direct()
+                                                                           .OnSuccess(dsl =>
+                                                                                      {
+                                                                                          dsl.Self().Core().Store.Hash.Insert();
+                                                                                          dsl.Self().Core().Store.Hash.Manipulate(manipulateDsl => manipulateDsl.Set("Page", 1));
+                                                                                      })
+                                                                           .AsHtmlAttributes(new { style = "width: 50px;", id = _pageSizesSelect }));
 
             return new MvcHtmlString("{0}{1}{2}{3}".F(divContent,
                                                       CreateTemplate(),
