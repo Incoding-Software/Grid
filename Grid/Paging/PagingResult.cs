@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace Grid.Paging
+﻿namespace Grid.Paging
 {
+    #region << Using >>
+
+    using System.Collections.Generic;
+
+    #endregion
+
     public class PagingResult<TModel>
     {
         #region Constructors
@@ -13,7 +17,13 @@ namespace Grid.Paging
             int startRows = (query.PageSize * (page - 1) + 1);
             int endRows = query.PageSize * page;
             PagingRange = "<div class=\"itemscount\">" + startRows + " - " + (endRows > totalCount ? totalCount : endRows) + " of " + totalCount + " items</div>";
-            Paging = PagingList.ToPaginated(query, totalCount);
+            Paging = new PagingContainer()
+                     {
+                             Items = PagingList.ToPaginated(query, totalCount),
+                             Total = totalCount.ToString(),
+                             Start = startRows.ToString(),
+                             End = endRows.ToString()
+                     };
         }
 
         #endregion
@@ -22,7 +32,7 @@ namespace Grid.Paging
 
         public List<TModel> Items { get; set; }
 
-        public List<PagingModel> Paging { get; set; }
+        public PagingContainer Paging { get; set; }
 
         public string PagingRange { get; set; }
 

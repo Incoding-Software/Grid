@@ -102,6 +102,7 @@
     <Compile Include="Paging\HashExtensions.cs" />
     <Compile Include="Paging\HashUrlAttribute.cs" />
     <Compile Include="Paging\IRoutableQuery.cs" />
+    <Compile Include="Paging\PagingContainer.cs" />
     <Compile Include="Paging\PagingList.cs" />
     <Compile Include="Paging\PagingModel.cs" />
     <Compile Include="Paging\PagingResult.cs" />
