@@ -60,7 +60,8 @@ namespace Grid
 
         Selector _customPagingTemplate;
 
-        Action<IIncodingMetaLanguageCallbackBodyDsl> _onBindAction = dsl => { };
+        Action<IIncodingMetaLanguageCallbackBodyDsl> _onSuccess = dsl => { };
+        Action<IIncodingMetaLanguageCallbackBodyDsl> _onBegin = dsl => { };
 
         JqueryBind _bindEvent = JqueryBind.InitIncoding;
 
@@ -210,9 +211,22 @@ namespace Grid
             return this;
         }
 
+        [Obsolete("Please use OnSuccess")]
         public IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
         {
-            this._onBindAction = action;
+            this._onSuccess = action;
+            return this;
+        }
+
+        public IGridBuilderOptions<T> OnSuccess(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
+        {
+            this._onSuccess = action;
+            return this;
+        }
+
+        public IGridBuilderOptions<T> OnBegin(Action<IIncodingMetaLanguageCallbackBodyDsl> action)
+        {
+            this._onBegin = action;
             return this;
         }
 
@@ -331,18 +345,22 @@ namespace Grid
 
         MvcHtmlString AddTemplate()
         {
-
             var table = this._htmlHelper.When(this._bindEvent)
                             .DoWithPreventDefaultAndStopPropagation()
                             .AjaxGet(this._ajaxGetAction)
+                            .OnBegin(dsl =>
+                                     {
+                                         if (this._onBegin != null)
+                                             this._onBegin(dsl);
+                                     })
                             .OnSuccess(dsl =>
                                        {
                                            dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
 
                                            var noRecordContent = this._noRecordsSelector ?? GridOptions.Default.NoRecordsSelector ?? "<caption>No records to display.<caption>";
                                            dsl.Self().JQuery.Dom.Use(noRecordContent).Html().If(() => Selector.Result.IsEmpty());
-                                           if (this._onBindAction != null)
-                                               this._onBindAction(dsl);
+                                           if (this._onSuccess != null)
+                                               this._onSuccess(dsl);
                                        })
                             .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                             .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
@@ -375,7 +393,7 @@ namespace Grid
                                                        if (_showItemsCount)
                                                            dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
                                                    })
-                                        .OnSuccess(_onBindAction)
+                                        .OnSuccess(this._onSuccess)
                                         .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                                         .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
                                         .ToTag(HtmlTag.Table);

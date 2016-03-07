@@ -27,7 +27,11 @@ namespace Grid.Interfaces
         IGridBuilderOptions<T> HeadClass(string htmlClass);
         IGridBuilderOptions<T> AjaxGet(string actionString);
         IGridBuilderOptions<T> Sortable();
+
+        [Obsolete("Please use OnSuccess")]
         IGridBuilderOptions<T> OnBind(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
+        IGridBuilderOptions<T> OnSuccess(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
+        IGridBuilderOptions<T> OnBegin(Action<IIncodingMetaLanguageCallbackBodyDsl> action);
         IGridBuilderOptions<T> NoRecords(Selector noRecordsSelector);
         IGridBuilderOptions<T> Pageable();
         IGridBuilderOptions<T> Pageable(Selector customPagingTemplate);
