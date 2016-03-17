@@ -380,6 +380,11 @@ namespace Grid
             var tableWithPageable = this._htmlHelper.When(this._bindEvent | JqueryBind.IncChangeUrl)
                                         .DoWithPreventDefaultAndStopPropagation()
                                         .AjaxHashGet(this._ajaxGetAction)
+                                        .OnBegin(dsl =>
+                                          {
+                                              if (this._onBegin != null)
+                                                  this._onBegin(dsl);
+                                          })
                                         .OnSuccess(dsl =>
                                                    {
                                                        dsl.Self().Core().Insert.For<PagingResult<T>>(result => result.Items).WithTemplate(Selector.Jquery.Id(this._templateId)).Html();
@@ -392,8 +397,10 @@ namespace Grid
 
                                                        if (_showItemsCount)
                                                            dsl.With(selector => selector.Id(_pagingContainer)).Core().Insert.For<PagingResult<T>>(result => result.PagingRange).Append();
-                                                   })
-                                        .OnSuccess(this._onSuccess)
+
+                                                       if (this._onSuccess != null)
+                                                           this._onSuccess(dsl);
+                                                   })                                        
                                         .OnError(dsl => dsl.Self().Core().JQuery.Manipulation.Html("Error ajax get"))
                                         .AsHtmlAttributes(new { id = this._contentTable, @class = "table " + (string.IsNullOrWhiteSpace(this._gridClass) ? GridOptions.Default.GetStyling() : this._gridClass) })
                                         .ToTag(HtmlTag.Table);
