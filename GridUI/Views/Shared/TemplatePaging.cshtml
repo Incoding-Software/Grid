@@ -1,25 +1,84 @@
 ﻿@using Grid.Paging
+@using Incoding.Extensions
 @using Incoding.MvcContrib
-
-
-
-@using (var template = Html.Incoding().Template<PagingModel>())
-{
-        <ul class="customPagination">
-            @using (var each = template.ForEach())
-            {
-                using (each.Is(r => r.Active))
-                {
-                    <li class="success">
-                        <a href="#!@each.ForRaw(r => r.Url)">@each.For(r => r.Text)</a>
-                    </li>
-                }
-                using (each.Not(r => r.Active))
-                {
-                    <li>
-                        <a href="#!@each.ForRaw(r => r.Url)">@each.For(r => r.Text)</a>
-                    </li>
-                }
-            }
-        </ul>
+@{
+    var pageOfName = "Page";
+    var tableSelector = "content-table".ToClass().Find(r => r.Class("table"));
 }
+
+<ul class="pagination">
+    <input type="hidden" name="@pageOfName" value="1"/>
+    @{
+        using (var template = Html.Incoding().Template<PagingContainer>())
+        {
+            using (var baseEach = template.ForEach())
+            {
+                <li>
+                    @using (baseEach.Not(s => s.IsFirst))
+                    {
+                        @(Html.When(JqueryBind.Click)
+                              .OnSuccess(dsl =>
+                                         {
+                                             dsl.WithName(pageOfName).JQuery.Attr.Val(1);
+                                             dsl.With(tableSelector).Trigger.Incoding();
+                                         })
+                              .AsHtmlAttributes(new { @class = "t-link" })
+                              .ToLink(@<span>&laquo;</span>))
+
+                        @(Html.When(JqueryBind.Click)
+                              .OnSuccess(dsl =>
+                                         {
+                                             dsl.WithName(pageOfName).Func.DecrementVal();
+                                             dsl.With(tableSelector).Trigger.Incoding();
+                                         })
+                              .AsHtmlAttributes(new { @class = "t-link" })
+                              .ToLink(@<span>prev</span>))
+                    }
+
+                    @using (var each = baseEach.ForEach(s => s.Items))
+                    {
+                        @each.Inline(r => r.Active,
+                                     isTrue: @<span class="active">
+                        @(Html.When(JqueryBind.InitIncoding)
+                              .OnSuccess(dsl => dsl.WithName(pageOfName).JQuery.Attr.Val(each.For(r => r.Page)))
+                              .AsHtmlAttributes()
+                              .ToDiv())
+                        @each.For(r => r.Text)
+                    </span>,
+                                     isFalse: @<text>
+                                                  @(Html.When(JqueryBind.Click)
+                                                        .PreventDefault()
+                                                        .OnSuccess(dsl =>
+                                                                   {
+                                                                       dsl.WithName(pageOfName).JQuery.Attr.Val(each.For(r => r.Page));
+                                                                       dsl.With(tableSelector).Trigger.Incoding();
+                                                                   })
+                                                        .AsHtmlAttributes(new { @class = "t-link", href = "#" })
+                                                        .ToLink(each.For(r => r.Page)))
+                                               </text>)
+                    }
+                    @using (baseEach.Is(s => s.HasNext))
+                    {
+                        @(Html.When(JqueryBind.Click)
+                              .OnSuccess(dsl =>
+                                         {
+                                             dsl.WithName(pageOfName).Func.IncrementVal();
+                                             dsl.With(tableSelector).Trigger.Incoding();
+                                         })
+                              .AsHtmlAttributes(new { @class = "t-link" })
+                              .ToLink(@<span>next</span>))
+
+                        @(Html.When(JqueryBind.Click)
+                              .OnSuccess(dsl =>
+                                         {
+                                             dsl.WithName(pageOfName).JQuery.Attr.Val(10);
+                                             dsl.With(tableSelector).Trigger.Incoding();
+                                         })
+                              .AsHtmlAttributes(new { @class = "t-link" })
+                              .ToLink(@<span>&raquo;</span>))
+                    }
+                </li>
+            }
+        }
+    }
+</ul>

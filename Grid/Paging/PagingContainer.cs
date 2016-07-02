@@ -10,6 +10,12 @@ namespace Grid.Paging
 
         public string Total { get; set; }
 
+        public bool IsFirst  { get; set; }
+
+        public bool HasNext { get; set; }
+        
+        public bool IsLast  { get; set; }
+
         public List<PagingModel> Items { get; set; }
     }
 }

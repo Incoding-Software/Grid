@@ -19,6 +19,9 @@
             PagingRange = "<div class=\"itemscount\">" + startRows + " - " + (endRows > totalCount ? totalCount : endRows) + " of " + totalCount + " items</div>";
             Paging = new PagingContainer()
                      {
+                             IsFirst = query.Page <= 1,
+                             HasNext = totalCount > endRows,
+                             IsLast = endRows == totalCount,
                              Items = PagingList.ToPaginated(query, totalCount),
                              Total = totalCount.ToString(),
                              Start = startRows.ToString(),

@@ -35,7 +35,7 @@
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetProductsWithPaging", "Home"))
-                      .Pageable())
+                      .Pageable(Url.Dispatcher().AsView("~/Views/Shared/TemplatePaging.cshtml").ToAjaxGet()))
         </div>
         <div class="sourceCode">
             <pre>

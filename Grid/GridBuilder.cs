@@ -379,7 +379,7 @@ namespace Grid
         {
             var tableWithPageable = this._htmlHelper.When(this._bindEvent | JqueryBind.IncChangeUrl)
                                         .DoWithPreventDefaultAndStopPropagation()
-                                        .AjaxHashGet(this._ajaxGetAction)
+                                        .Ajax(this._ajaxGetAction)
                                         .OnBegin(dsl =>
                                           {
                                               if (this._onBegin != null)
@@ -545,7 +545,7 @@ namespace Grid
                             {
                                 var li = new TagBuilder("li");
                                 var link = new TagBuilder("a");
-                                link.MergeAttribute("href", "#!" + each.For(r => r.Url));
+                                link.MergeAttribute("href", "#!" + each.For(r => r.Page));
                                 link.InnerHtml = each.For(r => r.Text);
                                 li.InnerHtml = link.ToString();
                                 li.AddCssClass("active");
@@ -555,7 +555,7 @@ namespace Grid
                             {
                                 var li = new TagBuilder("li");
                                 var link = new TagBuilder("a");
-                                link.MergeAttribute("href", "#!" + each.For(r => r.Url));
+                                link.MergeAttribute("href", "#!" + each.For(r => r.Page));
                                 link.InnerHtml = each.For(r => r.Text);
                                 li.InnerHtml = link.ToString();
                                 sb.Append(li);
